@@ -1,0 +1,31 @@
+.slick-slider .slick-prev.customArrows:before,
+.slick-slider .slick-next.customArrows:before{
+opacity:0;
+transition: .3s ease;
+}
+html.dark .slick-slider.homeSlider:hover .slick-prev.customArrows:before,
+html.dark .slick-slider.homeSlider:hover .slick-next.customArrows:before{
+opacity: 1;
+color: white;
+}
+
+html .slick-slider.homeSlider:hover .slick-prev.customArrows:before,
+html .slick-slider.homeSlider:hover .slick-next.customArrows:before{
+opacity: 1;
+color: black;
+}
+.homeSlider .slick-list{
+    border-radius:inherit;
+}
+.homeSlider .slick-list .slick-track{
+border-radius:inherit;
+}
+.homeSlider .slick-dots{
+    @apply -bottom-9
+}
+.customDot{
+    @apply dark:bg-gray-500 bg-gray-300
+}
+.slick-active .customDot{
+    @apply dark:bg-white bg-black
+}
