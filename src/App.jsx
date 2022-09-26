@@ -15,7 +15,6 @@ import useToggleTheme from "./hooks/useToggleTheme";
 function App() {
   useToggleTheme();
   return (
-    
     <ThemeProvider>
       <Layout>
         <Routes>
