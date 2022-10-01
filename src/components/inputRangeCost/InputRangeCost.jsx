@@ -8,7 +8,7 @@ export default function InputRangeCost({ min, max, onChange }) {
   let minValRef = useRef(null);
   let maxValRef = useRef(null);
   let range = useRef(null);
-
+  // console.log(Helo)
   let inputRangeCost = document.querySelectorAll(".inputRangeCost");
 
   let progressGap = document.querySelector(".progressGap");
