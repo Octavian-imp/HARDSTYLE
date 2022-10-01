@@ -1,31 +1,48 @@
-.slick-slider .slick-prev.customArrows:before,
-.slick-slider .slick-next.customArrows:before{
-opacity:0;
+$dark-color: #121212;
+
+.swiper.homeSlider .swiper-button-prev.customArrows:after,
+.swiper.homeSlider .swiper-button-next.customArrows:after{
+color: $dark-color;
+opacity:1;
 transition: .3s ease;
 }
-html.dark .slick-slider.homeSlider:hover .slick-prev.customArrows:before,
-html.dark .slick-slider.homeSlider:hover .slick-next.customArrows:before{
+
+html.dark .swiper.homeSlider .swiper-button-prev.customArrows:after,
+html.dark .swiper.homeSlider .swiper-button-next.customArrows:after{
 opacity: 1;
 color: white;
 }
 
-html .slick-slider.homeSlider:hover .slick-prev.customArrows:before,
-html .slick-slider.homeSlider:hover .slick-next.customArrows:before{
-opacity: 1;
+html.dark .swiper.homeSlider:hover .swiper-button-prev.customArrows:after,
+html.dark .swiper.homeSlider:hover .swiper-button-next.customArrows:after{
+color: white;
+}
+
+html .swiper.homeSlider:hover .swiper-button-prev.customArrows:after,
+html .swiper.homeSlider:hover .swiper-button-next.customArrows:after{
 color: black;
 }
+
 .homeSlider .slick-list{
     border-radius:inherit;
 }
 .homeSlider .slick-list .slick-track{
 border-radius:inherit;
 }
-.homeSlider .slick-dots{
-    @apply -bottom-9
+
+html.dark .swiper-pagination-bullet{
+    --tw-bg-opacity: 1;
+    background-color: rgba(107,114,128,var(--tw-bg-opacity)) !important;
 }
-.customDot{
-    @apply dark:bg-gray-500 bg-gray-300
+.swiper-pagination-bullet{
+    --tw-bg-opacity: 1;
+    background-color: rgba(209,213,219,var(--tw-bg-opacity)) !important;
 }
-.slick-active .customDot{
-    @apply dark:bg-white bg-black
+html.dark .swiper-pagination-bullet-active{
+    --tw-bg-opacity: 1;
+    background-color: rgba(255,255,255,var(--tw-bg-opacity)) !important;
+}
+.swiper-pagination-bullet-active{
+    --tw-bg-opacity: 1;
+    background-color: rgba(0,0,0,var(--tw-bg-opacity)) !important;
 }

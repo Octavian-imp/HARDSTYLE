@@ -1,4 +1,4 @@
-import Header from "../pages/header/Header";
+import Header from "./header/Header";
 
 function MainContainer({ children }) {
   return (

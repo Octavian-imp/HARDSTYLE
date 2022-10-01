@@ -1,85 +1,74 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import "./inputRangeCost.scss";
 
-export default function InputRangeCost({ min, max, onChange }) {
-  let [minValue, setMinValue] = useState(min);
-  let [maxValue, setMaxValue] = useState(max);
+export default function InputRangeCost({ min, max, step }) {
+  let progressGap = document.querySelector(".progressGap");
+  let [minVal, setMinVal] = useState(min);
+  let [maxVal, setMaxVal] = useState(max);
   let minValRef = useRef(null);
   let maxValRef = useRef(null);
-  let range = useRef(null);
-  let inputRangeCost = document.querySelectorAll(".inputRangeCost");
-  let progressGap = document.querySelector(".progressGap");
 
-  const getPercent = useCallback(
-    (value) => ((value - min) / (max - min)) * 100,
-    [min, max]
+  const inputCost = useCallback(
+    (item) => {
+      if (item.id === "cost-min") {
+        setMinVal(+item.value);
+        let left = (+minVal / +item.max) * 100;
+        progressGap.style.left = `${String(left)}%`;
+      } else if (item.id === "cost-max") {
+        setMaxVal(+item.value);
+        let right = 100 - (+maxVal / +item.max) * 100;
+        progressGap.style.right = `${String(right)}%`;
+      }
+    },
+    [minVal, maxVal, progressGap]
   );
 
   useEffect(() => {
-    if (maxValRef.current) {
-      const minPercent = getPercent(minValue);
-      const maxPercent = getPercent(+maxValRef.current.value);
-      if (range.current) {
-        range.current.style.left = `${minPercent}%`;
-        range.current.style.right = `${maxPercent - minPercent}%`;
-      }
-    }
-  }, [minValue, getPercent]);
+    let left = (+minVal / +minValRef.current.max) * 100;
+    let progressGap = document.querySelector(".progressGap");
+    progressGap.style.left = `${left}%`;
+  }, [minVal]);
 
   useEffect(() => {
-    if (minValRef.current) {
-      const minPercent = getPercent(+minValRef.current.value);
-      const maxPercent = getPercent(maxValue);
-      if (range.current) {
-        range.current.style.width = `${maxPercent - minPercent}%`;
-      }
-    }
-  }, [maxValue, getPercent]);
-
-  useEffect(() => {
-    onChange({ min: minValue, max: maxValue });
-  }, [minValue, maxValue, onChange]);
-
+    let right = 100 - (+maxVal / +maxValRef.current.max) * 100;
+    let progressGap = document.querySelector(".progressGap");
+    progressGap.style.right = `${right}%`;
+  }, [maxVal]);
   return (
-    <div
-      className="flex items-center relative justify-center bg-gray-300"
-      style={{ height: "1rem", width: "20rem", borderRadius: "0.25rem" }}
-    >
+    <>
       <div
-        ref={range}
-        className="bg-orange-500 absolute progressGap h-full"
-        style={{ borderRadius: "0.25rem" }}
-      ></div>
-      <input
-        type="range"
-        min={min}
-        max={max}
-        className="inputRangeCost"
-        id="cost-min"
-        onChange={(event) => {
-          const value = Math.min(+event.target.value, maxValue - 100);
-          setMinValue(value);
-          event.target.value = value.toString();
-        }}
-        value={minValue}
-        ref={minValRef}
-      />
-      <input
-        type="range"
-        min={min}
-        max={max}
-        className="inputRangeCost"
-        id="cost-max"
-        onChange={(event) => {
-          const value = Math.max(+event.target.value, minValue + 100);
-          setMaxValue(value);
-          event.target.value = value.toString();
-        }}
-        value={maxValue}
-        ref={maxValRef}
-      />
-    </div>
+        className="flex items-center bg-gray-300 relative"
+        style={{ height: ".5rem", width: "20rem", borderRadius: "0.25rem" }}
+      >
+        <div
+          className="bg-orange-500 absolute progressGap h-full"
+          style={{ borderRadius: "0.25rem" }}
+        ></div>
+        <input
+          type="range"
+          min="0"
+          max="100000"
+          step={step}
+          className="inputRangeCost z-1 w-full"
+          id="cost-min"
+          onInput={(e) => inputCost(e.target)}
+          value={minVal}
+          ref={minValRef}
+        />
+        <input
+          type="range"
+          min="0"
+          max="100000"
+          step={step}
+          className="inputRangeCost z-1 w-full"
+          id="cost-max"
+          onInput={(e) => inputCost(e.target)}
+          value={maxVal}
+          ref={maxValRef}
+        />
+      </div>
+      <div className="flex items-center justify-between"></div>
+    </>
   );
 }

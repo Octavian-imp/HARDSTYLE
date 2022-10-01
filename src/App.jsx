@@ -1,19 +1,19 @@
-import "./App.scss"
-import { ThemeProvider } from "./providers/ThemeProvider.jsx"
-import Layout from "./components/Layout"
-import Content from "./Content"
-import { Route, Routes } from "react-router-dom"
-import Home from "./pages/home/Home"
-import New from "./pages/new/New"
-import ForHim from "./pages/forHim/ForHim"
-import ForHer from "./pages/forHer/ForHer"
-import Accessories from "./pages/accessories/Accessories"
-import All from "./pages/all/All"
-import NotFound from "./pages/notFound/NotFound"
-import useToggleTheme from "./hooks/useToggleTheme"
+import "./App.scss";
+import { ThemeProvider } from "./providers/ThemeProvider.jsx";
+import Layout from "./components/Layout";
+import Content from "./Content";
+import { Route, Routes } from "react-router-dom";
+import Home from "./pages/home/Home";
+import New from "./pages/new/New";
+import ForHim from "./pages/forHim/ForHim";
+import ForHer from "./pages/forHer/ForHer";
+import Accessories from "./pages/accessories/Accessories";
+import All from "./pages/all/All";
+import NotFound from "./pages/notFound/NotFound";
+import useToggleTheme from "./hooks/useToggleTheme";
 
 function App() {
-  useToggleTheme()
+  useToggleTheme();
   return (
     <ThemeProvider>
       <Layout>
@@ -29,7 +29,7 @@ function App() {
         </Routes>
       </Layout>
     </ThemeProvider>
-  )
+  );
 }
 
-export default App
+export default App;
