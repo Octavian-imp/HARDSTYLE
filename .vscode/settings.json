@@ -1,4 +1,7 @@
 {
   "workbench.tree.indent": 16,
-  "cSpell.words": ["избранное", "Новинки", "Сравнить"]
+  "cSpell.words": ["избранное", "Новинки", "Сравнить"],
+  "prettier.semi": false,
+  "template-string-converter.autoRemoveTemplateString": true,
+  "template-string-converter.addBracketsToProps": true
 }
