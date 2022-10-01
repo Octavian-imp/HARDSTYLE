@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useRef } from "react";
+
 import "./inputRangeCost.scss";
 
 export default function InputRangeCost({ min, max, onChange }) {
