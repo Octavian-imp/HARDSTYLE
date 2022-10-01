@@ -8,7 +8,9 @@ export default function InputRangeCost({ min, max, onChange }) {
   let minValRef = useRef(null);
   let maxValRef = useRef(null);
   let range = useRef(null);
+
   let inputRangeCost = document.querySelectorAll(".inputRangeCost");
+
   let progressGap = document.querySelector(".progressGap");
 
   const getPercent = useCallback(
