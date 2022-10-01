@@ -3,8 +3,8 @@ import { useRef } from "react";
 import "./inputRangeCost.scss";
 
 export default function InputRangeCost({ min, max, onChange }) {
-  let [minValue, setMinValue] = useState(10000);
-  let [maxValue, setMaxValue] = useState(20000);
+  let [minValue, setMinValue] = useState(min);
+  let [maxValue, setMaxValue] = useState(max);
   let minValRef = useRef(null);
   let maxValRef = useRef(null);
   let range = useRef(null);
