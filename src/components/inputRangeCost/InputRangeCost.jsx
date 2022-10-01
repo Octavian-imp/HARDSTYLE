@@ -4,15 +4,12 @@ import { useRef } from "react";
 import "./inputRangeCost.scss";
 
 export default function InputRangeCost({ min, max, onChange }) {
-//   console.log(Hello back)
   let [minValue, setMinValue] = useState(min);
   let [maxValue, setMaxValue] = useState(max);
   let minValRef = useRef(null);
   let maxValRef = useRef(null);
   let range = useRef(null);
-  // console.log(Helo)
   let inputRangeCost = document.querySelectorAll(".inputRangeCost");
-
   let progressGap = document.querySelector(".progressGap");
 
   const getPercent = useCallback(
