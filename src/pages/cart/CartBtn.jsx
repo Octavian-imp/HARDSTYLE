@@ -1,6 +1,7 @@
 import { IoCart } from "react-icons/io5";
 
 function CartBtn() {
+  console.log("render cart");
   return (
     <button className="flex items-center bg-transparent text-xl">
       <IoCart className="dark:text-white text-black" />

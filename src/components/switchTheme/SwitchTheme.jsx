@@ -4,6 +4,7 @@ import useTheme from "../../hooks/useTheme";
 function SwitchTheme() {
   useToggleTheme();
   const { isDark, setIsDark } = useTheme();
+  console.log("render theme");
   return (
     <button
       className={`text-sm font-bold ${

@@ -7,7 +7,10 @@ import Search from "../search/Search";
 import SwitchTheme from "../switchTheme/SwitchTheme";
 import UserMenu from "../user/UserMenu";
 
+import "./Navbar.scss";
+
 function Navbar() {
+  console.log("render");
   let [clickMenu, setClickMenu] = useState(false);
   let navLinks = [
     {
@@ -50,8 +53,10 @@ function Navbar() {
         <FaBars className="text-xl" />
       </button>
       <div
-        className={`container absolute z-10 top-28 lg:top-0 lg:relative w-full dark:bg-dark bg-white duration-300 ${
-          clickMenu ? "visible" : "invisible lg:visible"
+        className={`container absolute z-10 top-28 lg:top-0 lg:relative w-full dark:bg-dark bg-white dark:lg:bg-transparent lg:bg-transparent duration-300 ${
+          clickMenu
+            ? "visible mount animate-decrease_1s_ease-in-out"
+            : "invisible unmount lg:visible animate-decrease_1s_ease-in-out"
         }`}
       >
         <div className="flex">
