@@ -1,9 +1,9 @@
-import useTheme from "../hooks/useTheme";
+import useTheme from "../hooks/useTheme"
 
-export default function Logo({ width = 100, height = width * 2, className }) {
-  const { isDark } = useTheme();
-  let mainColor = isDark ? "#fff" : "#000";
-  let secondColor = isDark ? "#000" : "#fff";
+export default function Logo({ width = "100%", height = "100%", className }) {
+  const { isDark } = useTheme()
+  let mainColor = isDark ? "#fff" : "#000"
+  let secondColor = isDark ? "#000" : "#fff"
 
   return (
     <div className={`flex items-center justify-center ${className}`}>
@@ -167,5 +167,5 @@ export default function Logo({ width = 100, height = width * 2, className }) {
         hard style
       </div>
     </div>
-  );
+  )
 }

@@ -1,45 +1,57 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react"
 
-import "./inputRangeCost.scss";
+import "./inputRangeCost.scss"
 
 export default function InputRangeCost({ min, max, step }) {
-  let progressGap = document.querySelector(".progressGap");
-  let [minVal, setMinVal] = useState(min);
-  let [maxVal, setMaxVal] = useState(max);
-  let minValRef = useRef(null);
-  let maxValRef = useRef(null);
+  let progressGap = document.querySelector(".progressGap")
+  let [minVal, setMinVal] = useState(min)
+  let [maxVal, setMaxVal] = useState(max)
+  let minValRef = useRef(null)
+  let maxValRef = useRef(null)
+  let costGap = 10000
 
   const inputCost = useCallback(
     (item) => {
       if (item.id === "cost-min") {
-        setMinVal(+item.value);
-        let left = (+minVal / +item.max) * 100;
-        progressGap.style.left = `${String(left)}%`;
+        if (
+          +item.value <
+          +document.getElementById("cost-max").value - costGap
+        ) {
+          setMinVal(+item.value)
+          let left = (+minVal / +item.max) * 100
+          progressGap.style.left = `${String(left)}%`
+        }
       } else if (item.id === "cost-max") {
-        setMaxVal(+item.value);
-        let right = 100 - (+maxVal / +item.max) * 100;
-        progressGap.style.right = `${String(right)}%`;
+        if (
+          +item.value - costGap >
+          +document.getElementById("cost-min").value
+        ) {
+          setMaxVal(+item.value)
+          let right = 100 - (+maxVal / +item.max) * 100
+          progressGap.style.right = `${String(right)}%`
+        }
       }
     },
     [minVal, maxVal, progressGap]
-  );
+  )
 
   useEffect(() => {
-    let left = (+minVal / +minValRef.current.max) * 100;
-    let progressGap = document.querySelector(".progressGap");
-    progressGap.style.left = `${left}%`;
-  }, [minVal]);
+    let left = (+minVal / +minValRef.current.max) * 100
+    let progressGap = document.querySelector(".progressGap")
+    progressGap.style.left = `${left}%`
+  }, [minVal])
 
   useEffect(() => {
-    let right = 100 - (+maxVal / +maxValRef.current.max) * 100;
-    let progressGap = document.querySelector(".progressGap");
-    progressGap.style.right = `${right}%`;
-  }, [maxVal]);
+    let right = 100 - (+maxVal / +maxValRef.current.max) * 100
+    let progressGap = document.querySelector(".progressGap")
+    progressGap.style.right = `${right}%`
+  }, [maxVal])
+
   return (
     <>
       <div
         className="flex items-center bg-gray-300 relative"
-        style={{ height: ".5rem", width: "20rem", borderRadius: "0.25rem" }}
+        style={{ height: ".5rem", width: "100%", borderRadius: "0.25rem" }}
       >
         <div
           className="bg-orange-500 absolute progressGap h-full"
@@ -70,5 +82,5 @@ export default function InputRangeCost({ min, max, step }) {
       </div>
       <div className="flex items-center justify-between"></div>
     </>
-  );
+  )
 }

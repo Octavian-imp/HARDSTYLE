@@ -1,17 +1,17 @@
-import { useState } from "react";
-import { FaBars } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
-import Logo from "../../assets/Component 11";
-import CartBtn from "../../pages/cart/CartBtn";
-import Search from "../search/Search";
-import SwitchTheme from "../switchTheme/SwitchTheme";
-import UserMenu from "../user/UserMenu";
+import { useState } from "react"
+import { FaBars } from "react-icons/fa"
+import { NavLink } from "react-router-dom"
+import Logo from "../../assets/Component 11"
+import CartBtn from "../../pages/cart/CartBtn"
+import Search from "../search/Search"
+import SwitchTheme from "../switchTheme/SwitchTheme"
+import UserMenu from "../user/UserMenu"
 
-import "./Navbar.scss";
+import "./Navbar.scss"
 
 function Navbar() {
-  console.log("render");
-  let [clickMenu, setClickMenu] = useState(false);
+  console.log("render")
+  let [clickMenu, setClickMenu] = useState(false)
   let navLinks = [
     {
       id: 1,
@@ -43,7 +43,7 @@ function Navbar() {
       url: "/all",
       title: "Все товары",
     },
-  ];
+  ]
   return (
     <>
       <button
@@ -53,7 +53,7 @@ function Navbar() {
         <FaBars className="text-xl" />
       </button>
       <div
-        className={`container absolute z-10 top-28 lg:top-0 lg:relative w-full dark:bg-dark bg-white dark:lg:bg-transparent lg:bg-transparent duration-300 ${
+        className={`md:container absolute z-10 top-24 sm:top-28 left-0 md:left-auto lg:top-0 lg:relative w-full dark:bg-dark bg-white dark:lg:bg-transparent lg:bg-transparent duration-300 ${
           clickMenu
             ? "visible mount animate-decrease_1s_ease-in-out"
             : "invisible unmount lg:visible animate-decrease_1s_ease-in-out"
@@ -72,8 +72,8 @@ function Navbar() {
             </div>
           </div>
         </div>
-        <div className="w-full">
-          <div className="flex lg:flex-row flex-col items-start mt-2 text-xl m-5 lg:m-0 lg:space-x-9 space-y-4 lg:space-y-0">
+        <div className="lg:w-fit w-full m-5">
+          <div className="flex lg:flex-row flex-col items-start text-xl lg:m-0 lg:space-x-9 space-y-4 lg:space-y-0">
             {navLinks &&
               navLinks.map((item) => (
                 <NavLink
@@ -81,8 +81,8 @@ function Navbar() {
                   to={item.url}
                   className={({ isActive }) =>
                     isActive
-                      ? `border-b-2 dark:text-white dark:border-b-white text-black border-b-black`
-                      : `dark:text-white text-black`
+                      ? `border-b-2 dark:text-white dark:border-b-white text-black border-b-black `
+                      : `dark:text-white text-black `
                   }
                 >
                   {item.title}
@@ -92,7 +92,7 @@ function Navbar() {
         </div>
       </div>
     </>
-  );
+  )
 }
 
-export default Navbar;
+export default Navbar

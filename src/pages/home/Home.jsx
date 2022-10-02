@@ -1,12 +1,12 @@
-import ItemProduct from "../../components/Item/ItemProduct";
-import MainContainer from "../../components/MainContainer";
-import "./Home.scss";
+import ItemProduct from "../../components/itemProduct/ItemProduct"
+import MainContainer from "../../components/MainContainer"
+import "./Home.scss"
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+import { Swiper, SwiperSlide } from "swiper/react"
+import { Navigation, Pagination, Autoplay } from "swiper"
+import "swiper/css"
+import "swiper/css/navigation"
+import "swiper/css/pagination"
 
 function Home() {
   const items = [
@@ -30,7 +30,7 @@ function Home() {
       id: 5,
       name_item: "Черная футболка Hard Style",
     },
-  ];
+  ]
 
   const settingsSlick = {
     modules: [Navigation, Pagination, Autoplay],
@@ -48,7 +48,7 @@ function Home() {
     loop: true,
     slidesPerView: 1,
     slidesPerGroup: 1,
-  };
+  }
 
   const settingsItems = {
     modules: [Navigation, Autoplay],
@@ -80,7 +80,7 @@ function Home() {
         slidesPerView: 5,
       },
     },
-  };
+  }
 
   return (
     <>
@@ -146,7 +146,7 @@ function Home() {
         </div>
       </MainContainer>
     </>
-  );
+  )
 }
 
-export default Home;
+export default Home

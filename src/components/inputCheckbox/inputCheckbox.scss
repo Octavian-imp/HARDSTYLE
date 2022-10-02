@@ -1,0 +1,29 @@
+$size-checkbox: 1rem;
+$border-radius: .25rem;
+
+
+.inputCheckbox:before{
+    content: '';
+    display:block;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: $size-checkbox;
+    height: $size-checkbox;
+    border-radius: $border-radius;
+    @apply dark:bg-light bg-gray-300;
+}
+
+.inputCheckbox:checked:after{
+    content:'';
+    display: block;
+    position:absolute;
+    top: 50%;
+    left: 5%;
+    transform: translateY(-48%);
+    width: $size-checkbox * .9;
+    height: $size-checkbox * .9;
+    border-radius: $border-radius;
+    @apply bg-orange-500;
+}

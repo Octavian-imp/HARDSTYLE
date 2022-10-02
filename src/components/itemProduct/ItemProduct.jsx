@@ -1,11 +1,14 @@
-import { IoCart, IoHeartOutline, IoStatsChart } from "react-icons/io5";
+import { IoCart, IoHeartOutline, IoStatsChart } from "react-icons/io5"
 
 function ItemProduct({
   url_item = require("../../assets/item.jpg"),
   name_item = "Черная футболка HARDSTYLE",
+  className,
 }) {
   return (
-    <div className="rounded-2xl 2xl:w-72 lg:w-64 2xl:mx-0 lg:mx-auto flex flex-col items-center">
+    <div
+      className={`rounded-2xl 2xl:w-72 lg:w-64 2xl:mx-0 lg:mx-auto flex flex-col items-center ${className}`}
+    >
       <img
         src={url_item}
         alt=""
@@ -41,7 +44,7 @@ function ItemProduct({
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default ItemProduct;
+export default ItemProduct

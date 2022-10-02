@@ -9,8 +9,10 @@ module.exports = {
       },
       colors: {
         dark: "#121212",
+        "dark-light": "#222226",
+        light: "#fafafa",
       },
     },
   },
   plugins: [],
-};
+}
