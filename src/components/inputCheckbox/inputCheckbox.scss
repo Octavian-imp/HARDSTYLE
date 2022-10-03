@@ -15,15 +15,6 @@ $border-radius: .25rem;
     @apply dark:bg-light bg-gray-300;
 }
 
-.inputCheckbox:checked:after{
-    content:'';
-    display: block;
-    position:absolute;
-    top: 50%;
-    left: 5%;
-    transform: translateY(-48%);
-    width: $size-checkbox * .9;
-    height: $size-checkbox * .9;
-    border-radius: $border-radius;
+.inputCheckbox:checked:before{
     @apply bg-orange-500;
 }

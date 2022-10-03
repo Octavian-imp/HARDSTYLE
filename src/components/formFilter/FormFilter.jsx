@@ -1,6 +1,7 @@
 import React from "react"
 import InputCheckbox from "../inputCheckbox/InputCheckbox"
 import InputRangeCost from "../inputRangeCost/InputRangeCost"
+import { v4 as uuidv4 } from "uuid"
 
 export default function FormFilter() {
   const colorsCheckbox = [
@@ -28,29 +29,31 @@ export default function FormFilter() {
       isChecked: true,
     },
   ]
+  const genderCheckbox = [
+    {
+      id: "male",
+      label: "Мужской",
+      isChecked: true,
+    },
+    {
+      id: "female",
+      label: "Женский",
+      isChecked: false,
+    },
+  ]
+
   return (
     <>
       <div className="text-center my-5 font-semibold text-xl">Фильтры</div>
       <div className="flex flex-col mb-4 mx-5">
         <span className="mb-3">Цена</span>
         <InputRangeCost min={0} max={100000} step={1000} />
-        <div className="flex my-4">
-          <input
-            className="w-1/3 text-center text-black bg-light rounded-2xl p-1"
-            type="number"
-            value="0"
-          />
-          <span className="w-1/3 text-center font-bold">&mdash;</span>
-          <input
-            type="number"
-            className="w-1/3 text-center text-black bg-light rounded-2xl p-1"
-            value="1000000"
-          />
-        </div>
+
         <span className="mb-3 font-semibold">Цвет</span>
         {colorsCheckbox &&
           colorsCheckbox.map((item) => (
             <InputCheckbox
+              key={uuidv4()}
               id={item.id}
               label={item.label}
               isChecked={item.isChecked}
@@ -60,6 +63,17 @@ export default function FormFilter() {
         {sizesCheckbox &&
           sizesCheckbox.map((item) => (
             <InputCheckbox
+              key={uuidv4()}
+              id={item.id}
+              label={item.label}
+              isChecked={item.isChecked}
+            />
+          ))}
+        <span className="mb-3 mt-5 font-semibold">Пол</span>
+        {genderCheckbox &&
+          genderCheckbox.map((item) => (
+            <InputCheckbox
+              key={uuidv4()}
               id={item.id}
               label={item.label}
               isChecked={item.isChecked}

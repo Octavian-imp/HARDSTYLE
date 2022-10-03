@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { FaBars } from "react-icons/fa"
+import { v4 as uuidv4 } from "uuid"
 import { NavLink } from "react-router-dom"
 import Logo from "../../assets/Component 11"
 import CartBtn from "../../pages/cart/CartBtn"
@@ -10,36 +11,29 @@ import UserMenu from "../user/UserMenu"
 import "./Navbar.scss"
 
 function Navbar() {
-  console.log("render")
   let [clickMenu, setClickMenu] = useState(false)
   let navLinks = [
     {
-      id: 1,
       url: "/home",
       title: "Главная",
     },
     {
-      id: 2,
       url: "/new",
       title: "Новинки",
     },
     {
-      id: 3,
       url: "/for-him",
       title: "Для него",
     },
     {
-      id: 4,
       url: "/for-her",
       title: "Для неё",
     },
     {
-      id: 5,
       url: "/accessories",
       title: "Аксеcсуары",
     },
     {
-      id: 6,
       url: "/all",
       title: "Все товары",
     },
@@ -77,7 +71,7 @@ function Navbar() {
             {navLinks &&
               navLinks.map((item) => (
                 <NavLink
-                  key={item.id}
+                  key={uuidv4()}
                   to={item.url}
                   className={({ isActive }) =>
                     isActive

@@ -3,18 +3,18 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import "./inputRangeCost.scss"
 
 export default function InputRangeCost({ min, max, step }) {
-  let progressGap = document.querySelector(".progressGap")
+  const progressGap = document.querySelector(".progressGap")
   let [minVal, setMinVal] = useState(min)
   let [maxVal, setMaxVal] = useState(max)
   let minValRef = useRef(null)
   let maxValRef = useRef(null)
-  let costGap = 10000
+  const costGap = 10000
 
   const inputCost = useCallback(
     (item) => {
       if (item.id === "cost-min") {
         if (
-          +item.value <
+          +item.value <=
           +document.getElementById("cost-max").value - costGap
         ) {
           setMinVal(+item.value)
@@ -23,7 +23,7 @@ export default function InputRangeCost({ min, max, step }) {
         }
       } else if (item.id === "cost-max") {
         if (
-          +item.value - costGap >
+          +item.value - costGap >=
           +document.getElementById("cost-min").value
         ) {
           setMaxVal(+item.value)
@@ -80,7 +80,21 @@ export default function InputRangeCost({ min, max, step }) {
           ref={maxValRef}
         />
       </div>
-      <div className="flex items-center justify-between"></div>
+      <div className="flex my-4">
+        <input
+          className="w-1/3 text-center text-black bg-light rounded-2xl p-1"
+          type="number"
+          value={minVal}
+          onChange={(e) => setMinVal(e.target.value)}
+        />
+        <span className="w-1/3 text-center font-bold">&mdash;</span>
+        <input
+          type="number"
+          className="w-1/3 text-center text-black bg-light rounded-2xl p-1"
+          value={maxVal}
+          onChange={(e) => setMaxVal(e.target.value)}
+        />
+      </div>
     </>
   )
 }
