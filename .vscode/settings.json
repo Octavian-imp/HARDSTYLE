@@ -22,6 +22,7 @@
     "Фильтры",
     "Цвет",
     "Цена",
+    "swiper",
     "uuidv"
   ],
   "prettier.semi": false,

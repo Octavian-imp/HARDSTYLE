@@ -1,4 +1,5 @@
 import { IoCart, IoHeartOutline, IoStatsChart } from "react-icons/io5"
+import { NavLink } from "react-router-dom"
 import formatPrice from "../../components/priceFormatter"
 
 function ItemProduct({
@@ -39,7 +40,7 @@ function ItemProduct({
       </div>
       <div className="dark:bg-[#222226] bg-gray-100 rounded-2xl w-full -mt-7 z-10 px-7">
         <div className="mt-5 font-semibold text-center whitespace-nowrap text-ellipsis overflow-hidden">
-          {name_item}
+          <NavLink to="/item">{name_item}</NavLink>
         </div>
         <div className="flex flex-wrap mt-5 items-end">
           <span className="font-semibold">
