@@ -1,23 +1,20 @@
-import FormFilter from "../../components/formFilter/FormFilter"
-import MainContainer from "../../components/MainContainer"
-import { FilterProductsProvider } from "../../components/filterProductsProvider/FilterProductsProvider"
-import ContentProductPage from "../../components/ContentProductPage"
-
+import FormFilter from "../../components/formFilter/FormFilter";
+import MainContainer from "../../components/MainContainer";
+import ContentProductPage from "../../components/ContentProductPage";
+import { FilterProductsProvider } from "../../providers/FilterProductsProvider";
 function New() {
-  return (
-    <>
-      <MainContainer>
-        <div className="flex-[1_0_auto] flex lg:flex-row flex-col container mx-auto lg:space-x-4">
-          <div className="xl:w-1/5 lg:w-1/5 h-fit dark:bg-dark-light bg-light rounded-3xl lg:sticky top-4 mb-4 lg:mb-0">
-            <FormFilter />
-          </div>
-          <FilterProductsProvider>
-            <ContentProductPage />
-          </FilterProductsProvider>
-        </div>
-      </MainContainer>
-    </>
-  )
+    return (
+        <MainContainer>
+            <div className="flex-[1_0_auto] flex lg:flex-row flex-col container mx-auto lg:space-x-4">
+                <div className="xl:w-1/5 lg:w-1/5 h-fit dark:bg-dark-light bg-light rounded-3xl lg:sticky top-4 mb-4 lg:mb-0">
+                    <FormFilter />
+                </div>
+                <FilterProductsProvider>
+                    <ContentProductPage />
+                </FilterProductsProvider>
+            </div>
+        </MainContainer>
+    );
 }
 
-export default New
+export default New;

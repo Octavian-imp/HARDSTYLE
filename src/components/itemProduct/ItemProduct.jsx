@@ -38,7 +38,7 @@ function ItemProduct({
           }}
         />
       </div>
-      <div className="dark:bg-[#222226] bg-gray-100 rounded-2xl w-full -mt-7 z-10 px-7">
+      <div className="dark:bg-dark-light bg-gray-100 rounded-2xl w-full -mt-7 z-10 px-7">
         <div className="mt-5 font-semibold text-center whitespace-nowrap text-ellipsis overflow-hidden">
           <NavLink to="/item">{name_item}</NavLink>
         </div>

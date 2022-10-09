@@ -1,7 +1,13 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+$dark: #121212;
+$dark-light: #222226;
+$light: #fafafa;
+$dark-muted: #cecece;
+$muted: #5a5a5a;
 
 html, body {
   @apply selection:bg-orange-500 selection:text-white;
@@ -15,6 +21,41 @@ html, body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* W3C standard
+   сейчас только для Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: $light $dark-light;
+}
+
+/* для Chrome/Edge/Safari */
+*::-webkit-scrollbar {
+  height: 12px;
+  width: 12px;
+}
+*::-webkit-scrollbar-track {
+  background: $light;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: $dark-light;
+  border-radius: 6px;
+  border: 3px solid $light;
+}
+
+html.dark {
+  & *{
+    scrollbar-color: $dark-light $light;
+  }
+  & *::-webkit-scrollbar-track {
+    background: $dark-light;
+  }
+  & *::-webkit-scrollbar-thumb {
+    background-color: $light;
+    border-color: $dark-light;
+  }
+}
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

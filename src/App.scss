@@ -60,6 +60,10 @@ $light-theme-text-color: #121212;
   }
 }
 
+input{
+@apply caret-orange-500 outline-none
+}
+
 button {
   cursor: pointer;
   color: $light-theme-bg-color;
