@@ -66,6 +66,7 @@ function Navbar() {
                         </div>
                     </div>
                 </div>
+
                 <div className="lg:w-fit w-full m-5">
                     <div className="flex lg:flex-row flex-col items-start text-xl lg:m-0 lg:space-x-9 space-y-4 lg:space-y-0">
                         {navLinks &&

@@ -1,7 +1,16 @@
 import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+import useFilter from "../../hooks/useFilter";
 
-export default function CustomSelect({ defaultValue, options }) {
-    const [isChecked, setIsChecked] = useState(false);
+export default function CustomSelectFilter({ options }) {
+    let { filter, setFilter } = useFilter();
+    let [isChecked, setIsChecked] = useState(false);
+
+    const actionClick = (value) => {
+        setFilter(value);
+        setIsChecked(!isChecked);
+    };
+
     return (
         <div className="relative ml-3">
             <span

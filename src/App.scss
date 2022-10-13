@@ -63,6 +63,9 @@ $light-theme-text-color: #121212;
 input{
 @apply caret-orange-500 outline-none
 }
+html.dark input[type='date']::-webkit-calendar-picker-indicator {
+  filter:invert(1);
+}
 
 button {
   cursor: pointer;

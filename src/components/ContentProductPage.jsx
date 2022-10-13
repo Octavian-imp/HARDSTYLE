@@ -1,4 +1,4 @@
-import CustomSelect from "./customSelect/CustomSelect";
+import CustomSelectFilter from "./customSelect/CustomSelectFilter";
 import ItemProduct from "./itemProduct/ItemProduct";
 import { v4 as uuidv4 } from "uuid";
 import useFilter from "../hooks/useFilter";
@@ -119,7 +119,7 @@ export default function ContentProductPage() {
         <div className="flex flex-col  xl:w-4/5 lg:w-4/5">
             <div className="flex mb-3 font-semibold">
                 Сортировка по:
-                <CustomSelect
+                <CustomSelectFilter
                     selectedValue={filter}
                     options={[
                         "Названию",

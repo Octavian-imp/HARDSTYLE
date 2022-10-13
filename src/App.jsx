@@ -15,6 +15,9 @@ import PageItem from "./pages/pageItem/PageItem";
 import Login from "./pages/login/Login";
 import Registration from "./pages/registration/Registration";
 import CartPage from "./pages/cart/CartPage";
+import Profile from "./pages/cabinet/profile/Profile";
+import Orders from "./pages/cabinet/orders/Orders";
+import LayoutUser from "./pages/cabinet/LayoutUser";
 
 function App() {
     useToggleTheme();
@@ -33,6 +36,10 @@ function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/registration" element={<Registration />} />
                     <Route path="/cart" element={<CartPage />} />
+                    <Route path="user" element={<LayoutUser />}>
+                        <Route path="profile" element={<Profile />} />
+                        <Route path="orders" element={<Orders />} />
+                    </Route>
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </Layout>
