@@ -18,6 +18,9 @@ import CartPage from "./pages/cart/CartPage";
 import Profile from "./pages/cabinet/profile/Profile";
 import Orders from "./pages/cabinet/orders/Orders";
 import LayoutUser from "./pages/cabinet/LayoutUser";
+import Favorite from "./pages/cabinet/favorite/Favorite";
+import Support from "./pages/cabinet/reqSupport/Support";
+import AddProduct from "./pages/cabinet/products/AddProduct";
 
 function App() {
     useToggleTheme();
@@ -39,6 +42,11 @@ function App() {
                     <Route path="user" element={<LayoutUser />}>
                         <Route path="profile" element={<Profile />} />
                         <Route path="orders" element={<Orders />} />
+                        <Route path="favorite" element={<Favorite />} />
+                        <Route path="support" element={<Support />} />
+                        <Route path="products">
+                            <Route path="add" element={<AddProduct />} />
+                        </Route>
                     </Route>
                     <Route path="*" element={<NotFound />} />
                 </Routes>

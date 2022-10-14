@@ -1,3 +1,4 @@
+import { IoBag } from "react-icons/io5";
 import { v4 as uuidv4 } from "uuid";
 import OrderItem from "./OrderItem";
 
@@ -63,8 +64,14 @@ export default function Orders() {
     return (
         <>
             <div className="text-xl lg:text-3xl font-semibold mb-6">Заказы</div>
-            {orders &&
-                orders.map((item) => <OrderItem key={uuidv4()} {...item} />)}
+            {orders ? (
+                orders.map((item) => <OrderItem key={uuidv4()} {...item} />)
+            ) : (
+                <div className="flex flex-col items-center justify-center h-full font-bold text-3xl">
+                    <IoBag className="text-warning text-9xl" />
+                    Нет заказов :(
+                </div>
+            )}
         </>
     );
 }

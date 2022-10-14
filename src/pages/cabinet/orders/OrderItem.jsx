@@ -1,3 +1,5 @@
+import formatPrice from "../../../components/priceFormatter";
+
 export default function OrderItem({
     id,
     product,
@@ -17,26 +19,26 @@ export default function OrderItem({
 */
     return (
         <div className="dark:bg-dark-light bg-light px-4 py-3 flex flex-col rounded-2xl my-3">
-            <div className="flex justify-between">
-                <div className="xl:text-3xl">
+            <div className="flex justify-between items-center flex-wrap">
+                <div className="text-2xl xl:text-3xl">
                     Заказ № {id}
                     {status === 1 && (
-                        <span className="text-zinc-500 text-xl ml-2">
+                        <span className="text-zinc-500 text-lg lg:text-xl ml-2">
                             Принят
                         </span>
                     )}
                     {status === 2 && (
-                        <span className="text-warning text-xl ml-2">
+                        <span className="text-warning text-lg lg:text-xl ml-2">
                             В пути
                         </span>
                     )}
                     {status === 3 && (
-                        <span className="text-success text-xl ml-2">
+                        <span className="text-success text-lg lg:text-xl ml-2">
                             Уже у вас
                         </span>
                     )}
                     {status === 4 && (
-                        <span className="text-red-500 text-xl ml-2">
+                        <span className="text-red-500 text-lg lg:text-xl ml-2">
                             Отменен
                         </span>
                     )}
@@ -45,7 +47,9 @@ export default function OrderItem({
             </div>
             <span className="mt-5">
                 Стоимость:{" "}
-                <span className="font-semibold">{product.totalPrice} руб.</span>
+                <span className="font-semibold">
+                    {formatPrice(product.totalPrice)} руб.
+                </span>
             </span>
             <span>
                 Способ оплаты:{" "}

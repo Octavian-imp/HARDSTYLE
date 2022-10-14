@@ -60,7 +60,10 @@ function Navbar() {
                     <div className=" flex lg:flex-row flex-col-reverse lg:w-fit w-full items-center justify-between lg:ml-auto my-8 lg:my-0 sm:mx-0 mx-5">
                         <Search />
                         <div className="flex sm:flex-row flex-col-reverse sm:items-center items-end justify-end lg:justify-start w-full lg:w-fit">
-                            <SwitchTheme />
+                            <SwitchTheme
+                                clickMenu={clickMenu}
+                                setClickMenu={setClickMenu}
+                            />
                             <CartBtn />
                             <UserMenu />
                         </div>

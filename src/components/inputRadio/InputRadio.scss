@@ -1,0 +1,20 @@
+$size-radio: 1rem;
+$border-radius: .25rem;
+
+
+.inputRadio:before{
+    content: '';
+    display:block;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: $size-radio;
+    height: $size-radio;
+    border-radius: $border-radius;
+    @apply dark:bg-light bg-gray-300;
+}
+
+.inputRadio:checked:before{
+    @apply bg-orange-500;
+}

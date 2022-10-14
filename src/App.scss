@@ -83,3 +83,15 @@ button {
   -ms-transition: 0.3s ease;
   -o-transition: 0.3s ease;
 }
+input,textarea,select{
+  @apply duration-200 outline-none;
+}
+input:hover,textarea:hover, select:hover{
+  @apply hover:border-zinc-500;
+}
+input:focus,textarea:focus, select:focus{
+  @apply focus:border-orange-500;
+}
+select > option{
+  @apply dark:bg-dark dark:text-white bg-light text-black;
+  }

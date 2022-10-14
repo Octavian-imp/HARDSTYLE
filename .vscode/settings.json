@@ -28,5 +28,15 @@
     "prettier.semi": false,
     "template-string-converter.autoRemoveTemplateString": true,
     "template-string-converter.addBracketsToProps": true,
-    "stylelint.autoFixOnSave": true
+    "stylelint.autoFixOnSave": true,
+    "javascript.inlayHints.enumMemberValues.enabled": true,
+    "javascript.inlayHints.functionLikeReturnTypes.enabled": true,
+    "javascript.inlayHints.parameterNames.enabled": "all",
+    "javascript.inlayHints.parameterTypes.enabled": true,
+    "javascript.inlayHints.propertyDeclarationTypes.enabled": true,
+    "javascript.inlayHints.variableTypes.enabled": true,
+    "typescript.inlayHints.enumMemberValues.enabled": true,
+    "typescript.inlayHints.parameterTypes.enabled": true,
+    "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
+    "editor.suggest.preview": true
 }
