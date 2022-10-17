@@ -15,8 +15,8 @@ export default function CustomSelectFilter({ options }) {
         <div className="relative ml-3">
             <span
                 onClick={() => setIsChecked(!isChecked)}
-                className={`select-none cursor-pointer after:duration-300 after:border-r-2 after:border-b-2 dark:after:border-light after:border-dark after:w-3 after:h-3 after:absolute after:top-[40%] after:-right-1/4 after:-translate-y-1/2 after:rotate-45 ${
-                    isChecked && "after:-rotate-45"
+                className={`select-none cursor-pointer pr-3 after:duration-300 after:border-r-2 after:border-b-2 dark:after:border-light after:border-dark after:w-3 after:h-3 after:absolute after:top-[40%] after:-right-1/4 after:-translate-y-1/2 after:rotate-45 ${
+                    isChecked && "after:-rotate-[135deg] after:top-[60%]"
                 }`}
             >
                 {filter}

@@ -1,4 +1,3 @@
-import MainContainer from "../../../components/MainContainer";
 import { RiEditBoxFill } from "react-icons/ri";
 import { IoMdSave } from "react-icons/io";
 import { useState } from "react";
@@ -153,7 +152,7 @@ export default function Profile() {
                             <input
                                 {...register("avatar")}
                                 type="file"
-                                accept="image/jpg,image/png,image/jpeg | image/*"
+                                accept="image/jpg,image/png,image/jpeg | .png,.jpg,.jpeg | image/*"
                                 className="hidden"
                                 id="inputImg"
                                 onChange={uploadImg}

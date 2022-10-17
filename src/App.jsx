@@ -21,6 +21,7 @@ import LayoutUser from "./pages/cabinet/LayoutUser";
 import Favorite from "./pages/cabinet/favorite/Favorite";
 import Support from "./pages/cabinet/reqSupport/Support";
 import AddProduct from "./pages/cabinet/products/AddProduct";
+import AllProducts from "./pages/cabinet/products/AllProducts";
 
 function App() {
     useToggleTheme();
@@ -46,6 +47,7 @@ function App() {
                         <Route path="support" element={<Support />} />
                         <Route path="products">
                             <Route path="add" element={<AddProduct />} />
+                            <Route path="all" element={<AllProducts />} />
                         </Route>
                     </Route>
                     <Route path="*" element={<NotFound />} />

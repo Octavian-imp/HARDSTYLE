@@ -1,7 +1,7 @@
-.itemPhoto{
-    transition: .3s ease-in-out;
-    opacity: 1;
-    &:hover{
-        opacity: 0;
+.hover-body{
+    &:hover {
+        & .hover-translate{
+            @apply dark:hover:bg-zinc-800 duration-200 hover:bg-zinc-200 
+        }
     }
 }

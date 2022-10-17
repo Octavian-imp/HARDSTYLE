@@ -53,9 +53,6 @@ export default function CartContent() {
             })
         );
     }
-    useEffect(() => {
-        console.log(cart);
-    }, [cart]);
 
     return (
         <div className="container mx-auto my-6 text-4xl">

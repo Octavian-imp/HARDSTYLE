@@ -10,7 +10,7 @@ const FavoriteItem = ({ id, urlImg, urlProduct, title, price }) => {
         <div className="dark:bg-dark-light bg-light flex flex-col items-center px-4 py-3 rounded-xl w-72 mt-2 ml-1">
             <img
                 src={urlImg}
-                alt=""
+                alt={title}
                 className="h-44 w-44 object-cover rounded-[inherit]"
             />
             <Link to={urlProduct} className="font-semibold mt-3 text-center">
@@ -38,7 +38,7 @@ const FavoriteItem = ({ id, urlImg, urlProduct, title, price }) => {
 };
 
 export default function Favorite() {
-    const [items, setItems] = useState([
+    const [items] = useState([
         {
             id: 1,
             urlImg: UrlImg,

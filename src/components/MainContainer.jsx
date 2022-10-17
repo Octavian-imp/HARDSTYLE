@@ -13,7 +13,7 @@ import Header from "./header/Header";
 import { v4 as uuidv4 } from "uuid";
 
 function MainContainer({ isHeader = true, isCabinet = false, children }) {
-    const menu = [
+    const menuUser = [
         {
             url: "/user/profile",
             title: "Профиль",
@@ -61,9 +61,9 @@ function MainContainer({ isHeader = true, isCabinet = false, children }) {
             <div className="container mx-auto flex">
                 {isCabinet ? (
                     <div className="flex lg:flex-row flex-col w-full">
-                        <div className="dark:bg-dark-light lg:w-[84px] lg:sticky lg:top-6 h-fit px-1 py-3 rounded-2xl flex flex-row lg:flex-col items-center lg:space-y-4 space-x-4 lg:space-x-0 pl-4 lg:pl-0">
-                            {menu &&
-                                menu.map((item, index) => {
+                        <div className="dark:bg-dark-light lg:w-[84px] lg:sticky lg:top-6 h-fit py-3 rounded-2xl flex flex-row lg:flex-col items-center lg:space-y-4 space-x-4 lg:space-x-0 pl-4 lg:pl-0 overflow-x-auto">
+                            {menuUser &&
+                                menuUser.map((item, index) => {
                                     return (
                                         <>
                                             {index === 5 && (

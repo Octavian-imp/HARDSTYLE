@@ -87,10 +87,10 @@ export default function ContentProductPage() {
         setNewProducts(json);
     }
     useEffect(() => {
-        fetch("https://fakestoreapi.com/products")
-            .then((response) => response.json())
-            .then((result) => setNewProducts(result));
-
+        // fetch("https://fakestoreapi.com/products")
+        //     .then((response) => response.json())
+        //     .then((result) => setNewProducts(result));
+        fetchProducts();
         //добавление пола itemam (убрать)
         setNewProducts(
             newProducts.map(
@@ -98,7 +98,7 @@ export default function ContentProductPage() {
                     (item["gender"] = index % 2 ? "male" : "female")
             )
         );
-    }, []);
+    }, [newProducts]);
 
     useMemo(() => {
         if (filter === "Цена (по возрастанию)")
@@ -135,7 +135,6 @@ export default function ContentProductPage() {
                     newProducts.map((item) => (
                         <ItemProduct
                             key={uuidv4()}
-                            className="mb-4"
                             url_item_1={item.image}
                             name_item={item.title}
                             cost={item.price}
