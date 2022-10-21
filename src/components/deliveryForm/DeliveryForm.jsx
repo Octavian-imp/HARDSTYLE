@@ -21,7 +21,7 @@ function CustomField({ name, label, type = "text", isRequired = false }) {
 }
 
 export default function DeliveryForm() {
-    const [fields, setFields] = useState([
+    const [fields] = useState([
         {
             name: "city",
             label: "Город",

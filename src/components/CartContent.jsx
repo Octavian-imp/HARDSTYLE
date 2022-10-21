@@ -1,12 +1,20 @@
-import { FaTimes } from "react-icons/fa";
+import { FaTimes, FaTruck } from "react-icons/fa";
 import { v4 as uuidv4 } from "uuid";
 import useCart from "../hooks/useCart";
 import { useEffect, useState } from "react";
 import ItemProductCart from "./itemProduct/ItemProductCart";
 import formatPrice from "../components/priceFormatter";
-import DeliveryForm from "./deliveryForm/DeliveryForm";
+import { useForm } from "react-hook-form";
 
 export default function CartContent() {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({
+        mode: "onChange",
+    });
+
     const { cart, setCart } = useCart();
     //суммарная скидка
     const [totalDiscount, setTotalDiscount] = useState(0);
@@ -54,10 +62,47 @@ export default function CartContent() {
         );
     }
 
+    //поля адреса доставки
+    const [fields] = useState([
+        {
+            name: "city",
+            label: "Город",
+            isRequired: true,
+        },
+        {
+            name: "street",
+            label: "Улица",
+            isRequired: true,
+        },
+        {
+            name: "houseNumber",
+            label: "Дом",
+            isRequired: true,
+        },
+        {
+            name: "frame",
+            label: "Корпус",
+            isRequired: false,
+        },
+        {
+            name: "flat",
+            label: "Квартира",
+            isRequired: true,
+        },
+    ]);
+
+    const onSubmit = (data) => {
+        console.log(data);
+    };
+
     return (
         <div className="container mx-auto my-6 text-4xl">
             Корзина
-            <div className="flex flex-wrap lg:flex-row flex-col justify-between mt-6">
+            <form
+                onSubmit={handleSubmit(onSubmit)}
+                noValidate
+                className="flex flex-wrap lg:flex-row flex-col justify-between mt-6"
+            >
                 <div className="mb-6 w-full lg:w-3/5 h-fit">
                     <div className="dark:bg-dark-light bg-light w-full rounded-xl px-3 py-2">
                         <button
@@ -89,7 +134,43 @@ export default function CartContent() {
                             ))}
                     </div>
                     <div className="mt-5 dark:bg-dark-light bg-light py-4 px-6 rounded-xl">
-                        <DeliveryForm />
+                        <div className="text-2xl flex items-center">
+                            Адрес доставки <FaTruck className="ml-2" />
+                        </div>
+                        <div className="mt-5 px-3 flex flex-col space-y-2">
+                            {fields &&
+                                fields.map((field) => (
+                                    <>
+                                        <label
+                                            htmlFor={field.name}
+                                            className="text-lg mb-2 w-fit"
+                                            required={field.isRequired}
+                                        >
+                                            {field.label}
+                                            {field.isRequired && (
+                                                <span className="text-red-500 ml-2">
+                                                    *
+                                                </span>
+                                            )}
+                                        </label>
+                                        <input
+                                            {...register(field.name, {
+                                                required: `Заполните поле ${field.label}`,
+                                            })}
+                                            type={field.type}
+                                            id={field.name}
+                                            required={field.isRequired}
+                                            className="text-lg bg-transparent py-1 px-3 rounded-lg border-2 border-zinc-700 focus:border-orange-500 hover:border-zinc-500 duration-200"
+                                            aria-placeholder={`Введите ${field.label}`}
+                                        />
+                                        {errors?.name && (
+                                            <div className="text-red-500">
+                                                {errors.name.message}
+                                            </div>
+                                        )}
+                                    </>
+                                ))}
+                        </div>
                     </div>
                 </div>
                 <div className=" flex flex-col text-lg xl:text-xl w-full lg:w-2/5 lg:pl-7">
@@ -131,7 +212,7 @@ export default function CartContent() {
                         </button>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     );
 }
