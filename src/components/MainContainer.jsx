@@ -7,12 +7,23 @@ import {
     IoTicket,
 } from "react-icons/io5";
 import { BsFillChatDotsFill, BsHeartFill } from "react-icons/bs";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { CartProvider } from "../providers/CartContext";
 import Header from "./header/Header";
 import { v4 as uuidv4 } from "uuid";
+import { useContext } from "react";
+import { Context } from "..";
 
 function MainContainer({ isHeader = true, isCabinet = false, children }) {
+    const { user } = useContext(Context);
+    const navigate = useNavigate();
+    const logOut = () => {
+        user.setUser({});
+        user.setIsAuth(false);
+        localStorage.removeItem("token");
+        return navigate("/");
+    };
+
     const menuUser = [
         {
             url: "/user/profile",
@@ -49,11 +60,6 @@ function MainContainer({ isHeader = true, isCabinet = false, children }) {
             title: "Все товары",
             icon: <IoFileTrayFull />,
         },
-        {
-            url: "/logout",
-            title: "Выйти",
-            icon: <IoLogOut />,
-        },
     ];
     return (
         <CartProvider>
@@ -87,6 +93,14 @@ function MainContainer({ isHeader = true, isCabinet = false, children }) {
                                         </>
                                     );
                                 })}
+                            <NavLink
+                                to="/"
+                                onClick={logOut}
+                                className="hover:bg-[#c0c0c0] dark:hover:bg-muted p-2 duration-200 rounded-xl h-fit text-2xl dark:text-muted dark:hover:text-white"
+                                title="Выйти"
+                            >
+                                <IoLogOut />
+                            </NavLink>
                         </div>
                         <div className="lg:ml-5 my-5 lg:mt-0 w-full">
                             {children}

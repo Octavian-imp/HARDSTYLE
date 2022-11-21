@@ -98,7 +98,8 @@ export default function ContentProductPage() {
                     (item["gender"] = index % 2 ? "male" : "female")
             )
         );
-    }, [newProducts]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useMemo(() => {
         if (filter === "Цена (по возрастанию)")
@@ -116,7 +117,7 @@ export default function ContentProductPage() {
     }, [filter, newProducts]);
 
     return (
-        <div className="flex flex-col  xl:w-4/5 lg:w-4/5">
+        <div className="flex flex-col xl:w-4/5 lg:w-4/5">
             <div className="flex mb-3 font-semibold">
                 Сортировка по:
                 <CustomSelectFilter

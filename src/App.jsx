@@ -22,39 +22,59 @@ import Favorite from "./pages/cabinet/favorite/Favorite";
 import Support from "./pages/cabinet/reqSupport/Support";
 import AddProduct from "./pages/cabinet/products/AddProduct";
 import AllProducts from "./pages/cabinet/products/AllProducts";
+import { useState, useContext, useLayoutEffect } from "react";
+import { observer } from "mobx-react-lite";
+import { Context } from ".";
+import { check } from "./http/userApi";
+import { authRoutes } from "./routes";
 
-function App() {
+const App = observer(() => {
     useToggleTheme();
+    const { user } = useContext(Context);
+    const [loading, setLoading] = useState(true);
+    useLayoutEffect(() => {
+        check()
+            .then((data) => {
+                user.setUser(data);
+                user.setIsAuth(true);
+            })
+            .finally(setLoading(false));
+    }, []);
+
     return (
         <ThemeProvider>
             <Layout>
                 <Routes>
-                    <Route path="/" element={<Content />} />
-                    <Route path="/home" element={<Home />} />
-                    <Route path="/new" element={<New />} />
-                    <Route path="/for-him" element={<ForHim />} />
-                    <Route path="/for-her" element={<ForHer />} />
-                    <Route path="/accessories" element={<Accessories />} />
-                    <Route path="/all" element={<All />} />
-                    <Route path="/item" element={<PageItem />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/registration" element={<Registration />} />
-                    <Route path="/cart" element={<CartPage />} />
-                    <Route path="user" element={<LayoutUser />}>
-                        <Route path="profile" element={<Profile />} />
-                        <Route path="orders" element={<Orders />} />
-                        <Route path="favorite" element={<Favorite />} />
-                        <Route path="support" element={<Support />} />
-                        <Route path="products">
-                            <Route path="add" element={<AddProduct />} />
-                            <Route path="all" element={<AllProducts />} />
+                    {/* Авторизованный пользователь */}
+                    {user.isAuth && (
+                        <Route path="user" element={<LayoutUser />}>
+                            <Route path="profile" element={<Profile />} />
+                            <Route path="orders" element={<Orders />} />
+                            <Route path="favorite" element={<Favorite />} />
+                            <Route path="support" element={<Support />} />
+                            <Route path="products">
+                                <Route path="add" element={<AddProduct />} />
+                                <Route path="all" element={<AllProducts />} />
+                            </Route>
                         </Route>
-                    </Route>
+                    )}
+                    {/* Публичные маршруты */}
+                    <Route path="/" element={<Content />} />
+                    <Route path="home" element={<Home />} />
+                    <Route path="new" element={<New />} />
+                    <Route path="for-him" element={<ForHim />} />
+                    <Route path="for-her" element={<ForHer />} />
+                    <Route path="accessories" element={<Accessories />} />
+                    <Route path="all" element={<All />} />
+                    <Route path="item" element={<PageItem />} />
+                    <Route path="login" element={<Login />} />
+                    <Route path="registration" element={<Login />} />
+                    <Route path="cart" element={<CartPage />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </Layout>
         </ThemeProvider>
     );
-}
+});
 
 export default App;

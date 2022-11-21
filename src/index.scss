@@ -22,6 +22,10 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+*:focus,
+*:focus-within, *:active,*:target,*:focus-visible{
+  @apply outline-none;
+}
 /* W3C standard
    сейчас только для Firefox */
 * {
