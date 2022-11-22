@@ -2,18 +2,17 @@ import "./App.scss";
 import { ThemeProvider } from "./providers/ThemeProvider.jsx";
 import Layout from "./components/Layout";
 import Content from "./Content";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Home from "./pages/home/Home";
 import New from "./pages/new/New";
 import ForHim from "./pages/forHim/ForHim";
 import ForHer from "./pages/forHer/ForHer";
 import Accessories from "./pages/accessories/Accessories";
 import All from "./pages/all/All";
-import NotFound from "./pages/notFound/NotFound";
+import Preloader from "./pages/preloader/Preloader";
 import useToggleTheme from "./hooks/useToggleTheme";
 import PageItem from "./pages/pageItem/PageItem";
 import Login from "./pages/login/Login";
-import Registration from "./pages/registration/Registration";
 import CartPage from "./pages/cart/CartPage";
 import Profile from "./pages/cabinet/profile/Profile";
 import Orders from "./pages/cabinet/orders/Orders";
@@ -22,24 +21,35 @@ import Favorite from "./pages/cabinet/favorite/Favorite";
 import Support from "./pages/cabinet/reqSupport/Support";
 import AddProduct from "./pages/cabinet/products/AddProduct";
 import AllProducts from "./pages/cabinet/products/AllProducts";
-import { useState, useContext, useLayoutEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { Context } from ".";
 import { check } from "./http/userApi";
-import { authRoutes } from "./routes";
 
 const App = observer(() => {
-    useToggleTheme();
     const { user } = useContext(Context);
-    const [loading, setLoading] = useState(true);
-    useLayoutEffect(() => {
+
+    useEffect(() => {
         check()
             .then((data) => {
                 user.setUser(data);
                 user.setIsAuth(true);
             })
             .finally(setLoading(false));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+    useToggleTheme();
+    const [loading, setLoading] = useState(true);
+
+    if (loading) {
+        return (
+            <ThemeProvider>
+                <Layout>
+                    <Preloader previewText="Loading..." />
+                </Layout>
+            </ThemeProvider>
+        );
+    }
 
     return (
         <ThemeProvider>
@@ -70,7 +80,7 @@ const App = observer(() => {
                     <Route path="login" element={<Login />} />
                     <Route path="registration" element={<Login />} />
                     <Route path="cart" element={<CartPage />} />
-                    <Route path="*" element={<NotFound />} />
+                    <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
             </Layout>
         </ThemeProvider>

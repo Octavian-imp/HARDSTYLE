@@ -1,7 +1,7 @@
 import Logo from "../../assets/Component 11";
 import useTheme from "../../hooks/useTheme";
 
-function NotFound() {
+function Preloader({ previewText }) {
     const { isDark } = useTheme();
     return (
         <div
@@ -15,10 +15,10 @@ function NotFound() {
                     isDark ? "text-white" : "text-black"
                 } font-stalinist animate-bounce mt-5`}
             >
-                Not Found
+                {previewText}
             </div>
         </div>
     );
 }
 
-export default NotFound;
+export default Preloader;

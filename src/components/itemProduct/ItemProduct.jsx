@@ -12,10 +12,13 @@ function ItemProduct({
     cost_without_discount = 10000,
     units = "руб.",
     className,
+    isSliderChild = false,
 }) {
     return (
         <div
-            className={`rounded-2xl h-96 2xl:w-72 lg:w-1/3 sm:w-1/2 w-full px-3 2xl:px-0 2xl:mx-0 lg:mx-auto flex flex-col overflow-hidden mb-4 hover-body`}
+            className={`rounded-2xl h-96 ${
+                !isSliderChild && "2xl:w-72 lg:w-1/3 sm:w-1/2"
+            } w-full px-3 2xl:px-0 2xl:mx-0 lg:mx-auto flex flex-col overflow-hidden mb-4 hover-body`}
         >
             <div className="w-full 2xl:h-72 sm:h-64 h-64 relative rounded-t-[inherit] bg-white">
                 <img
