@@ -40,7 +40,6 @@ const App = observer(() => {
     }, []);
     useToggleTheme();
     const [loading, setLoading] = useState(true);
-
     if (loading) {
         return (
             <ThemeProvider>
