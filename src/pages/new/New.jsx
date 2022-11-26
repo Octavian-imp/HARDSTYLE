@@ -2,7 +2,11 @@ import FormFilter from "../../components/formFilter/FormFilter";
 import MainContainer from "../../components/MainContainer";
 import ContentProductPage from "../../components/ContentProductPage";
 import { FilterProductsProvider } from "../../providers/FilterProductsProvider";
-function New() {
+import { observer } from "mobx-react-lite";
+import { useEffect } from "react";
+import { fetchProducts } from "../../http/productAPI";
+
+const New = observer(() => {
     return (
         <MainContainer>
             <div className="flex-[1_0_auto] flex lg:flex-row flex-col container mx-auto lg:space-x-4">
@@ -15,6 +19,6 @@ function New() {
             </div>
         </MainContainer>
     );
-}
+});
 
 export default New;

@@ -4,8 +4,22 @@ import "../../../components/inputRadio/InputRadio.scss";
 import { v4 as uuidv4 } from "uuid";
 
 export default function AddProduct() {
+    //работа с картинками и превью к ним
     const [images, setImages] = useState([]);
     const [imageURLs, setImageURLs] = useState([]);
+    useEffect(() => {
+        if (images.length < 1) return;
+        const newImageURLs = [];
+        images.forEach((image) =>
+            newImageURLs.push(URL.createObjectURL(image))
+        );
+        setImageURLs(newImageURLs);
+    }, [images]);
+    const uploadImg = (e) => {
+        setImages([...e.target.files]);
+    };
+
+    //работа с формой
     const {
         register,
         handleSubmit,
@@ -25,17 +39,11 @@ export default function AddProduct() {
         data.photo = images;
         console.log(data);
     };
-    useEffect(() => {
-        if (images.length < 1) return;
-        const newImageURLs = [];
-        images.forEach((image) =>
-            newImageURLs.push(URL.createObjectURL(image))
-        );
-        setImageURLs(newImageURLs);
-    }, [images]);
 
-    const uploadImg = (e) => {
-        setImages([...e.target.files]);
+    //добавление размера
+    const [sizes, setSizes] = useState([]);
+    const addSize = () => {
+        setSizes([...sizes, { size: "", count: 0 }]);
     };
 
     return (
@@ -158,60 +166,71 @@ export default function AddProduct() {
                             Размеры и количество
                         </div>
                         <div className="flex flex-col items-start ml-2">
-                            <div className="flex flex-col justify-center">
-                                <label
-                                    htmlFor="size"
-                                    className="mr-2 mb-1 font-semibold"
-                                >
-                                    Размер
-                                </label>
-                                <select
-                                    id="size"
-                                    {...register("size", {
-                                        required: "Выберите размер",
-                                    })}
-                                    className="bg-transparent border-2 px-2 py-1 rounded-lg text-center border-zinc-700 focus:border-orange-500 hover:border-zinc-500 duration-200 cursor-pointer"
-                                >
-                                    <option value="">Выберите размер</option>
-                                    <option value="s">S</option>
-                                    <option value="m">M</option>
-                                    <option value="l">L</option>
-                                    <option value="xl">XL</option>
-                                    <option value="2xl">2XL</option>
-                                    <option value="3xl">3XL</option>
-                                    <option value="4xl">4XL</option>
-                                </select>
-                            </div>
-                            {errors?.size && (
-                                <span className="text-red-500">
-                                    {errors.size.message}
-                                </span>
-                            )}
-                            <div className="flex flex-col justify-center items-start mt-2">
-                                <label
-                                    htmlFor="sizeCount"
-                                    className="mr-2 mb-1 font-semibold"
-                                >
-                                    Количество (шт.)
-                                </label>
-                                <input
-                                    id="sizeCount"
-                                    type="number"
-                                    {...register("count", {
-                                        required: "Поле не должно быть пустым",
-                                        pattern: {
-                                            value: /[0-9]+/gi,
-                                        },
-                                    })}
-                                    className="bg-transparent border-2 px-2 py-1 rounded-lg border-zinc-700 focus:border-orange-500 hover:border-zinc-500 duration-200"
-                                />
-                            </div>
-                            {errors?.count && (
-                                <span className="text-red-500">
-                                    {errors.count.message}
-                                </span>
-                            )}
-                            <button className="mt-3 bg-yellow-500 hover:bg-yellow-600 px-4 py-1 font-semibold text-center rounded-2xl">
+                            {sizes.map((i) => (
+                                <>
+                                    <div className="flex flex-col justify-center">
+                                        <label
+                                            htmlFor="size"
+                                            className="mr-2 mb-1 font-semibold"
+                                        >
+                                            Размер
+                                        </label>
+                                        <select
+                                            id="size"
+                                            {...register("size", {
+                                                required: "Выберите размер",
+                                            })}
+                                            className="bg-transparent border-2 px-2 py-1 rounded-lg text-center border-zinc-700 focus:border-orange-500 hover:border-zinc-500 duration-200 cursor-pointer"
+                                        >
+                                            <option value="">
+                                                Выберите размер
+                                            </option>
+                                            <option value="s">S</option>
+                                            <option value="m">M</option>
+                                            <option value="l">L</option>
+                                            <option value="xl">XL</option>
+                                            <option value="2xl">2XL</option>
+                                            <option value="3xl">3XL</option>
+                                            <option value="4xl">4XL</option>
+                                        </select>
+                                    </div>
+                                    {errors?.size && (
+                                        <span className="text-red-500">
+                                            {errors.size.message}
+                                        </span>
+                                    )}
+                                    <div className="flex flex-col justify-center items-start mt-2">
+                                        <label
+                                            htmlFor="sizeCount"
+                                            className="mr-2 mb-1 font-semibold"
+                                        >
+                                            Количество (шт.)
+                                        </label>
+                                        <input
+                                            id="sizeCount"
+                                            type="number"
+                                            {...register("count", {
+                                                required:
+                                                    "Поле не должно быть пустым",
+                                                pattern: {
+                                                    value: /[0-9]+/gi,
+                                                },
+                                            })}
+                                            className="bg-transparent border-2 px-2 py-1 rounded-lg border-zinc-700 focus:border-orange-500 hover:border-zinc-500 duration-200"
+                                        />
+                                    </div>
+                                    {errors?.count && (
+                                        <span className="text-red-500">
+                                            {errors.count.message}
+                                        </span>
+                                    )}
+                                </>
+                            ))}
+                            <button
+                                type="button"
+                                onClick={addSize}
+                                className="mt-3 bg-yellow-500 hover:bg-yellow-600 px-4 py-1 font-semibold text-center rounded-2xl"
+                            >
                                 Добавить размер
                             </button>
                         </div>

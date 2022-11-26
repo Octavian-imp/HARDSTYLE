@@ -4,100 +4,20 @@ import { v4 as uuidv4 } from "uuid";
 import useFilter from "../hooks/useFilter";
 import { useEffect, useMemo } from "react";
 import { useState } from "react";
-// {
-//   name: "Item 2",
-//   cost: (Math.random() * (100000 - 0)).toFixed(2),
-//   isDiscount: true,
-//   cost_without_discount: (Math.random() * (100000 - 0)).toFixed(2),
-// },
-// {
-//   name: "Item 1",
-//   cost: (Math.random() * (100000 - 0)).toFixed(2),
-//   isDiscount: true,
-//   cost_without_discount: (Math.random() * (100000 - 0)).toFixed(2),
-// },
-// {
-//   name: "Item 3",
-//   cost: (Math.random() * (100000 - 0)).toFixed(2),
-//   isDiscount: true,
-//   cost_without_discount: (Math.random() * (100000 - 0)).toFixed(2),
-// },
-// {
-//   name: "Item 4",
-//   cost: (Math.random() * (100000 - 0)).toFixed(2),
-//   isDiscount: true,
-//   cost_without_discount: (Math.random() * (100000 - 0)).toFixed(2),
-// },
-// {
-//   name: "Item 5",
-//   cost: (Math.random() * (100000 - 0)).toFixed(2),
-//   isDiscount: true,
-//   cost_without_discount: (Math.random() * (100000 - 0)).toFixed(2),
-// },
-// {
-//   name: "Item 4",
-//   cost: (Math.random() * (100000 - 0)).toFixed(2),
-//   isDiscount: true,
-//   cost_without_discount: (Math.random() * (100000 - 0)).toFixed(2),
-// },
-// {
-//   name: "Item 6",
-//   cost: (Math.random() * (100000 - 0)).toFixed(2),
-//   isDiscount: true,
-//   cost_without_discount: (Math.random() * (100000 - 0)).toFixed(2),
-// },
-// {
-//   name: "Item 7",
-//   cost: (Math.random() * (100000 - 0)).toFixed(2),
-//   isDiscount: true,
-//   cost_without_discount: (Math.random() * (100000 - 0)).toFixed(2),
-// },
-// {
-//   name: "Item 8",
-//   cost: (Math.random() * (100000 - 0)).toFixed(2),
-//   isDiscount: true,
-//   cost_without_discount: (Math.random() * (100000 - 0)).toFixed(2),
-// },
-// {
-//   name: "Item 9",
-//   cost: (Math.random() * (100000 - 0)).toFixed(2),
-//   isDiscount: true,
-//   cost_without_discount: (Math.random() * (100000 - 0)).toFixed(2),
-// },
-// {
-//   name: "Item 10",
-//   cost: (Math.random() * (100000 - 0)).toFixed(2),
-//   isDiscount: true,
-//   cost_without_discount: (Math.random() * (100000 - 0)).toFixed(2),
-// },
-// {
-//   name: "Item 11",
-//   cost: (Math.random() * (100000 - 0)).toFixed(2),
-//   isDiscount: true,
-//   cost_without_discount: (Math.random() * (100000 - 0)).toFixed(2),
-// },
+import { fetchProducts } from "../http/productAPI";
+import { useContext } from "react";
+import { Context } from "..";
 
 export default function ContentProductPage() {
     let [newProducts, setNewProducts] = useState([]);
     let { filter } = useFilter();
+    const { products } = useContext(Context);
 
-    async function fetchProducts() {
-        const res = await fetch("https://fakestoreapi.com/products");
-        const json = await res.json();
-        setNewProducts(json);
-    }
     useEffect(() => {
-        // fetch("https://fakestoreapi.com/products")
-        //     .then((response) => response.json())
-        //     .then((result) => setNewProducts(result));
-        fetchProducts();
-        //добавление пола itemam (убрать)
-        setNewProducts(
-            newProducts.map(
-                (item, index) =>
-                    (item["gender"] = index % 2 ? "male" : "female")
-            )
-        );
+        fetchProducts().then((data) => {
+            products.setProducts(data.rows);
+            setNewProducts(products.products);
+        });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -109,8 +29,8 @@ export default function ContentProductPage() {
         else if (filter === "Названию")
             setNewProducts(
                 newProducts.sort((a, b) => {
-                    if (a.title > b.title) return 1;
-                    else if (a.title < b.title) return -1;
+                    if (a.name > b.name) return 1;
+                    else if (a.name < b.name) return -1;
                     return 0;
                 })
             );
@@ -136,14 +56,16 @@ export default function ContentProductPage() {
                     newProducts.map((item) => (
                         <ItemProduct
                             key={uuidv4()}
-                            url_item_1={item.image}
-                            name_item={item.title}
+                            url_item_1={
+                                process.env.REACT_APP_API_URL + item.img
+                            }
+                            url_item_2={
+                                process.env.REACT_APP_API_URL + item.img
+                            }
+                            name_item={item.name}
                             cost={item.price}
-                            discount={true}
-                            cost_without_discount={(
-                                Math.random() *
-                                (100000 - 0)
-                            ).toFixed(2)}
+                            discount={item.isDiscount}
+                            cost_without_discount={item.priceWithoutDiscount}
                         />
                     ))}
             </div>

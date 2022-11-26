@@ -75,7 +75,7 @@ const App = observer(() => {
                     <Route path="for-her" element={<ForHer />} />
                     <Route path="accessories" element={<Accessories />} />
                     <Route path="all" element={<All />} />
-                    <Route path="item" element={<PageItem />} />
+                    <Route path="product/:id" element={<PageItem />} />
                     <Route path="login" element={<Login />} />
                     <Route path="registration" element={<Login />} />
                     <Route path="cart" element={<CartPage />} />
