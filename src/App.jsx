@@ -79,7 +79,10 @@ const App = observer(() => {
                     <Route path="login" element={<Login />} />
                     <Route path="registration" element={<Login />} />
                     <Route path="cart" element={<CartPage />} />
-                    <Route path="*" element={<Navigate to="/" />} />
+                    <Route
+                        path="*"
+                        element={<Preloader previewText={"Not Found"} />}
+                    />
                 </Routes>
             </Layout>
         </ThemeProvider>
