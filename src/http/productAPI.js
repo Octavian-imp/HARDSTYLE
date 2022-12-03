@@ -20,6 +20,11 @@ export const fetchProducts = async () => {
     return data;
 };
 
+export const fetchProductsAllCounts = async () => {
+    const { data } = await $authHost.get("api/product/all");
+    return data;
+};
+
 export const fetchOneProduct = async (id) => {
     const { data } = await $host.get("api/product/" + id);
     return data;

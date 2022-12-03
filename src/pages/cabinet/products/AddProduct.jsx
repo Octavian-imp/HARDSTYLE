@@ -1,6 +1,6 @@
 // import { useForm } from "react-hook-form";
 import { useEffect, useState, useContext } from "react";
-import { stringify, v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from "uuid";
 import { observer } from "mobx-react-lite";
 import { createProduct, fetchCategory } from "../../../http/productAPI";
 import "../../../components/inputRadio/InputRadio.scss";
@@ -70,7 +70,6 @@ const AddProduct = observer(() => {
 
     // отправка данных
     const addProduct = () => {
-        console.log(categoryId);
         const formData = new FormData();
         formData.append("name", name);
         formData.append("gender", gender);
