@@ -1,6 +1,6 @@
 // import { useForm } from "react-hook-form";
 import { useEffect, useState, useContext } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { stringify, v4 as uuidv4 } from "uuid";
 import { observer } from "mobx-react-lite";
 import { createProduct, fetchCategory } from "../../../http/productAPI";
 import "../../../components/inputRadio/InputRadio.scss";
@@ -52,11 +52,6 @@ const AddProduct = observer(() => {
     //     },
     // });
 
-    const onSubmit = (e) => {
-        e.preventDefault();
-        console.log(categoryId, gender, name, description, sizes, price);
-    };
-
     //работа с размерами
     const [sizes, setSizes] = useState([
         { size: "", count: 0, number: uuidv4() },
@@ -75,13 +70,23 @@ const AddProduct = observer(() => {
 
     // отправка данных
     const addProduct = () => {
+        console.log(categoryId);
         const formData = new FormData();
         formData.append("name", name);
         formData.append("gender", gender);
-        formData.append("price", price);
-        formData.append("categoryId", categoryId);
+        formData.append("price", `${price}`);
+        formData.append("categoryId", `${categoryId}`);
         formData.append("sizes", JSON.stringify(sizes));
-        createProduct();
+        // TODO:исправить на массив картинок
+        formData.append("img", images.at(0));
+        createProduct(formData)
+            .then((data) => console.log("Product add => ", data))
+            .catch((er) => console.log(er.response.data.message));
+    };
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        addProduct();
     };
     return (
         <>
@@ -91,7 +96,6 @@ const AddProduct = observer(() => {
             <form
                 onSubmit={(e) => onSubmit(e)}
                 className="dark:bg-dark-light bg-light rounded-2xl px-4 py-3 flex flex-col"
-                encType="multipart/form-data"
                 noValidate
             >
                 <div className="flex flex-col lg:flex-row mb-3">
@@ -111,6 +115,7 @@ const AddProduct = observer(() => {
                                     //     required: "Выберите категорию товара",
                                     // })}
                                     value={categoryId}
+                                    required
                                     onChange={(e) =>
                                         setCategoryId(e.target.value)
                                     }
@@ -369,13 +374,13 @@ const AddProduct = observer(() => {
                                     + Добавить изображения
                                 </label>
                             ) : (
-                                <div className="w-full h-full flex flex-wrap justify-center space-y-2">
+                                <div className="w-full h-full flex flex-col justify-center space-y-2 py-2">
                                     {imageURLs.map((image) => (
                                         <img
                                             key={uuidv4()}
                                             src={image}
                                             alt=""
-                                            className="select-none object-cover lg:object-contain h-52 lg:h-auto w-full lg:w-auto"
+                                            className="select-none object-cover lg:object-contain max-h-52 lg:h-auto w-full lg:w-auto"
                                         />
                                     ))}
                                     <label
