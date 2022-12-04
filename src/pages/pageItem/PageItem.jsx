@@ -35,10 +35,10 @@ function TabItem({ title, content }) {
 }
 
 export default function PageItem() {
-    const tabs = [
+    const [tabs, setTabs] = useState([
         {
             title: "Характеристики",
-            content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
 eiusmod tempor incididunt ut labore et dolore magna aliqua. Et
 malesuada fames ac turpis. Ac ut consequat semper viverra nam
 libero. Sapien faucibus et molestie ac. Malesuada fames ac turpis
@@ -50,7 +50,7 @@ scelerisque fermentum dui.`,
         },
         {
             title: "Доставка",
-            content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
 eiusmod tempor incididunt ut labore et dolore magna aliqua. Et
 malesuada fames ac turpis. Ac ut consequat semper viverra nam
 libero. Sapien faucibus et molestie ac. Malesuada fames ac turpis
@@ -62,7 +62,7 @@ scelerisque fermentum dui.`,
         },
         {
             title: "Как подобрать размер?",
-            content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
 eiusmod tempor incididunt ut labore et dolore magna aliqua. Et
 malesuada fames ac turpis. Ac ut consequat semper viverra nam
 libero. Sapien faucibus et molestie ac. Malesuada fames ac turpis
@@ -72,26 +72,42 @@ scelerisque. Laoreet id donec ultrices tincidunt. Nunc pulvinar
 sapien et ligula. Etiam dignissim diam quis enim lobortis
 scelerisque fermentum dui.`,
         },
-    ];
+    ]);
 
-    const [product, setProduct] = useState({ info: [] });
+    // TODO:Сделать вывод картинок из бека
+    const [itemImages, setItemImages] = useState([
+        require("../../assets/item.jpg"),
+        require("../../assets/item_2.jpg"),
+        require("../../assets/item.jpg"),
+        require("../../assets/item_2.jpg"),
+        require("../../assets/item.jpg"),
+    ]);
+    const [sizes, setSizes] = useState([]);
+    const [product, setProduct] = useState({});
+    const [description, setDescription] = useState([]);
     const { id } = useParams();
     useEffect(() => {
         fetchOneProduct(id).then((data) => {
             setProduct(data);
+            setSizes(data.sizes);
+            if (data.info.length > 0) {
+                setTabs([
+                    ...tabs,
+                    ...data.info.filter((item) => item.title !== "description"),
+                ]);
+                setDescription(
+                    data.info.find((item) => item.title === "description")
+                        .description
+                );
+            }
+            // setItemImages(
+            //     `${process.env.REACT_APP_API_URL + product.img}`
+            // );
         });
-    }, []);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [id]);
 
-    const itemImages = [
-        require("../../assets/item.jpg"),
-        require("../../assets/item_2.jpg"),
-        require("../../assets/item.jpg"),
-        require("../../assets/item_2.jpg"),
-        require("../../assets/item.jpg"),
-    ];
-
-    const sizes = ["s", "m", "l", "xl"];
-
+    // Настройки слайдеров
     const settingsMain = {
         modules: [Thumbs, Virtual],
         slidesPerView: 1,
@@ -125,8 +141,13 @@ scelerisque fermentum dui.`,
                                 return (
                                     <SwiperSlide key={index}>
                                         <div className="w-full h-80 lg:h-96 xl:h-[500px] rounded-xl">
+                                            {/* исправить вывод */}
                                             <img
-                                                src={item}
+                                                src={
+                                                    process.env
+                                                        .REACT_APP_API_URL +
+                                                    product.img
+                                                }
                                                 alt=""
                                                 className=" h-full object-cover rounded-[inherit] mx-auto select-none"
                                             />
@@ -143,8 +164,13 @@ scelerisque fermentum dui.`,
                                 return (
                                     <SwiperSlide key={index}>
                                         <div className="w-full h-full rounded-xl cursor-pointer">
+                                            {/* исправить вывод */}
                                             <img
-                                                src={item}
+                                                src={
+                                                    process.env
+                                                        .REACT_APP_API_URL +
+                                                    product.img
+                                                }
                                                 alt=""
                                                 className=" h-full object-cover rounded-[inherit] mx-auto select-none"
                                             />
@@ -158,18 +184,19 @@ scelerisque fermentum dui.`,
                     </div>
                     <div className="flex flex-col w-full lg:w-1/2">
                         <div className="text-3xl font-semibold mb-7">
-                            Черная футболка HARD STYLE
+                            {product.name}
                         </div>
                         <div className="dark:text-dark-muted text-muted mb-7">
-                            {product.info}
+                            {/* исправить это после добавления описания в таблицу */}
+                            {description}
                         </div>
                         <div className="flex flex-wrap ml-2 lg:ml-0">
-                            {sizes.map((item, index) => {
+                            {sizes.map((item) => {
                                 return (
                                     <SelectSizeRadioBtn
                                         key={uuidv4()}
-                                        id_index={index}
-                                        label={item}
+                                        id_index={item.id}
+                                        label={item.size}
                                     />
                                 );
                             })}
@@ -188,7 +215,7 @@ scelerisque fermentum dui.`,
                         <TabItem
                             key={uuidv4()}
                             title={item.title}
-                            content={item.content}
+                            content={item.description}
                         />
                     );
                 })}

@@ -18,13 +18,15 @@ export default function AllProducts() {
         fetchProductsAllCounts()
             .then((data) => {
                 data.forEach((item) => {
-                    item.totalCount =
-                        item.sizes.length > 1
-                            ? item.sizes.reduce(
-                                  (prev, next) => prev + next.count,
-                                  0
-                              )
-                            : item.sizes.at(0).count;
+                    item.totalCount = 0;
+                    if (item.sizes.length > 1) {
+                        item.totalCount = item.sizes.reduce(
+                            (prev, next) => prev + next.count,
+                            0
+                        );
+                    } else if (item.sizes.length > 0) {
+                        item.totalCount = item.sizes.at(0).count;
+                    } else item.totalCount = "null";
                     item.categoryName =
                         item.categoryId === null
                             ? "error"

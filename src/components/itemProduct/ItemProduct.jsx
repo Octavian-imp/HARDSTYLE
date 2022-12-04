@@ -6,10 +6,11 @@ import "./ItemProduct.scss";
 function ItemProduct({
     url_item_1 = require("../../assets/item.jpg"),
     url_item_2 = require("../../assets/item_2.jpg"),
+    url_item_page,
     name_item = "Item without name",
-    cost = 20000,
+    cost = "null",
     discount = false,
-    cost_without_discount = 10000,
+    cost_without_discount = "null",
     units = "руб.",
     className,
     isSliderChild = false,
@@ -44,7 +45,7 @@ function ItemProduct({
             </div>
             <div className="dark:bg-dark-light bg-gray-100 rounded-b-2xl rounded- w-full -mt-7 z-10 px-7 hover-translate">
                 <div className="mt-4 font-semibold text-center whitespace-nowrap text-ellipsis overflow-hidden">
-                    <NavLink to="/item">{name_item}</NavLink>
+                    <NavLink to={url_item_page}>{name_item}</NavLink>
                 </div>
                 <div className="flex flex-wrap mt-4 items-end">
                     <span className="font-semibold">

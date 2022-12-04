@@ -62,6 +62,7 @@ export default function ContentProductPage() {
                             url_item_2={
                                 process.env.REACT_APP_API_URL + item.img
                             }
+                            url_item_page={`/product/${item.id}`}
                             name_item={item.name}
                             cost={item.price}
                             discount={item.isDiscount}

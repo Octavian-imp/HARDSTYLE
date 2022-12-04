@@ -19,6 +19,7 @@ const AddProduct = observer(() => {
     const [gender, setGender] = useState("male");
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
+    const [info, setInfo] = useState([]);
     const [price, setPrice] = useState(0);
 
     //работа с картинками и превью к ним
@@ -70,17 +71,27 @@ const AddProduct = observer(() => {
 
     // отправка данных
     const addProduct = () => {
-        const formData = new FormData();
-        formData.append("name", name);
-        formData.append("gender", gender);
-        formData.append("price", `${price}`);
-        formData.append("categoryId", `${categoryId}`);
-        formData.append("sizes", JSON.stringify(sizes));
-        // TODO:исправить на массив картинок
-        formData.append("img", images.at(0));
-        createProduct(formData)
-            .then((data) => console.log("Product add => ", data))
-            .catch((er) => console.log(er.response.data.message));
+        // поле описания вставляем в массив info
+        setTimeout(() => {
+            const formData = new FormData();
+            formData.append("name", name);
+            formData.append("gender", gender);
+            formData.append("price", `${price}`);
+            formData.append("categoryId", `${categoryId}`);
+            formData.append("sizes", JSON.stringify(sizes));
+            formData.append(
+                "info",
+                JSON.stringify([
+                    ...info,
+                    { title: "description", description: description },
+                ])
+            );
+            // TODO:исправить на массив картинок
+            formData.append("img", images.at(0));
+            createProduct(formData)
+                .then((data) => console.log("Product add => ", data))
+                .catch((er) => console.log(er.response.data.message));
+        }, 0);
     };
 
     const onSubmit = (e) => {
@@ -212,6 +223,7 @@ const AddProduct = observer(() => {
                                     rows="5"
                                     className="lg:w-4/5 bg-transparent border-2 rounded-lg px-2 py-1 border-zinc-700 focus:border-orange-500 hover:border-zinc-500 duration-200 outline-none"
                                     placeholder="Укажите описание товара"
+                                    maxLength={255}
                                 ></textarea>
                                 {/* {errors?.description && (
                                     <span className="text-red-500">
@@ -253,6 +265,11 @@ const AddProduct = observer(() => {
                                             <option value="" disabled selected>
                                                 Выберите размер
                                             </option>
+                                            {Number(categoryId) === 1 && (
+                                                <option value="no size">
+                                                    Без размера
+                                                </option>
+                                            )}
                                             <option value="s">S</option>
                                             <option value="m">M</option>
                                             <option value="l">L</option>
