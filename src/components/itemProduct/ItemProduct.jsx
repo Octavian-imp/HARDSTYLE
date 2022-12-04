@@ -1,11 +1,13 @@
 import { IoCart, IoHeartOutline, IoStatsChart } from "react-icons/io5";
 import { NavLink } from "react-router-dom";
 import formatPrice from "../../components/priceFormatter";
+import useCart from "../../hooks/useCart";
 import "./ItemProduct.scss";
 
 function ItemProduct({
-    url_item_1 = require("../../assets/item.jpg"),
-    url_item_2 = require("../../assets/item_2.jpg"),
+    id,
+    url_item_2 = require("../../assets/not_found_logo.png"),
+    url_item_img = require("../../assets/not_found_logo.png"),
     url_item_page,
     name_item = "Item without name",
     cost = "null",
@@ -16,7 +18,7 @@ function ItemProduct({
     isSliderChild = false,
 }) {
     return (
-        <div
+        <article
             className={`rounded-2xl h-96 ${
                 !isSliderChild && "2xl:w-72 lg:w-1/3 sm:w-1/2"
             } w-full px-3 2xl:px-0 2xl:mx-0 lg:mx-auto flex flex-col overflow-hidden mb-4 hover-body`}
@@ -33,7 +35,7 @@ function ItemProduct({
                     }}
                 />
                 <img
-                    src={url_item_1}
+                    src={url_item_img}
                     alt=""
                     className="w-full h-full absolute top-0 left-0 bg-white hover:opacity-0 duration-300"
                     style={{
@@ -58,13 +60,14 @@ function ItemProduct({
                     )}
                 </div>
                 <div className="flex justify-between mt-4 mb-3 text-sm">
-                    <button
-                        className="bg-orange-500 hover:bg-orange-700 text-white flex items-center justify-center rounded-full font-semibold"
+                    <NavLink
+                        to={`/product/${id}`}
+                        className="bg-orange-500 hover:bg-orange-700 text-white flex items-center justify-center rounded-full font-semibold px-3 py-2"
                         title="Купить"
                     >
                         <IoCart className="text-white mr-2 text-xl" />
                         Купить
-                    </button>
+                    </NavLink>
                     <button
                         className="bg-red-500 hover:bg-red-700 text-white flex items-center justify-center rounded-full font-semibold p-2"
                         title="В избранное"
@@ -79,7 +82,7 @@ function ItemProduct({
                     </button>
                 </div>
             </div>
-        </div>
+        </article>
     );
 }
 

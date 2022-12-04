@@ -14,6 +14,7 @@ export default function SelectSizeRadioBtn({ id_index, label }) {
                 className="appearance-none absolute w-full h-full top-0 left-0 checked:border-b-2 checked:border-b-orange-500 cursor-pointer"
                 data-size={label}
                 onChange={(el) => setSize(el.target.dataset.size)}
+                required
             />
             <span className="pointer-none select-none z-10">
                 {label.toUpperCase()}

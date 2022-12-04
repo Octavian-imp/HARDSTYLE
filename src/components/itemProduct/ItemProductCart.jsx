@@ -5,7 +5,7 @@ import formatPrice from "../../components/priceFormatter";
 
 export default function ItemProductCart({
     id,
-    url_img = require("../../assets/Frame 4.png"),
+    url_img = require("../../assets/not_found_logo.png"),
     name = "Without name",
     size = "m",
     cost,

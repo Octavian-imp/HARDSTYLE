@@ -2,37 +2,19 @@ import ItemProduct from "../../components/itemProduct/ItemProduct";
 import MainContainer from "../../components/MainContainer";
 import "./Home.scss";
 
+import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { fetchPopularProducts } from "../../http/productAPI";
 
 function Home() {
-    const items = [
-        {
-            id: 1,
-            name_item: "Черная футболка Hard Style",
-        },
-        {
-            id: 2,
-            name_item: "Черная футболка Hard Style",
-        },
-        {
-            id: 3,
-            name_item: "Черная футболка Hard Style",
-        },
-        {
-            id: 4,
-            name_item: "Черная футболка Hard Style",
-        },
-        {
-            id: 5,
-            name_item: "Черная футболка Hard Style",
-        },
-    ];
+    const [popularItems, setPopularItems] = useState([]);
 
-    const settingsSlick = {
+    //настройки слайдеров
+    const settingsMainBanner = {
         modules: [Navigation, Pagination, Autoplay],
         pagination: {
             clickable: true,
@@ -50,7 +32,7 @@ function Home() {
         slidesPerGroup: 1,
     };
 
-    const settingsItems = {
+    const settingsPopularItems = {
         modules: [Navigation, Autoplay],
         spaceBetween: 15,
         navigation: {
@@ -82,12 +64,18 @@ function Home() {
         },
     };
 
+    useEffect(() => {
+        fetchPopularProducts().then((res) => {
+            setPopularItems(res.rows);
+        });
+    }, []);
+
     return (
         <>
             <MainContainer>
                 <div className="mt-6 container mx-auto mb-11">
                     <Swiper
-                        {...settingsSlick}
+                        {...settingsMainBanner}
                         className="homeSlider rounded-[3rem] "
                     >
                         <SwiperSlide>
@@ -130,16 +118,25 @@ function Home() {
                     </div>
 
                     <Swiper
-                        {...settingsItems}
+                        {...settingsPopularItems}
                         className="homeSlider mt-10 flex items-center justify-center"
                     >
-                        {items &&
-                            items.map((item, index) => (
-                                <SwiperSlide virtualIndex={index} key={index}>
+                        {popularItems &&
+                            popularItems.map((item, index) => (
+                                <SwiperSlide
+                                    virtualIndex={index}
+                                    key={index}
+                                    className="overflow-hidden"
+                                >
                                     <ItemProduct
                                         index={item.id}
-                                        url_item={item.url_item}
-                                        name_item={item.name_item}
+                                        url_item_img={
+                                            process.env.REACT_APP_API_URL +
+                                            item.img
+                                        }
+                                        url_item_page={`/product/${item.id}`}
+                                        name_item={item.name}
+                                        cost={item.price}
                                         isSliderChild={true}
                                     />
                                 </SwiperSlide>

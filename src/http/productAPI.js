@@ -15,8 +15,16 @@ export const createProduct = async (product) => {
     return data;
 };
 
-export const fetchProducts = async () => {
-    const { data } = await $host.get("api/product");
+export const fetchProducts = async (params) => {
+    const { data } = await $host.get(
+        "api/product",
+        params && { params: { gender: params.gender } }
+    );
+    return data;
+};
+
+export const fetchPopularProducts = async () => {
+    const { data } = await $host.get("api/product", { params: { limit: 6 } });
     return data;
 };
 

@@ -7,6 +7,7 @@ import MainContainer from "../../components/MainContainer";
 import "./PageItem.scss";
 import SelectSizeRadioBtn from "../../components/selectSizeRadioBtn/SelectSizeRadioBtn";
 import { fetchOneProduct } from "../../http/productAPI";
+import useCart from "../../hooks/useCart";
 
 function TabItem({ title, content }) {
     const [isClicked, setIsClicked] = useState(false);
@@ -35,6 +36,7 @@ function TabItem({ title, content }) {
 }
 
 export default function PageItem() {
+    const { cart, setCart } = useCart();
     const [tabs, setTabs] = useState([
         {
             title: "Характеристики",
@@ -82,13 +84,24 @@ scelerisque fermentum dui.`,
         require("../../assets/item_2.jpg"),
         require("../../assets/item.jpg"),
     ]);
+
     const [sizes, setSizes] = useState([]);
     const [product, setProduct] = useState({});
+    const [productCart, setProductCart] = useState({});
     const [description, setDescription] = useState([]);
     const { id } = useParams();
+    //Получение информации о товаре
     useEffect(() => {
         fetchOneProduct(id).then((data) => {
             setProduct(data);
+            // присвоение первоначальных данных переменой productInfo для отправки в корзину
+            // setProductCart({
+            //     id: data.id,
+            //     url_img: data.img,
+            //     title: data.name,
+            //     price: data.price,
+            //     count: 1,
+            // });
             setSizes(data.sizes);
             if (data.info.length > 0) {
                 setTabs([
@@ -100,9 +113,6 @@ scelerisque fermentum dui.`,
                         .description
                 );
             }
-            // setItemImages(
-            //     `${process.env.REACT_APP_API_URL + product.img}`
-            // );
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
@@ -112,6 +122,7 @@ scelerisque fermentum dui.`,
         modules: [Thumbs, Virtual],
         slidesPerView: 1,
         slidesPerGroup: 1,
+        spaceBetween: 30,
         thumbs: {
             swiper: {
                 el: ".paginationMain",
@@ -124,6 +135,7 @@ scelerisque fermentum dui.`,
         modules: [Navigation, Virtual],
         slidesPerView: 3,
         slidesPerGroup: 1,
+        spaceBetween: 20,
         navigation: {
             prevEl: ".swiper-button-prev",
             nextEl: ".swiper-button-next",
@@ -136,7 +148,6 @@ scelerisque fermentum dui.`,
                 <div className="flex flex-col lg:flex-row items-center w-full">
                     <div className="flex w-full lg:w-1/2 flex-wrap">
                         <Swiper {...settingsMain} className="mainSlider">
-                            {/* вставить вывод картинок из products */}
                             {itemImages.map((item, index) => {
                                 return (
                                     <SwiperSlide key={index}>
@@ -182,12 +193,11 @@ scelerisque fermentum dui.`,
                             <div className="swiper-button-next customArrows dark:!text-white !text-black"></div>
                         </Swiper>
                     </div>
-                    <div className="flex flex-col w-full lg:w-1/2">
+                    <div className="flex flex-col w-full lg:w-1/2 lg:mx-10 px-5">
                         <div className="text-3xl font-semibold mb-7">
                             {product.name}
                         </div>
                         <div className="dark:text-dark-muted text-muted mb-7">
-                            {/* исправить это после добавления описания в таблицу */}
                             {description}
                         </div>
                         <div className="flex flex-wrap ml-2 lg:ml-0">
@@ -204,6 +214,7 @@ scelerisque fermentum dui.`,
                         <button
                             className="mt-7 ml-2 lg:ml-0 w-fit font-semibold text-center px-24 py-3 bg-orange-500 hover:bg-orange-600"
                             type="button"
+                            onClick={() => setCart([...cart, productCart])}
                         >
                             Купить
                         </button>

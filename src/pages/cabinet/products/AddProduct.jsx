@@ -106,7 +106,6 @@ const AddProduct = observer(() => {
             <form
                 onSubmit={(e) => onSubmit(e)}
                 className="dark:bg-dark-light bg-light rounded-2xl px-4 py-3 flex flex-col"
-                noValidate
             >
                 <div className="flex flex-col lg:flex-row mb-3">
                     <div className="space-y-4 2xl:w-4/5 lg:w-3/5">
@@ -188,6 +187,7 @@ const AddProduct = observer(() => {
                                         type="text"
                                         id="productName"
                                         value={name}
+                                        required
                                         onChange={(e) => {
                                             setName(e.target.value);
                                         }}
@@ -213,6 +213,7 @@ const AddProduct = observer(() => {
                                 </label>
                                 <textarea
                                     id="description"
+                                    required
                                     value={description}
                                     onChange={(e) =>
                                         setDescription(e.target.value)
@@ -253,6 +254,7 @@ const AddProduct = observer(() => {
                                             // {...register(`size_${index}`, {
                                             //     required: "Выберите размер",
                                             // })}
+                                            required
                                             onChange={(e) =>
                                                 changeSize(
                                                     "size",
@@ -295,6 +297,7 @@ const AddProduct = observer(() => {
                                         <input
                                             id={`sizeCount_${index}`}
                                             type="number"
+                                            required
                                             value={i.count}
                                             onChange={(e) =>
                                                 changeSize(
@@ -349,6 +352,7 @@ const AddProduct = observer(() => {
                                 id="price"
                                 type="number"
                                 value={price}
+                                required
                                 onChange={(e) => setPrice(e.target.value)}
                                 // {...register("price", {
                                 //     required: "Необходимо указать стоимость",
@@ -375,8 +379,8 @@ const AddProduct = observer(() => {
                                 // {...register("photo", {
                                 //     required: "Выберите изображение товара",
                                 // })}
-                                multiple
                                 id="photo"
+                                required
                                 type="file"
                                 accept="image/jpg,image/png,image/jpeg | .png,.jpg,.jpeg | image/*"
                                 className="hidden"

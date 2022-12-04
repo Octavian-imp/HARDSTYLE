@@ -8,13 +8,12 @@ import { fetchProducts } from "../http/productAPI";
 import { useContext } from "react";
 import { Context } from "..";
 
-export default function ContentProductPage() {
+export default function ContentProductPage({ gender }) {
     let [newProducts, setNewProducts] = useState([]);
     let { filter } = useFilter();
     const { products } = useContext(Context);
-
     useEffect(() => {
-        fetchProducts().then((data) => {
+        fetchProducts({ gender: gender }).then((data) => {
             products.setProducts(data.rows);
             setNewProducts(products.products);
         });
@@ -56,10 +55,8 @@ export default function ContentProductPage() {
                     newProducts.map((item) => (
                         <ItemProduct
                             key={uuidv4()}
-                            url_item_1={
-                                process.env.REACT_APP_API_URL + item.img
-                            }
-                            url_item_2={
+                            id={item.id}
+                            url_item_img={
                                 process.env.REACT_APP_API_URL + item.img
                             }
                             url_item_page={`/product/${item.id}`}
