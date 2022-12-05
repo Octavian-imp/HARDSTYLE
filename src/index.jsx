@@ -6,7 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import { createContext } from "react";
 import UserStore from "./store/UserStore";
 import ProductStore from "./store/ProductStore";
-//Merge
+
 export const Context = createContext(null);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
