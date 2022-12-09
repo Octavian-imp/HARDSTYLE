@@ -14,8 +14,8 @@ export default function CartContent() {
     } = useForm({
         mode: "onChange",
     });
-
     const { cart, setCart } = useCart();
+    console.log(cart);
     //суммарная скидка
     const [totalDiscount, setTotalDiscount] = useState(0);
     //итоговая стоимость
@@ -105,14 +105,20 @@ export default function CartContent() {
             >
                 <div className="mb-6 w-full lg:w-3/5 h-fit">
                     <div className="dark:bg-dark-light bg-light w-full rounded-xl px-3 py-2">
-                        <button
-                            type="button"
-                            className="text-2xl flex items-center justify-center bg-inherit dark:text-white text-black"
-                            onClick={() => setCart()}
-                        >
-                            Очистить корзину{" "}
-                            <FaTimes className="ml-2"></FaTimes>
-                        </button>
+                        {cart?.length > 0 ? (
+                            <button
+                                type="button"
+                                className="text-2xl flex items-center justify-center bg-inherit dark:text-white text-black"
+                                onClick={() => setCart([])}
+                            >
+                                Очистить корзину{" "}
+                                <FaTimes className="ml-2"></FaTimes>
+                            </button>
+                        ) : (
+                            <span className="text-2xl flex items-center justify-center bg-inherit dark:text-white text-black my-4">
+                                Ваша корзина пуста :(
+                            </span>
+                        )}
                     </div>
                     <div className="mt-5 flex flex-col space-y-5">
                         {cart &&
@@ -120,7 +126,7 @@ export default function CartContent() {
                                 <ItemProductCart
                                     key={uuidv4()}
                                     id={item.id}
-                                    url_img={item.image}
+                                    url_img={item.url_img}
                                     name={item.title}
                                     size={item.size}
                                     cost={item.price}

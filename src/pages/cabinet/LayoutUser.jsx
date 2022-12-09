@@ -1,10 +1,10 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import MainContainer from "../../components/MainContainer";
+import UserContainer from "../../components/UserContainer";
 export default function LayoutUser() {
     return (
-        <MainContainer isCabinet={true}>
+        <UserContainer>
             <Outlet />
-        </MainContainer>
+        </UserContainer>
     );
 }

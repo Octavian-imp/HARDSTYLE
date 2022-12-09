@@ -4,7 +4,7 @@ import { Navigation, Thumbs, Virtual } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useParams } from "react-router-dom";
 import MainContainer from "../../components/MainContainer";
-import "./PageItem.scss";
+import "./ItemContent.scss";
 import SelectSizeRadioBtn from "../../components/selectSizeRadioBtn/SelectSizeRadioBtn";
 import { fetchOneProduct } from "../../http/productAPI";
 import useCart from "../../hooks/useCart";
@@ -35,7 +35,7 @@ function TabItem({ title, content }) {
     );
 }
 
-export default function PageItem() {
+export default function ItemContent() {
     const { cart, setCart } = useCart();
     const [tabs, setTabs] = useState([
         {
@@ -95,13 +95,13 @@ scelerisque fermentum dui.`,
         fetchOneProduct(id).then((data) => {
             setProduct(data);
             // присвоение первоначальных данных переменой productInfo для отправки в корзину
-            // setProductCart({
-            //     id: data.id,
-            //     url_img: data.img,
-            //     title: data.name,
-            //     price: data.price,
-            //     count: 1,
-            // });
+            setProductCart({
+                id: data.id,
+                url_img: process.env.REACT_APP_API_URL + data.img,
+                title: data.name,
+                price: data.price,
+                count: 1,
+            });
             setSizes(data.sizes);
             if (data.info.length > 0) {
                 setTabs([
@@ -143,94 +143,97 @@ scelerisque fermentum dui.`,
     };
 
     return (
-        <MainContainer>
-            <div className="container mx-auto flex  flex-wrap py-10">
-                <div className="flex flex-col lg:flex-row items-center w-full">
-                    <div className="flex w-full lg:w-1/2 flex-wrap">
-                        <Swiper {...settingsMain} className="mainSlider">
-                            {itemImages.map((item, index) => {
-                                return (
-                                    <SwiperSlide key={index}>
-                                        <div className="w-full h-80 lg:h-96 xl:h-[500px] rounded-xl">
-                                            {/* исправить вывод */}
-                                            <img
-                                                src={
-                                                    process.env
-                                                        .REACT_APP_API_URL +
-                                                    product.img
-                                                }
-                                                alt=""
-                                                className=" h-full object-cover rounded-[inherit] mx-auto select-none"
-                                            />
-                                        </div>
-                                    </SwiperSlide>
-                                );
-                            })}
-                        </Swiper>
-                        <Swiper
-                            {...settingsPaginationMain}
-                            className="paginationMain w-full mt-4 h-24"
-                        >
-                            {itemImages.map((item, index) => {
-                                return (
-                                    <SwiperSlide key={index}>
-                                        <div className="w-full h-full rounded-xl cursor-pointer">
-                                            {/* исправить вывод */}
-                                            <img
-                                                src={
-                                                    process.env
-                                                        .REACT_APP_API_URL +
-                                                    product.img
-                                                }
-                                                alt=""
-                                                className=" h-full object-cover rounded-[inherit] mx-auto select-none"
-                                            />
-                                        </div>
-                                    </SwiperSlide>
-                                );
-                            })}
-                            <div className="swiper-button-prev customArrows dark:!text-white !text-black"></div>
-                            <div className="swiper-button-next customArrows dark:!text-white !text-black"></div>
-                        </Swiper>
-                    </div>
-                    <div className="flex flex-col w-full lg:w-1/2 lg:mx-10 px-5">
-                        <div className="text-3xl font-semibold mb-7">
-                            {product.name}
-                        </div>
-                        <div className="dark:text-dark-muted text-muted mb-7">
-                            {description}
-                        </div>
-                        <div className="flex flex-wrap ml-2 lg:ml-0">
-                            {sizes.map((item) => {
-                                return (
-                                    <SelectSizeRadioBtn
-                                        key={uuidv4()}
-                                        id_index={item.id}
-                                        label={item.size}
-                                    />
-                                );
-                            })}
-                        </div>
-                        <button
-                            className="mt-7 ml-2 lg:ml-0 w-fit font-semibold text-center px-24 py-3 bg-orange-500 hover:bg-orange-600"
-                            type="button"
-                            onClick={() => setCart([...cart, productCart])}
-                        >
-                            Купить
-                        </button>
-                    </div>
+        <div className="container mx-auto flex  flex-wrap py-10">
+            <div className="flex flex-col lg:flex-row items-center w-full">
+                <div className="flex w-full lg:w-1/2 flex-wrap">
+                    <Swiper {...settingsMain} className="mainSlider">
+                        {itemImages.map((item, index) => {
+                            return (
+                                <SwiperSlide key={index}>
+                                    <div className="w-full h-80 lg:h-96 xl:h-[500px] rounded-xl">
+                                        {/* исправить вывод */}
+                                        <img
+                                            src={
+                                                process.env.REACT_APP_API_URL +
+                                                product.img
+                                            }
+                                            alt=""
+                                            className=" h-full object-cover rounded-[inherit] mx-auto select-none"
+                                        />
+                                    </div>
+                                </SwiperSlide>
+                            );
+                        })}
+                    </Swiper>
+                    <Swiper
+                        {...settingsPaginationMain}
+                        className="paginationMain w-full mt-4 h-24"
+                    >
+                        {itemImages.map((item, index) => {
+                            return (
+                                <SwiperSlide key={index}>
+                                    <div className="w-full h-full rounded-xl cursor-pointer">
+                                        {/* исправить вывод */}
+                                        <img
+                                            src={
+                                                process.env.REACT_APP_API_URL +
+                                                product.img
+                                            }
+                                            alt=""
+                                            className=" h-full object-cover rounded-[inherit] mx-auto select-none"
+                                        />
+                                    </div>
+                                </SwiperSlide>
+                            );
+                        })}
+                        <div className="swiper-button-prev customArrows dark:!text-white !text-black"></div>
+                        <div className="swiper-button-next customArrows dark:!text-white !text-black"></div>
+                    </Swiper>
                 </div>
-                {/* поменять на products.info когда будет сделано получение info */}
-                {tabs.map((item) => {
-                    return (
-                        <TabItem
-                            key={uuidv4()}
-                            title={item.title}
-                            content={item.description}
-                        />
-                    );
-                })}
+                <div className="flex flex-col w-full lg:w-1/2 lg:mx-10 px-5">
+                    <div className="text-3xl font-semibold mb-7">
+                        {product.name}
+                    </div>
+                    <div className="dark:text-dark-muted text-muted mb-7">
+                        {description}
+                    </div>
+                    <div className="flex flex-wrap ml-2 lg:ml-0">
+                        {sizes.map((item) => {
+                            return (
+                                <SelectSizeRadioBtn
+                                    key={item.id}
+                                    id_index={item.id}
+                                    label={item.size}
+                                    setProductCart={setProductCart}
+                                    prevProduct={productCart}
+                                />
+                            );
+                        })}
+                    </div>
+                    <button
+                        className="mt-7 ml-2 lg:ml-0 w-fit font-semibold text-center px-24 py-3 bg-orange-500 hover:bg-orange-600"
+                        type="button"
+                        onClick={() => {
+                            productCart.size !== undefined
+                                ? // сделать проверку чтобы не было дубликатов одного товара в корзине!!!
+                                  setCart([...cart, productCart])
+                                : alert("choose size");
+                        }}
+                    >
+                        Купить
+                    </button>
+                </div>
             </div>
-        </MainContainer>
+            {/* поменять на products.info когда будет сделано получение info */}
+            {tabs.map((item) => {
+                return (
+                    <TabItem
+                        key={uuidv4()}
+                        title={item.title}
+                        content={item.description}
+                    />
+                );
+            })}
+        </div>
     );
 }

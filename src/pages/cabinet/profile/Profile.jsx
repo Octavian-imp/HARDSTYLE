@@ -3,8 +3,15 @@ import { IoMdSave } from "react-icons/io";
 import { useState } from "react";
 import imgUser from "../../../assets/item.jpg";
 import { useForm } from "react-hook-form";
+import useTheme from "../../../hooks/useTheme";
+import { useEffect } from "react";
 
 export default function Profile() {
+    const { setIsHeader } = useTheme();
+    useEffect(() => {
+        setIsHeader(true);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     const [UrlAvatar, setUrlAvatar] = useState(imgUser);
     const [isEdit, setIsEdit] = useState(false);
     const date = new Date();

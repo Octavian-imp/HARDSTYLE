@@ -21,7 +21,7 @@ export default function ItemProductCart({
             <div className="flex">
                 <img
                     src={url_img}
-                    alt={name}
+                    alt=""
                     className="min-w-40 w-40 h-40 object-contain rounded-lg"
                 />
                 <div className="flex flex-col justify-between m-4 w-96">

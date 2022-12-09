@@ -1,11 +1,7 @@
 import MainContainer from "../../components/MainContainer";
 
 function All() {
-  return (
-    <>
-      <MainContainer></MainContainer>
-    </>
-  );
+    return <></>;
 }
 
 export default All;

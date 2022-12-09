@@ -1,13 +1,11 @@
-import MainContainer from "../../components/MainContainer"
+import MainContainer from "../../components/MainContainer";
 
 function Accessories() {
-  return (
-    <>
-      <MainContainer>
-        <div className="flex-[1_0_auto] ">Accessories</div>
-      </MainContainer>
-    </>
-  )
+    return (
+        <>
+            <div className="flex-[1_0_auto] ">Accessories</div>
+        </>
+    );
 }
 
-export default Accessories
+export default Accessories;

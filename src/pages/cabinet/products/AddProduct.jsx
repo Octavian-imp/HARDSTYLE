@@ -89,7 +89,7 @@ const AddProduct = observer(() => {
             // TODO:исправить на массив картинок
             formData.append("img", images.at(0));
             createProduct(formData)
-                .then((data) => console.log("Product add => ", data))
+                .then((data) => alert("Товар успешно добавлен: ", data.name))
                 .catch((er) => console.log(er.response.data.message));
         }, 0);
     };
