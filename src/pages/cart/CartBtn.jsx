@@ -1,15 +1,9 @@
-import { useState } from "react";
-import { useEffect } from "react";
 import { IoCart } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import useCart from "../../hooks/useCart";
 
 function CartBtn() {
-    const { cart } = useCart();
-    const [countProducts, setCountProducts] = useState(0);
-    useEffect(() => {
-        setCountProducts(cart.reduce((sum, item) => sum + item.count, 0));
-    }, [cart]);
+    const { countProducts } = useCart();
     return (
         <Link
             to="/cart"

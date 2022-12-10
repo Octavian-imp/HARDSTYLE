@@ -14,8 +14,7 @@ export default function CartContent() {
     } = useForm({
         mode: "onChange",
     });
-    const { cart, setCart } = useCart();
-    console.log(cart);
+    let { cart, setCart, setCountProducts } = useCart();
     //суммарная скидка
     const [totalDiscount, setTotalDiscount] = useState(0);
     //итоговая стоимость
@@ -52,6 +51,7 @@ export default function CartContent() {
                 return item;
             })
         );
+        setCountProducts((prev) => prev + 1);
     }
     function decrease(id) {
         setCart(
@@ -60,6 +60,8 @@ export default function CartContent() {
                 return item;
             })
         );
+
+        setCountProducts((prev) => (prev > 1 ? prev - 1 : prev));
     }
 
     //поля адреса доставки
@@ -124,7 +126,7 @@ export default function CartContent() {
                         {cart &&
                             cart.map((item) => (
                                 <ItemProductCart
-                                    key={uuidv4()}
+                                    key={item.title}
                                     id={item.id}
                                     url_img={item.url_img}
                                     name={item.title}

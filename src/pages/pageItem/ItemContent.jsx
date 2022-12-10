@@ -8,6 +8,7 @@ import "./ItemContent.scss";
 import SelectSizeRadioBtn from "../../components/selectSizeRadioBtn/SelectSizeRadioBtn";
 import { fetchOneProduct } from "../../http/productAPI";
 import useCart from "../../hooks/useCart";
+import bothDuplicateItems from "../../components/bothDuplicateItems";
 
 function TabItem({ title, content }) {
     const [isClicked, setIsClicked] = useState(false);
@@ -36,7 +37,7 @@ function TabItem({ title, content }) {
 }
 
 export default function ItemContent() {
-    const { cart, setCart } = useCart();
+    const { cart, setCart, setCountProducts } = useCart();
     const [tabs, setTabs] = useState([
         {
             title: "Характеристики",
@@ -214,10 +215,10 @@ scelerisque fermentum dui.`,
                         className="mt-7 ml-2 lg:ml-0 w-fit font-semibold text-center px-24 py-3 bg-orange-500 hover:bg-orange-600"
                         type="button"
                         onClick={() => {
-                            productCart.size !== undefined
-                                ? // сделать проверку чтобы не было дубликатов одного товара в корзине!!!
-                                  setCart([...cart, productCart])
-                                : alert("choose size");
+                            if (productCart.size !== undefined) {
+                                setCart(bothDuplicateItems(cart, productCart));
+                                setCountProducts((prev) => prev + 1);
+                            } else alert("choose size");
                         }}
                     >
                         Купить
