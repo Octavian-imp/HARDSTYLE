@@ -15,10 +15,10 @@ export const createProduct = async (product) => {
     return data;
 };
 
-export const fetchProducts = async (params) => {
+export const fetchProducts = async (params, page, limit = 12) => {
     const { data } = await $host.get(
         "api/product",
-        params && { params: { gender: params.gender } }
+        params && { params: { gender: params.gender, page, limit } }
     );
     return data;
 };

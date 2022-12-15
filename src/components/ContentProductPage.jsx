@@ -1,24 +1,35 @@
 import CustomSelectFilter from "./customSelect/CustomSelectFilter";
 import ItemProduct from "./itemProduct/ItemProduct";
 import { v4 as uuidv4 } from "uuid";
-import useFilter from "../hooks/useFilter";
+import { observer } from "mobx-react-lite";
 import { useEffect, useMemo } from "react";
-import { useState } from "react";
-import { fetchProducts } from "../http/productAPI";
 import { useContext } from "react";
+import { useState } from "react";
+import useFilter from "../hooks/useFilter";
+import { fetchProducts } from "../http/productAPI";
 import { Context } from "..";
+import Pages from "./Pages";
 
-export default function ContentProductPage({ gender }) {
+const ContentProductPage = observer(({ gender }) => {
     let [newProducts, setNewProducts] = useState([]);
     let { filter } = useFilter();
     const { products } = useContext(Context);
     useEffect(() => {
-        fetchProducts({ gender: gender }).then((data) => {
+        fetchProducts({ gender: gender }, 1, 12).then((data) => {
             products.setProducts(data.rows);
+            products.setTotalCount(data.count);
             setNewProducts(products.products);
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+    useEffect(() => {
+        fetchProducts({ gender: gender }, products.page, 12).then((data) => {
+            products.setProducts(data.rows);
+            products.setTotalCount(data.count);
+            setNewProducts(products.products);
+        });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [products.page]);
 
     useMemo(() => {
         if (filter === "Цена (по возрастанию)")
@@ -67,6 +78,8 @@ export default function ContentProductPage({ gender }) {
                         />
                     ))}
             </div>
+            <Pages />
         </div>
     );
-}
+});
+export default ContentProductPage;
