@@ -1,5 +1,4 @@
 import ItemProduct from "../../components/itemProduct/ItemProduct";
-import MainContainer from "../../components/MainContainer";
 import "./Home.scss";
 
 import { useEffect, useState } from "react";

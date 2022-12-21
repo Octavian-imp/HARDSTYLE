@@ -3,7 +3,6 @@ import { v4 as uuidv4 } from "uuid";
 import { Navigation, Thumbs, Virtual } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useParams } from "react-router-dom";
-import MainContainer from "../../components/MainContainer";
 import "./ItemContent.scss";
 import SelectSizeRadioBtn from "../../components/selectSizeRadioBtn/SelectSizeRadioBtn";
 import { fetchOneProduct } from "../../http/productAPI";

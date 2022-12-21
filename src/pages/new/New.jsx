@@ -1,6 +1,5 @@
 import { observer } from "mobx-react-lite";
 import FormFilter from "../../components/formFilter/FormFilter";
-import MainContainer from "../../components/MainContainer";
 import ContentProductPage from "../../components/ContentProductPage";
 import { FilterProductsProvider } from "../../providers/FilterProductsProvider";
 
