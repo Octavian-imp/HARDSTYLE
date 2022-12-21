@@ -12,7 +12,7 @@ export default function Profile() {
         setIsHeader(true);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-    const [UrlAvatar, setUrlAvatar] = useState(imgUser);
+    const [urlAvatar, setUrlAvatar] = useState(imgUser);
     const [isEdit, setIsEdit] = useState(false);
     const date = new Date();
     const currDate = `${date.getFullYear()}-${
@@ -28,7 +28,7 @@ export default function Profile() {
         defaultValues: {
             name: "Иван Иванов",
             gender: "male",
-            avatar: UrlAvatar,
+            avatar: urlAvatar,
         },
     });
     const onSubmit = (data) => {
@@ -150,7 +150,7 @@ export default function Profile() {
                     style={{ clipPath: "circle(50% at 50% 50% )" }}
                 >
                     <img
-                        src={UrlAvatar}
+                        src={urlAvatar}
                         alt=""
                         className="h-[inherit] w-full object-cover"
                     />
