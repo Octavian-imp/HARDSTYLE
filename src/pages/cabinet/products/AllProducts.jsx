@@ -1,42 +1,38 @@
-import { useEffect, useContext, useState } from "react";
-import formatPrice from "../../../components/priceFormatter";
-import { v4 as uuidv4 } from "uuid";
-import {
-    fetchCategory,
-    fetchProductsAllCounts,
-} from "../../../http/productAPI";
-import { Context } from "../../../.";
+import { useContext, useEffect, useState } from "react"
+import { v4 as uuidv4 } from "uuid"
+import { Context } from "../../../."
+import formatPrice from "../../../components/priceFormatter"
+import { fetchCategory, fetchProductsAllCounts } from "../../../http/productAPI"
 
 export default function AllProducts() {
-    const [items, setItems] = useState([]);
-    const { products } = useContext(Context);
+    const [items, setItems] = useState([])
+    const { products } = useContext(Context)
 
     useEffect(() => {
         fetchCategory().then((res) => {
-            products.setCategories(res);
-        });
+            products.setCategories(res)
+        })
         fetchProductsAllCounts()
             .then((data) => {
                 data.forEach((item) => {
-                    item.totalCount = 0;
+                    item.totalCount = 0
                     if (item.sizes.length > 1) {
                         item.totalCount = item.sizes.reduce(
                             (prev, next) => prev + next.count,
                             0
-                        );
+                        )
                     } else if (item.sizes.length > 0) {
-                        item.totalCount = item.sizes.at(0).count;
-                    } else item.totalCount = "null";
+                        item.totalCount = item.sizes.at(0).count
+                    } else item.totalCount = "null"
                     item.categoryName =
                         item.categoryId === null
                             ? "error"
-                            : products.categories.at(item.categoryId - 1)?.name;
-                });
-                setItems(data);
+                            : products.categories.at(item.categoryId - 1)?.name
+                })
+                setItems(data)
             })
-            .catch((er) => console.log(er));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [setItems]);
+            .catch((er) => console.log(er))
+    }, [setItems])
 
     return (
         <>
@@ -84,11 +80,11 @@ export default function AllProducts() {
                                             )}
                                         </td>
                                     </tr>
-                                );
+                                )
                             })}
                     </tbody>
                 </table>
             </div>
         </>
-    );
+    )
 }

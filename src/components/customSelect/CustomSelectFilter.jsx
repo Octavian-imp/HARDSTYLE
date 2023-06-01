@@ -1,15 +1,15 @@
-import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import useFilter from "../../hooks/useFilter";
+import { useState } from "react"
+import { v4 as uuidv4 } from "uuid"
 
-export default function CustomSelectFilter({ options }) {
-    let { filter, setFilter } = useFilter();
-    let [isChecked, setIsChecked] = useState(false);
+export default function CustomSelectFilter({ options, onChangeValue }) {
+    let [isChecked, setIsChecked] = useState(false)
+    let [selectedSort, setSelectedSort] = useState(options[0].content)
 
     const actionClick = (value) => {
-        setFilter(value);
-        setIsChecked(!isChecked);
-    };
+        onChangeValue(value.name)
+        setSelectedSort(value.content)
+        setIsChecked(!isChecked)
+    }
 
     return (
         <div className="relative ml-3">
@@ -19,7 +19,7 @@ export default function CustomSelectFilter({ options }) {
                     isChecked && "after:-rotate-[135deg] after:top-[60%]"
                 }`}
             >
-                {filter}
+                {selectedSort}
             </span>
             <ul
                 className={`absolute -left-[10%] z-20  py-3 rounded-xl space-y-3 ${
@@ -27,16 +27,16 @@ export default function CustomSelectFilter({ options }) {
                 } ${isChecked ? "dark:bg-dark-light bg-light" : ""}`}
             >
                 {options &&
-                    options.map((option) => (
+                    options.map((option, index) => (
                         <li
                             key={uuidv4()}
                             onClick={() => actionClick(option)}
                             className="select-none text-center cursor-pointer px-7 py-1 hover:bg-orange-500"
                         >
-                            {option}
+                            {option.content}
                         </li>
                     ))}
             </ul>
         </div>
-    );
+    )
 }

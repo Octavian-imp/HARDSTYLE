@@ -1,49 +1,48 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { login, registration } from "../../http/userApi";
-import { useContext, useState } from "react";
-import { Context } from "../..";
-import { observer } from "mobx-react-lite";
-import useTheme from "../../hooks/useTheme";
-import { useEffect } from "react";
+import { useEffect, useState } from "react"
+import { useForm } from "react-hook-form"
+import { useDispatch, useSelector } from "react-redux"
+import { Link, useLocation, useNavigate } from "react-router-dom"
+import useTheme from "../../hooks/useTheme"
+import { login, registration } from "../../http/userApi"
+import { SET_USER } from "../../store/actions/userActionsTypes"
 
-const Login = observer(() => {
-    const { user } = useContext(Context);
-    const { setIsHeader } = useTheme();
+const Login = () => {
+    const user = useSelector((state) => state.user)
+    const dispatch = useDispatch()
+
+    const { setIsHeader } = useTheme()
     useEffect(() => {
-        setIsHeader(false);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+        setIsHeader(false)
+    }, [])
 
-    const location = useLocation();
-    const navigate = useNavigate();
-    const isLogin = location.pathname === "/login";
+    const location = useLocation()
+    const navigate = useNavigate()
+    const isLogin = location.pathname === "/login"
 
-    const [email, setEmail] = useState("");
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("")
+    const [username, setUsername] = useState("")
+    const [password, setPassword] = useState("")
 
     const click = async () => {
         try {
-            let data;
+            let data
             if (isLogin) {
-                data = await login(email, password);
+                data = await login(email, password)
+                dispatch({ type: SET_USER, payload: data })
             } else {
-                data = await registration(email, password, username);
+                data = await registration(email, password, username)
             }
-            user.setUser(data);
-            user.setIsAuth(true);
-            navigate("/user/profile");
+            navigate("/user/profile")
         } catch (e) {
             //переделать вывод ошибок
-            alert(e.response.data.message);
+            alert(e.response.data.message)
             reset({
                 username: "",
                 email: "",
                 password: "",
-            });
+            })
         }
-    };
+    }
 
     const {
         register,
@@ -57,7 +56,7 @@ const Login = observer(() => {
             email: "",
             password: "",
         },
-    });
+    })
 
     return (
         <form
@@ -88,12 +87,12 @@ const Login = observer(() => {
             <span className="mt-10 mb-2">{isLogin ? "Логин" : "Email"}</span>
             <input
                 {...register("email", {
-                    required: "Login is required",
+                    required: "Email is required",
                 })}
                 tabIndex="1"
-                type="text"
+                type="email"
                 className="border-b-2 border-b-white px-2 py-2 bg-transparent focus:border-b-orange-500 outline-none caret-orange-500 duration-300"
-                placeholder="Введите логин"
+                placeholder="Введите email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
             />
@@ -134,7 +133,7 @@ const Login = observer(() => {
                 {`${isLogin ? "Регистрация" : "Уже есть аккаунт"}`}
             </Link>
         </form>
-    );
-});
+    )
+}
 
-export default Login;
+export default Login

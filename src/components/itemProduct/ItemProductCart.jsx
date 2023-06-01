@@ -1,7 +1,7 @@
-import { FaTimes } from "react-icons/fa";
-import { BsHeart } from "react-icons/bs";
-import CountItems from "../CountItems";
-import formatPrice from "../../components/priceFormatter";
+import { BsHeart } from "react-icons/bs"
+import { FaTimes } from "react-icons/fa"
+import formatPrice from "../../components/priceFormatter"
+import CountItems from "../CountItems"
 
 export default function ItemProductCart({
     id,
@@ -53,7 +53,7 @@ export default function ItemProductCart({
                     type="button"
                     className="text-xl w-fit bg-transparent dark:text-white text-black dark:hover:text-red-500 hover:text-red-500"
                     title="Удалить"
-                    onClick={() => deleteProduct(id)}
+                    onClick={() => deleteProduct(id, size, countItem)}
                 >
                     <FaTimes></FaTimes>
                 </button>
@@ -61,11 +61,13 @@ export default function ItemProductCart({
                     <CountItems
                         value={countItem}
                         id={id}
+                        size={size}
+                        count={countItem}
                         increase={increase}
                         decrease={decrease}
                     />
                 </div>
             </div>
         </div>
-    );
+    )
 }

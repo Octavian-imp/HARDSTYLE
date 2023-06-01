@@ -1,23 +1,28 @@
-import { RiEditBoxFill } from "react-icons/ri";
-import { IoMdSave } from "react-icons/io";
-import { useState } from "react";
-import imgUser from "../../../assets/item.jpg";
-import { useForm } from "react-hook-form";
-import useTheme from "../../../hooks/useTheme";
-import { useEffect } from "react";
+import { useState } from "react"
+import { IoMdSave } from "react-icons/io"
+import { RiEditBoxFill } from "react-icons/ri"
+// import imgUser from "../../../assets/item.jpg";
+import { useEffect } from "react"
+import { useForm } from "react-hook-form"
+import { useDispatch, useSelector } from "react-redux"
+import useTheme from "../../../hooks/useTheme"
 
 export default function Profile() {
-    const { setIsHeader } = useTheme();
+    const user = useSelector((state) => state.user)
+    const dispatch = useDispatch()
+
+    const { setIsHeader } = useTheme()
     useEffect(() => {
-        setIsHeader(true);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-    const [urlAvatar, setUrlAvatar] = useState(imgUser);
-    const [isEdit, setIsEdit] = useState(false);
-    const date = new Date();
+        setIsHeader(true)
+    }, [])
+    const [urlAvatar, setUrlAvatar] = useState(
+        process.env.REACT_APP_API_URL + user.avatarURL
+    )
+    const [isEdit, setIsEdit] = useState(false)
+    const date = new Date()
     const currDate = `${date.getFullYear()}-${
         date.getMonth() + 1
-    }-${date.getDate()}`;
+    }-${date.getDate()}`
     const {
         register,
         handleSubmit,
@@ -26,25 +31,25 @@ export default function Profile() {
     } = useForm({
         mode: "onChange",
         defaultValues: {
-            name: "Иван Иванов",
-            gender: "male",
-            avatar: urlAvatar,
+            name: user.username,
+            // gender: "male",
+            avatar: process.env.ROOT_URL_AVATAR + user.avatarURL,
         },
-    });
+    })
     const onSubmit = (data) => {
-        console.log(data);
-    };
+        console.log(data)
+    }
     const uploadImg = (el) => {
         if (el.target.files[0]) {
-            setUrlAvatar(el.target.files[0]);
-            const reader = new FileReader();
+            setUrlAvatar(el.target.files[0])
+            const reader = new FileReader()
             reader.addEventListener("load", () => {
-                setUrlAvatar(reader.result);
-                setValue("avatar", reader.result);
-            });
-            reader.readAsDataURL(el.target.files[0]);
+                setUrlAvatar(reader.result)
+                setValue("avatar", reader.result)
+            })
+            reader.readAsDataURL(el.target.files[0])
         }
-    };
+    }
 
     return (
         <>
@@ -86,7 +91,7 @@ export default function Profile() {
                             </div>
                         )}
                     </div>
-                    <div>
+                    {/* <div>
                         <span className="font-semibold mr-2">Пол</span>
                         <select
                             {...register("gender")}
@@ -110,7 +115,7 @@ export default function Profile() {
                                 Женский
                             </option>
                         </select>
-                    </div>
+                    </div> */}
                     <div>
                         <span className="font-semibold mr-2">
                             День рождения
@@ -173,5 +178,5 @@ export default function Profile() {
                 </div>
             </form>
         </>
-    );
+    )
 }

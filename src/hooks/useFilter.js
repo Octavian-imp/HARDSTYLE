@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { FilterProductsContext } from "../providers/FilterProductsProvider";
+import { FilterProductsContext } from "../providers/FilterProductsProvider.jsx";
 
 const useFilter = () => {
     const value = useContext(FilterProductsContext);

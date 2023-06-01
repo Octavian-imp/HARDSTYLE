@@ -1,14 +1,13 @@
-import { useContext } from "react";
-import { HiUserCircle } from "react-icons/hi";
 import { AiOutlineLogin } from "react-icons/ai";
+import { HiUserCircle } from "react-icons/hi";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Context } from "../..";
 
 function UserMenu() {
-    const { user } = useContext(Context);
+    const user = useSelector((state) => state.user);
     return (
         <>
-            {user.isAuth ? (
+            {user !== null ? (
                 <Link
                     to="/user/profile"
                     className="bg-transparent text-xl flex items-center whitespace-nowrap ml-3"

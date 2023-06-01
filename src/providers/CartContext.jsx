@@ -1,5 +1,4 @@
 import { createContext, useMemo, useState } from "react";
-import itemLogoFront from "../assets/item.jpg";
 
 export const CartContext = createContext([]);
 
@@ -19,7 +18,7 @@ export const CartProvider = ({ children }) => {
     const [countProducts, setCountProducts] = useState(0);
     const value = useMemo(
         () => ({ cart, countProducts, setCart, setCountProducts }),
-        [cart, countProducts]
+        [cart, countProducts, setCart]
     );
     return (
         <CartContext.Provider value={value}>{children}</CartContext.Provider>

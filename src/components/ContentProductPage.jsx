@@ -1,64 +1,47 @@
-import CustomSelectFilter from "./customSelect/CustomSelectFilter";
-import ItemProduct from "./itemProduct/ItemProduct";
-import { v4 as uuidv4 } from "uuid";
-import { observer } from "mobx-react-lite";
-import { useEffect, useMemo } from "react";
-import { useContext } from "react";
-import { useState } from "react";
-import useFilter from "../hooks/useFilter";
-import { fetchProducts } from "../http/productAPI";
-import { Context } from "..";
-import Pages from "./Pages";
+import { useEffect, useState } from "react"
+import { v4 as uuidv4 } from "uuid"
+import { filterOptions } from "../global/filterOptions"
+import { useGetProductsQuery } from "../http/productAPI.RTK"
+import CustomSelectFilter from "./customSelect/CustomSelectFilter"
+import ItemProduct from "./itemProduct/ItemProduct"
 
-const ContentProductPage = observer(({ gender }) => {
-    let [newProducts, setNewProducts] = useState([]);
-    let { filter } = useFilter();
-    const { products } = useContext(Context);
+const ContentProductPage = ({ gender }) => {
+    const [page, setPage] = useState(1)
+    const [sortname, setSortname] = useState(filterOptions[0].name)
+    const { data, isLoading, error, isError } = useGetProductsQuery({
+        limit: 12,
+        page,
+        sort: sortname,
+    })
+    let [pageCount, setPageCount] = useState(1)
+    let [newProducts, setNewProducts] = useState([])
+
     useEffect(() => {
-        fetchProducts({ gender: gender }, 1, 12).then((data) => {
-            products.setProducts(data.rows);
-            products.setTotalCount(data.count);
-            setNewProducts(products.products);
-        });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-    useEffect(() => {
-        fetchProducts({ gender: gender }, products.page, 12).then((data) => {
-            products.setProducts(data.rows);
-            products.setTotalCount(data.count);
-            setNewProducts(products.products);
-        });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [products.page]);
-
-    useMemo(() => {
-        if (filter === "Цена (по возрастанию)")
-            setNewProducts(newProducts.sort((a, b) => a.price - b.price));
-        else if (filter === "Цена (по убыванию)")
-            setNewProducts(newProducts.sort((a, b) => b.price - a.price));
-        else if (filter === "Названию")
-            setNewProducts(
-                newProducts.sort((a, b) => {
-                    if (a.name > b.name) return 1;
-                    else if (a.name < b.name) return -1;
-                    return 0;
-                })
-            );
-    }, [filter, newProducts]);
-
+        if (data) {
+            setNewProducts(data.rows)
+            setPageCount(Math.ceil(data.count / 12))
+        }
+    }, [data])
+    if (isLoading) {
+        return <h1>Loading</h1>
+    }
+    if (isError) {
+        return (
+            <h1>
+                {error.status} {JSON.stringify(error.data)}
+            </h1>
+        )
+    }
     return (
         <div className="flex flex-col xl:w-4/5 lg:w-4/5">
             <div className="flex mb-3 font-semibold">
                 Сортировка по:
                 <CustomSelectFilter
-                    selectedValue={filter}
-                    options={[
-                        "Названию",
-                        "Популярное",
-                        "Новизне",
-                        "Цена (по возрастанию)",
-                        "Цена (по убыванию)",
-                    ]}
+                    options={filterOptions}
+                    onChangeValue={(value) => {
+                        setSortname(value)
+                        setPage(1)
+                    }}
                 />
             </div>
             <div className="flex md:justify-between justify-evenly flex-wrap">
@@ -78,8 +61,31 @@ const ContentProductPage = observer(({ gender }) => {
                         />
                     ))}
             </div>
-            <Pages />
+
+            {/* pagination */}
+            <div className="mb-5">
+                <ul className="flex justify-end space-x-4">
+                    <li
+                        className="rounded-full px-3 py-2 text-center cursor-pointer"
+                        onClick={() =>
+                            setPage((prev) => (prev - 1 >= 1 ? prev - 1 : prev))
+                        }
+                    >
+                        Предыдущая
+                    </li>
+                    <li
+                        className="rounded-full px-3 py-2 text-center cursor-pointer"
+                        onClick={() =>
+                            setPage((prev) =>
+                                prev + 1 <= pageCount ? prev + 1 : prev
+                            )
+                        }
+                    >
+                        Следующая
+                    </li>
+                </ul>
+            </div>
         </div>
-    );
-});
-export default ContentProductPage;
+    )
+}
+export default ContentProductPage

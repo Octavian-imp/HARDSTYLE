@@ -1,10 +1,10 @@
-export default function CountItems({ value, id, increase, decrease }) {
+export default function CountItems({ value, id, size, increase, decrease }) {
     return (
         <>
             <button
                 className="block m-auto w-fit bg-inherit dark:text-white text-black hover:bg-orange-500"
                 title="Уменьшить"
-                onClick={() => decrease(id)}
+                onClick={() => decrease(id, size)}
             >
                 &#8722;
             </button>
@@ -18,7 +18,7 @@ export default function CountItems({ value, id, increase, decrease }) {
             <button
                 className="block m-auto w-fit bg-inherit dark:text-white text-black hover:bg-orange-500"
                 title="Увеличить"
-                onClick={() => increase(id)}
+                onClick={() => increase(id, size)}
             >
                 &#43;
             </button>

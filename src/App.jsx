@@ -1,47 +1,46 @@
-import { useState, useContext, useEffect } from "react";
-import { observer } from "mobx-react-lite";
-import { Route, Routes } from "react-router-dom";
-import "./App.scss";
-import { ThemeProvider } from "./providers/ThemeProvider.jsx";
-import Layout from "./components/Layout";
-import Content from "./Content";
-import Home from "./pages/home/Home";
-import New from "./pages/new/New";
-import ForHim from "./pages/forHim/ForHim";
-import ForHer from "./pages/forHer/ForHer";
-import Accessories from "./pages/accessories/Accessories";
-import All from "./pages/all/All";
-import Preloader from "./pages/preloader/Preloader";
-import useToggleTheme from "./hooks/useToggleTheme";
-import ItemPage from "./pages/pageItem/ItemPage";
-import Login from "./pages/login/Login";
-import CartPage from "./pages/cart/CartPage";
-import Profile from "./pages/cabinet/profile/Profile";
-import Orders from "./pages/cabinet/orders/Orders";
-import LayoutUser from "./pages/cabinet/LayoutUser";
-import Favorite from "./pages/cabinet/favorite/Favorite";
-import Support from "./pages/cabinet/reqSupport/Support";
-import AddProduct from "./pages/cabinet/products/AddProduct";
-import AllProducts from "./pages/cabinet/products/AllProducts";
-import { Context } from ".";
-import { check } from "./http/userApi";
-import { CartProvider } from "./providers/CartContext";
-import MainContainer from "./components/MainContainer";
+import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { Route, Routes } from "react-router-dom"
+import "./App.scss"
+import Content from "./Content"
+import Layout from "./components/Layout"
+import MainContainer from "./components/MainContainer"
+import useToggleTheme from "./hooks/useToggleTheme"
+import { check } from "./http/userApi"
+import Accessories from "./pages/accessories/Accessories"
+import All from "./pages/all/All"
+import LayoutUser from "./pages/cabinet/LayoutUser"
+import Favorite from "./pages/cabinet/favorite/Favorite"
+import Orders from "./pages/cabinet/orders/Orders"
+import AddProduct from "./pages/cabinet/products/AddProduct"
+import AllProducts from "./pages/cabinet/products/AllProducts"
+import Profile from "./pages/cabinet/profile/Profile"
+import Support from "./pages/cabinet/reqSupport/Support"
+import CartPage from "./pages/cart/CartPage"
+import ForHer from "./pages/forHer/ForHer"
+import ForHim from "./pages/forHim/ForHim"
+import Home from "./pages/home/Home"
+import Login from "./pages/login/Login"
+import New from "./pages/new/New"
+import ItemPage from "./pages/pageItem/ItemPage"
+import Preloader from "./pages/preloader/Preloader"
+import { CartProvider } from "./providers/CartContext"
+import { ThemeProvider } from "./providers/ThemeProvider.jsx"
+import { SET_USER } from "./store/actions/userActionsTypes"
 
-const App = observer(() => {
-    const { user } = useContext(Context);
-
+const App = () => {
+    // const { user } = useContext(Context);
+    const dispatch = useDispatch()
+    const user = useSelector((state) => state.user)
     useEffect(() => {
         check()
             .then((data) => {
-                user.setUser(data);
-                user.setIsAuth(true);
+                dispatch({ type: SET_USER, payload: data })
             })
-            .finally(setLoading(false));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-    useToggleTheme();
-    const [loading, setLoading] = useState(true);
+            .finally(setLoading(false))
+    }, [])
+    useToggleTheme()
+    const [loading, setLoading] = useState(true)
     if (loading) {
         return (
             <ThemeProvider>
@@ -49,7 +48,7 @@ const App = observer(() => {
                     <Preloader previewText="Loading..." />
                 </Layout>
             </ThemeProvider>
-        );
+        )
     }
     return (
         <ThemeProvider>
@@ -58,7 +57,8 @@ const App = observer(() => {
                     <MainContainer>
                         <Routes>
                             {/* Авторизованный пользователь */}
-                            {user.isAuth && (
+                            {/* Убрать */}
+                            {user !== null && (
                                 <Route path="user" element={<LayoutUser />}>
                                     <Route
                                         path="profile"
@@ -111,7 +111,7 @@ const App = observer(() => {
                 </CartProvider>
             </Layout>
         </ThemeProvider>
-    );
-});
+    )
+}
 
-export default App;
+export default App

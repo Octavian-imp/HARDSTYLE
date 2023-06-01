@@ -2,7 +2,7 @@ import { IoCart } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import useCart from "../../hooks/useCart";
 
-function CartBtn() {
+const CartBtn = () => {
     const { countProducts } = useCart();
     return (
         <Link
@@ -15,6 +15,6 @@ function CartBtn() {
             </span>
         </Link>
     );
-}
+};
 
 export default CartBtn;

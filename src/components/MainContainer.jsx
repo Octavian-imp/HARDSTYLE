@@ -7,7 +7,9 @@ const MainContainer = memo(({ isCabinet = false, children }) => {
     return (
         <>
             {isHeader && <Header />}
-            <div className="container mx-auto flex flex-[1_0]">{children}</div>
+            <div className="container px-3 mx-auto flex flex-[1_0]">
+                {children}
+            </div>
         </>
     );
 });

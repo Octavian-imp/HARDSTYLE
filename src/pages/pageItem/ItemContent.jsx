@@ -1,16 +1,16 @@
-import { useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
-import { Navigation, Thumbs, Virtual } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { useParams } from "react-router-dom";
-import "./ItemContent.scss";
-import SelectSizeRadioBtn from "../../components/selectSizeRadioBtn/SelectSizeRadioBtn";
-import { fetchOneProduct } from "../../http/productAPI";
-import useCart from "../../hooks/useCart";
-import bothDuplicateItems from "../../components/bothDuplicateItems";
+import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
+import { Navigation, Thumbs, Virtual } from "swiper"
+import { Swiper, SwiperSlide } from "swiper/react"
+import { v4 as uuidv4 } from "uuid"
+import bothDuplicateItems from "../../components/bothDuplicateItems.js"
+import SelectSizeRadioBtn from "../../components/selectSizeRadioBtn/SelectSizeRadioBtn.jsx"
+import useCart from "../../hooks/useCart"
+import { fetchOneProduct } from "../../http/productAPI"
+import "./ItemContent.scss"
 
 function TabItem({ title, content }) {
-    const [isClicked, setIsClicked] = useState(false);
+    const [isClicked, setIsClicked] = useState(false)
     return (
         <div
             className="border-y-2 border-dark-light mt-5 flex flex-col px-5 py-5 w-full cursor-pointer"
@@ -32,11 +32,11 @@ function TabItem({ title, content }) {
                 {content}
             </div>
         </div>
-    );
+    )
 }
 
 export default function ItemContent() {
-    const { cart, setCart, setCountProducts } = useCart();
+    const { cart, setCart, setCountProducts } = useCart()
     const [tabs, setTabs] = useState([
         {
             title: "Характеристики",
@@ -74,7 +74,7 @@ scelerisque. Laoreet id donec ultrices tincidunt. Nunc pulvinar
 sapien et ligula. Etiam dignissim diam quis enim lobortis
 scelerisque fermentum dui.`,
         },
-    ]);
+    ])
 
     // TODO:Сделать вывод картинок из бека
     const [itemImages, setItemImages] = useState([
@@ -83,17 +83,17 @@ scelerisque fermentum dui.`,
         require("../../assets/item.jpg"),
         require("../../assets/item_2.jpg"),
         require("../../assets/item.jpg"),
-    ]);
+    ])
 
-    const [sizes, setSizes] = useState([]);
-    const [product, setProduct] = useState({});
-    const [productCart, setProductCart] = useState({});
-    const [description, setDescription] = useState([]);
-    const { id } = useParams();
+    const [sizes, setSizes] = useState([])
+    const [product, setProduct] = useState({})
+    const [productCart, setProductCart] = useState({})
+    const [description, setDescription] = useState([])
+    const { id } = useParams()
     //Получение информации о товаре
     useEffect(() => {
         fetchOneProduct(id).then((data) => {
-            setProduct(data);
+            setProduct(data)
             // присвоение первоначальных данных переменой productInfo для отправки в корзину
             setProductCart({
                 id: data.id,
@@ -101,21 +101,20 @@ scelerisque fermentum dui.`,
                 title: data.name,
                 price: data.price,
                 count: 1,
-            });
-            setSizes(data.sizes);
+            })
+            setSizes(data.sizes)
             if (data.info.length > 0) {
                 setTabs([
                     ...tabs,
                     ...data.info.filter((item) => item.title !== "description"),
-                ]);
+                ])
                 setDescription(
                     data.info.find((item) => item.title === "description")
                         .description
-                );
+                )
             }
-        });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [id]);
+        })
+    }, [id])
 
     // Настройки слайдеров
     const settingsMain = {
@@ -130,7 +129,7 @@ scelerisque fermentum dui.`,
                 slidesPerGroup: 1,
             },
         },
-    };
+    }
     const settingsPaginationMain = {
         modules: [Navigation, Virtual],
         slidesPerView: 3,
@@ -140,7 +139,7 @@ scelerisque fermentum dui.`,
             prevEl: ".swiper-button-prev",
             nextEl: ".swiper-button-next",
         },
-    };
+    }
 
     return (
         <div className="container mx-auto flex  flex-wrap py-10">
@@ -162,7 +161,7 @@ scelerisque fermentum dui.`,
                                         />
                                     </div>
                                 </SwiperSlide>
-                            );
+                            )
                         })}
                     </Swiper>
                     <Swiper
@@ -184,7 +183,7 @@ scelerisque fermentum dui.`,
                                         />
                                     </div>
                                 </SwiperSlide>
-                            );
+                            )
                         })}
                         <div className="swiper-button-prev customArrows dark:!text-white !text-black"></div>
                         <div className="swiper-button-next customArrows dark:!text-white !text-black"></div>
@@ -207,7 +206,7 @@ scelerisque fermentum dui.`,
                                     setProductCart={setProductCart}
                                     prevProduct={productCart}
                                 />
-                            );
+                            )
                         })}
                     </div>
                     <button
@@ -215,9 +214,9 @@ scelerisque fermentum dui.`,
                         type="button"
                         onClick={() => {
                             if (productCart.size !== undefined) {
-                                setCart(bothDuplicateItems(cart, productCart));
-                                setCountProducts((prev) => prev + 1);
-                            } else alert("choose size");
+                                setCart(bothDuplicateItems(cart, productCart))
+                                setCountProducts((prev) => prev + 1)
+                            } else alert("choose size")
                         }}
                     >
                         Купить
@@ -232,8 +231,8 @@ scelerisque fermentum dui.`,
                         title={item.title}
                         content={item.description}
                     />
-                );
+                )
             })}
         </div>
-    );
+    )
 }

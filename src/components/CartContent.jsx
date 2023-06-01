@@ -1,10 +1,10 @@
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { FaTimes, FaTruck } from "react-icons/fa";
 import { v4 as uuidv4 } from "uuid";
-import useCart from "../hooks/useCart";
-import { useEffect, useState } from "react";
-import ItemProductCart from "./itemProduct/ItemProductCart";
 import formatPrice from "../components/priceFormatter";
-import { useForm } from "react-hook-form";
+import useCart from "../hooks/useCart";
+import ItemProductCart from "./itemProduct/ItemProductCart";
 
 export default function CartContent() {
     const {
@@ -19,7 +19,6 @@ export default function CartContent() {
     const [totalDiscount, setTotalDiscount] = useState(0);
     //итоговая стоимость
     const [total, setTotal] = useState(0);
-
     useEffect(() => {
         if (cart) {
             setTotalDiscount(
@@ -39,13 +38,14 @@ export default function CartContent() {
         }
     }, [cart]);
 
-    function deleteProduct(id) {
+    function deleteProduct(id, count) {
         setCart(cart.filter((item) => item.id !== id));
+        setCountProducts((prev) => prev - count);
     }
-    function increase(id) {
+    function increase(id, size) {
         setCart(
             cart.map((item) => {
-                if (item.id === id) {
+                if (item.id === id && item.size === size) {
                     ++item.count;
                 }
                 return item;
@@ -53,10 +53,11 @@ export default function CartContent() {
         );
         setCountProducts((prev) => prev + 1);
     }
-    function decrease(id) {
+    function decrease(id, size) {
         setCart(
             cart.map((item) => {
-                if (item.id === id && item.count > 1) --item.count;
+                if (item.id === id && item.size === size && item.count > 1)
+                    --item.count;
                 return item;
             })
         );
@@ -148,7 +149,10 @@ export default function CartContent() {
                         <div className="mt-5 px-3 flex flex-col space-y-2">
                             {fields &&
                                 fields.map((field) => (
-                                    <>
+                                    <div
+                                        key={uuidv4()}
+                                        className="flex flex-col"
+                                    >
                                         <label
                                             htmlFor={field.name}
                                             className="text-lg mb-2 w-fit"
@@ -176,7 +180,7 @@ export default function CartContent() {
                                                 {errors.name.message}
                                             </div>
                                         )}
-                                    </>
+                                    </div>
                                 ))}
                         </div>
                     </div>

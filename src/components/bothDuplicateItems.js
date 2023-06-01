@@ -2,7 +2,7 @@
  * Слияние одинаковых товаров
  */
 
-module.exports = function bothDuplicateItems(arr, productValue) {
+export default function bothDuplicateItems(arr, productValue) {
     const duplIndex = arr.findIndex(
         (item) => item.id === productValue.id && item.size === productValue.size
     );
@@ -12,4 +12,4 @@ module.exports = function bothDuplicateItems(arr, productValue) {
     } else {
         return [...arr, productValue];
     }
-};
+}

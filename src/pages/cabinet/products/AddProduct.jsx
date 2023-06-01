@@ -1,41 +1,36 @@
-// import { useForm } from "react-hook-form";
-import { useEffect, useState, useContext } from "react";
-import { v4 as uuidv4 } from "uuid";
-import { observer } from "mobx-react-lite";
-import { createProduct, fetchCategory } from "../../../http/productAPI";
-import "../../../components/inputRadio/InputRadio.scss";
-import { Context } from "../../../.";
+import { useContext, useEffect, useState } from "react"
+import { v4 as uuidv4 } from "uuid"
+import { Context } from "../../../."
+import "../../../components/inputRadio/InputRadio.scss"
+import { createProduct, fetchCategory } from "../../../http/productAPI"
 
-const AddProduct = observer(() => {
-    const { products } = useContext(Context);
+const AddProduct = () => {
+    const { products } = useContext(Context)
     useEffect(() => {
         fetchCategory().then((res) => {
-            products.setCategories(res);
-        });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+            products.setCategories(res)
+        })
+    }, [])
 
-    const [categoryId, setCategoryId] = useState("");
-    const [gender, setGender] = useState("male");
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [info, setInfo] = useState([]);
-    const [price, setPrice] = useState(0);
+    const [categoryId, setCategoryId] = useState("")
+    const [gender, setGender] = useState("male")
+    const [name, setName] = useState("")
+    const [description, setDescription] = useState("")
+    const [info, setInfo] = useState([])
+    const [price, setPrice] = useState(0)
 
     //работа с картинками и превью к ним
-    const [images, setImages] = useState([]);
-    const [imageURLs, setImageURLs] = useState([]);
+    const [images, setImages] = useState([])
+    const [imageURLs, setImageURLs] = useState([])
     useEffect(() => {
-        if (images.length < 1) return;
-        const newImageURLs = [];
-        images.forEach((image) =>
-            newImageURLs.push(URL.createObjectURL(image))
-        );
-        setImageURLs(newImageURLs);
-    }, [images]);
+        if (images.length < 1) return
+        const newImageURLs = []
+        images.forEach((image) => newImageURLs.push(URL.createObjectURL(image)))
+        setImageURLs(newImageURLs)
+    }, [images])
     const uploadImg = (e) => {
-        setImages([...e.target.files]);
-    };
+        setImages([...e.target.files])
+    }
 
     //работа с формой
     // const {
@@ -56,48 +51,48 @@ const AddProduct = observer(() => {
     //работа с размерами
     const [sizes, setSizes] = useState([
         { size: "", count: 0, number: uuidv4() },
-    ]);
+    ])
     const addSize = () => {
-        setSizes([...sizes, { size: "", count: 0, number: uuidv4() }]);
-    };
+        setSizes([...sizes, { size: "", count: 0, number: uuidv4() }])
+    }
     const deleteSize = (number) => {
-        setSizes(sizes.filter((item) => item.number !== number));
-    };
+        setSizes(sizes.filter((item) => item.number !== number))
+    }
     const changeSize = (key, value, number) => {
         setSizes(
             sizes.map((i) => (i.number === number ? { ...i, [key]: value } : i))
-        );
-    };
+        )
+    }
 
     // отправка данных
     const addProduct = () => {
         // поле описания вставляем в массив info
         setTimeout(() => {
-            const formData = new FormData();
-            formData.append("name", name);
-            formData.append("gender", gender);
-            formData.append("price", `${price}`);
-            formData.append("categoryId", `${categoryId}`);
-            formData.append("sizes", JSON.stringify(sizes));
+            const formData = new FormData()
+            formData.append("name", name)
+            formData.append("gender", gender)
+            formData.append("price", `${price}`)
+            formData.append("categoryId", `${categoryId}`)
+            formData.append("sizes", JSON.stringify(sizes))
             formData.append(
                 "info",
                 JSON.stringify([
                     ...info,
                     { title: "description", description: description },
                 ])
-            );
+            )
             // TODO:исправить на массив картинок
-            formData.append("img", images.at(0));
+            formData.append("img", images.at(0))
             createProduct(formData)
                 .then((data) => alert("Товар успешно добавлен: ", data.name))
-                .catch((er) => console.log(er.response.data.message));
-        }, 0);
-    };
+                .catch((er) => alert(er.response.data.message))
+        }, 0)
+    }
 
     const onSubmit = (e) => {
-        e.preventDefault();
-        addProduct();
-    };
+        e.preventDefault()
+        addProduct()
+    }
     return (
         <>
             <div className="text-xl lg:text-3xl font-semibold mb-6">
@@ -189,7 +184,7 @@ const AddProduct = observer(() => {
                                         value={name}
                                         required
                                         onChange={(e) => {
-                                            setName(e.target.value);
+                                            setName(e.target.value)
                                         }}
                                         // {...register("productName", {
                                         //     required:
@@ -421,7 +416,7 @@ const AddProduct = observer(() => {
                 </div>
             </form>
         </>
-    );
-});
+    )
+}
 
-export default AddProduct;
+export default AddProduct

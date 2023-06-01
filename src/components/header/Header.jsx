@@ -3,7 +3,7 @@ import Navbar from "../navbar/Navbar";
 
 function Header() {
     return (
-        <header className="container-fluid">
+        <header className="container-fluid px-3">
             <div className="container flex flex-col mx-auto py-6">
                 <div className="flex justify-between flex-wrap mx-2 sm:mx-0">
                     <div className="flex items-center lg:hidden">

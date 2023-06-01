@@ -1,15 +1,17 @@
-import { useMemo } from "react"
-import { useState } from "react"
-import { createContext } from "react"
+import { createContext, useMemo, useState } from "react"
+import { filterOptions } from "../global/filterOptions"
 
-export const FilterProductsContext = createContext({ filter: "Новизне" })
+export const FilterProductsContext = createContext({
+    filter: filterOptions[0].name,
+})
 
 export const FilterProductsProvider = ({ children }) => {
-  const [filter, setFilter] = useState("Новизне")
-  const value = useMemo(() => ({ filter, setFilter }), [filter])
-  return (
-    <FilterProductsContext.Provider value={value}>
-      {children}
-    </FilterProductsContext.Provider>
-  )
+    const [typeSort, setTypeSort] = useState(filterOptions[0].name)
+    // Остановился на добавлениии стейтов для фильтра (подумать насчет useRef)
+    const value = useMemo(() => ({ typeSort, setTypeSort }), [typeSort])
+    return (
+        <FilterProductsContext.Provider value={value}>
+            {children}
+        </FilterProductsContext.Provider>
+    )
 }

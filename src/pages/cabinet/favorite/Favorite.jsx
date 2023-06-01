@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { IoCart, IoHeart, IoHeartDislikeOutline } from "react-icons/io5";
-import UrlImg from "../../../assets/item.jpg";
-import { v4 as uuidv4 } from "uuid";
-import formatPrice from "../../../components/priceFormatter";
-import { Link } from "react-router-dom";
+import { useState } from "react"
+import { IoCart, IoHeart, IoHeartDislikeOutline } from "react-icons/io5"
+import { Link } from "react-router-dom"
+import { v4 as uuidv4 } from "uuid"
+import UrlImg from "../../../assets/item.jpg"
+import formatPrice from "../../../components/priceFormatter"
 
 const FavoriteItem = ({ id, urlImg, urlProduct, title, price }) => {
     return (
@@ -19,7 +19,7 @@ const FavoriteItem = ({ id, urlImg, urlProduct, title, price }) => {
             <span className="font-bold">{price} руб.</span>
             <div className="flex justify-between space-x-5 mt-3">
                 <button
-                    className="bg-orange-500 hover:bg-orange-700 text-white flex items-center justify-center rounded-full font-semibold"
+                    className="bg-orange-500 hover:bg-orange-700 text-white flex items-center justify-center rounded-full font-semibold p-2"
                     title="Купить"
                 >
                     <IoCart className="text-white mr-2 text-2xl" />
@@ -34,8 +34,8 @@ const FavoriteItem = ({ id, urlImg, urlProduct, title, price }) => {
                 </button>
             </div>
         </div>
-    );
-};
+    )
+}
 
 export default function Favorite() {
     const [items] = useState([
@@ -74,7 +74,7 @@ export default function Favorite() {
             title: "Черная футболка HARD STYLE",
             price: Math.ceil((Math.random() * (100000 - 0)).toFixed(2)),
         },
-    ]);
+    ])
     return (
         <>
             <div className="text-xl lg:text-3xl font-semibold mb-6">
@@ -100,5 +100,5 @@ export default function Favorite() {
                 </div>
             )}
         </>
-    );
+    )
 }

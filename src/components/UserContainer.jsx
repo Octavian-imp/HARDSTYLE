@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import { BsFillChatDotsFill, BsHeartFill } from "react-icons/bs";
 import { FaUserAlt } from "react-icons/fa";
 import {
@@ -8,16 +7,17 @@ import {
     IoLogOut,
     IoTicket,
 } from "react-icons/io5";
+import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import { Context } from "..";
+import { LOGOUT_USER } from "../store/actions/userActionsTypes";
 
 function UserContainer({ children }) {
-    const { user } = useContext(Context);
+    const dispatch = useDispatch();
+
     const navigate = useNavigate();
     const logOut = () => {
-        user.setUser({});
-        user.setIsAuth(false);
+        dispatch({ type: LOGOUT_USER });
         localStorage.removeItem("token");
         return navigate("/");
     };
@@ -60,19 +60,15 @@ function UserContainer({ children }) {
     ];
     return (
         <div className="flex lg:flex-row flex-col w-full">
-            <div className="dark:bg-dark-light lg:w-[84px] lg:sticky lg:top-6 h-fit py-3 rounded-2xl flex flex-row lg:flex-col items-center lg:space-y-4 space-x-4 lg:space-x-0 pl-4 lg:pl-0 overflow-x-auto">
+            <ul className="dark:bg-dark-light lg:w-[84px] lg:sticky lg:top-6 h-fit py-3 rounded-2xl flex flex-row lg:flex-col items-center lg:space-y-4 space-x-4 lg:space-x-0 pl-4 lg:pl-0 overflow-x-auto">
                 {menuUser &&
                     menuUser.map((item, index) => {
                         return (
-                            <>
+                            <li key={uuidv4()} className="flex flex-col">
                                 {index === 5 && (
-                                    <div
-                                        key={uuidv4()}
-                                        className="bg-muted w-[2px] lg:w-[40px] h-[40px] lg:h-[2px] rounded-sm"
-                                    />
+                                    <div className="bg-muted w-[2px] lg:w-[40px] h-[40px] lg:h-[2px] rounded-sm mb-4" />
                                 )}
                                 <NavLink
-                                    key={uuidv4()}
                                     to={item.url}
                                     className={({ isActive }) =>
                                         isActive
@@ -83,7 +79,7 @@ function UserContainer({ children }) {
                                 >
                                     {item.icon}
                                 </NavLink>
-                            </>
+                            </li>
                         );
                     })}
                 <NavLink
@@ -94,7 +90,7 @@ function UserContainer({ children }) {
                 >
                     <IoLogOut />
                 </NavLink>
-            </div>
+            </ul>
             <div className="lg:ml-5 my-5 lg:mt-0 w-full">{children}</div>
         </div>
     );
