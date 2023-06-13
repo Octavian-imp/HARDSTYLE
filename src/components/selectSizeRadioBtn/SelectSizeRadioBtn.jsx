@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useState } from "react"
 
 export default function SelectSizeRadioBtn({
     id_index,
@@ -7,7 +6,7 @@ export default function SelectSizeRadioBtn({
     setProductCart,
     prevProduct,
 }) {
-    const [sizeChecked, setSizeChecked] = useState("");
+    const [sizeChecked, setSizeChecked] = useState("")
 
     return (
         <label
@@ -21,8 +20,12 @@ export default function SelectSizeRadioBtn({
                 className="appearance-none absolute w-full h-full top-0 left-0 checked:border-b-2 checked:border-b-orange-500 cursor-pointer"
                 data-size={label}
                 onChange={(el) => {
-                    setSizeChecked(el.target.dataset.size);
-                    setProductCart({ ...prevProduct, size: label });
+                    setSizeChecked(el.target.dataset.size)
+                    setProductCart({
+                        ...prevProduct,
+                        size: label,
+                        count: 1,
+                    })
                 }}
                 required
             />
@@ -30,5 +33,5 @@ export default function SelectSizeRadioBtn({
                 {label.toUpperCase()}
             </span>
         </label>
-    );
+    )
 }

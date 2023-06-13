@@ -4,12 +4,13 @@ import { RiEditBoxFill } from "react-icons/ri"
 // import imgUser from "../../../assets/item.jpg";
 import { useEffect } from "react"
 import { useForm } from "react-hook-form"
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import useTheme from "../../../hooks/useTheme"
+import { useUpdateUserMutation } from "../../../http/userAuthApi.RTK"
 
 export default function Profile() {
     const user = useSelector((state) => state.user)
-    const dispatch = useDispatch()
+    const [updateInfo] = useUpdateUserMutation()
 
     const { setIsHeader } = useTheme()
     useEffect(() => {
@@ -31,13 +32,33 @@ export default function Profile() {
     } = useForm({
         mode: "onChange",
         defaultValues: {
-            name: user.username,
-            // gender: "male",
+            username: user.username,
+            birthDay: user.birthDay,
             avatar: process.env.ROOT_URL_AVATAR + user.avatarURL,
         },
     })
-    const onSubmit = (data) => {
-        console.log(data)
+    const onSubmit = async (data) => {
+        try {
+            await updateInfo({
+                id: user.id,
+                newUsername: data.username,
+                newAvatar: data.avatar,
+                birthDay: data.birthDay,
+            })
+                .unwrap()
+                .then((res) => {
+                    alert("Информация обновлена")
+                })
+                .catch((err) => {
+                    console.error(err)
+                })
+            setIsEdit(false)
+        } catch (error) {
+            if (error.status === 404) {
+                alert("Имя пользователя уже занято")
+            }
+            console.error(error)
+        }
     }
     const uploadImg = (el) => {
         if (el.target.files[0]) {
@@ -45,7 +66,7 @@ export default function Profile() {
             const reader = new FileReader()
             reader.addEventListener("load", () => {
                 setUrlAvatar(reader.result)
-                setValue("avatar", reader.result)
+                setValue("avatar", el.target.files[0])
             })
             reader.readAsDataURL(el.target.files[0])
         }
@@ -65,17 +86,17 @@ export default function Profile() {
             <form
                 className="flex lg:flex-row flex-col-reverse"
                 onSubmit={handleSubmit(onSubmit)}
-                noValidate
                 encType="multipart/form-data"
             >
                 <div className="flex flex-col space-y-3">
                     <div className="mt-6">
                         <span className="mt-10 mb-2 font-semibold">
-                            Имя и фамилия
+                            Username
                         </span>
                         <input
-                            {...register("name", {
-                                required: "Имя и фамилия не должны быть пустым",
+                            {...register("username", {
+                                required:
+                                    "Имя пользователя не должно быть пустым",
                             })}
                             className={`border-b-2 ${
                                 isEdit
@@ -85,9 +106,9 @@ export default function Profile() {
                             disabled={!isEdit}
                             required
                         />
-                        {errors?.name && (
+                        {errors?.username && (
                             <div className="text-red-500">
-                                {errors.name.message}
+                                {errors.username.message}
                             </div>
                         )}
                     </div>

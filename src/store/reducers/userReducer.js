@@ -1,6 +1,6 @@
-import { LOGOUT_USER, SET_USER } from "../actions/userActionsTypes.js";
+import { LOGOUT_USER, SET_USER } from "../actions/userActionsTypes.js"
 
-const defaultState = null;
+const defaultState = null
 
 export const UserReducer = (state = defaultState, action) => {
     switch (action.type) {
@@ -11,10 +11,12 @@ export const UserReducer = (state = defaultState, action) => {
                 email: action.payload.email,
                 role: action.payload.role,
                 avatarURL: action.payload.avatar,
-            };
+                birthDay: action.payload.birthDay,
+                token: action.payload.token,
+            }
         case LOGOUT_USER:
-            return null;
+            return null
         default:
-            return state;
+            return state
     }
-};
+}

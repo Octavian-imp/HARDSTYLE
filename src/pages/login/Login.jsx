@@ -3,8 +3,10 @@ import { useForm } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import useTheme from "../../hooks/useTheme"
-import { login, registration } from "../../http/userApi"
-import { SET_USER } from "../../store/actions/userActionsTypes"
+import {
+    useCreateUserMutation,
+    useSetUserMutation,
+} from "../../http/userAuthApi.RTK"
 
 const Login = () => {
     const user = useSelector((state) => state.user)
@@ -18,24 +20,38 @@ const Login = () => {
     const location = useLocation()
     const navigate = useNavigate()
     const isLogin = location.pathname === "/login"
+    const [setUser] = useSetUserMutation()
+    const [createUser] = useCreateUserMutation()
 
     const [email, setEmail] = useState("")
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
+    // if (isErrorLogin) {
+    //     alert(errorLogin.status)
+    //     return
+    // }
+    // if (isErrorRegister) {
+    //     alert(errorLogin.status)
+    // }
 
-    const click = async () => {
+    const click = async (event) => {
+        event.preventDefault()
         try {
-            let data
             if (isLogin) {
-                data = await login(email, password)
-                dispatch({ type: SET_USER, payload: data })
+                await setUser({ email, password }).unwrap()
             } else {
-                data = await registration(email, password, username)
+                await createUser({
+                    email,
+                    password,
+                    username,
+                    role: "ADMIN",
+                }).unwrap()
             }
             navigate("/user/profile")
-        } catch (e) {
-            //переделать вывод ошибок
-            alert(e.response.data.message)
+        } catch (err) {
+            alert(
+                `Ошибка: ${err.data.message}. \nСтраница будет перезагружена после нажатия на кнопку 'ОК'`
+            )
             reset({
                 username: "",
                 email: "",
@@ -120,7 +136,9 @@ const Login = () => {
             <button
                 tabIndex="1"
                 type="button"
-                onClick={click}
+                onClick={(event) => {
+                    click(event)
+                }}
                 className="btn mt-6 bg-orange-500 focus:bg-orange-600 hover:bg-orange-600 2xl:px-28 py-3 font-semibold"
             >
                 {isLogin ? "Войти" : "Регистрация"}

@@ -1,16 +1,11 @@
-import { useContext, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { v4 as uuidv4 } from "uuid"
-import { Context } from "../../../."
 import "../../../components/inputRadio/InputRadio.scss"
-import { createProduct, fetchCategory } from "../../../http/productAPI"
+import { useGetCategoriesQuery } from "../../../http/categoryAPI.RTK"
+import { createProduct } from "../../../http/productAPI"
 
 const AddProduct = () => {
-    const { products } = useContext(Context)
-    useEffect(() => {
-        fetchCategory().then((res) => {
-            products.setCategories(res)
-        })
-    }, [])
+    const { data: categories, isError } = useGetCategoriesQuery()
 
     const [categoryId, setCategoryId] = useState("")
     const [gender, setGender] = useState("male")
@@ -65,28 +60,26 @@ const AddProduct = () => {
     }
 
     // отправка данных
-    const addProduct = () => {
+    const addProduct = async () => {
         // поле описания вставляем в массив info
-        setTimeout(() => {
-            const formData = new FormData()
-            formData.append("name", name)
-            formData.append("gender", gender)
-            formData.append("price", `${price}`)
-            formData.append("categoryId", `${categoryId}`)
-            formData.append("sizes", JSON.stringify(sizes))
-            formData.append(
-                "info",
-                JSON.stringify([
-                    ...info,
-                    { title: "description", description: description },
-                ])
-            )
-            // TODO:исправить на массив картинок
-            formData.append("img", images.at(0))
-            createProduct(formData)
-                .then((data) => alert("Товар успешно добавлен: ", data.name))
-                .catch((er) => alert(er.response.data.message))
-        }, 0)
+        const formData = new FormData()
+        formData.append("name", name)
+        formData.append("gender", gender)
+        formData.append("price", `${price}`)
+        formData.append("categoryId", `${categoryId}`)
+        formData.append("sizes", JSON.stringify(sizes))
+        formData.append(
+            "info",
+            JSON.stringify([
+                ...info,
+                { title: "description", description: description },
+            ])
+        )
+        // TODO:исправить на массив картинок
+        formData.append("img", images.at(0))
+        createProduct(formData)
+            .then((data) => alert("Товар успешно добавлен: ", data.name))
+            .catch((er) => alert(er.response.data.message))
     }
 
     const onSubmit = (e) => {
@@ -128,11 +121,12 @@ const AddProduct = () => {
                                     <option value="" disabled selected>
                                         Выберите категорию
                                     </option>
-                                    {products.categories.map((el) => (
-                                        <option key={el.id} value={el.id}>
-                                            {el.name}
-                                        </option>
-                                    ))}
+                                    {!isError &&
+                                        categories.map((el) => (
+                                            <option key={el.id} value={el.id}>
+                                                {el.name}
+                                            </option>
+                                        ))}
                                 </select>
                             </div>
                             {/* {errors?.category && (

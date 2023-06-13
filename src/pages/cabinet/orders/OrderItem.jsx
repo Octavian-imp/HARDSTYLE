@@ -1,14 +1,12 @@
-import formatPrice from "../../../components/priceFormatter";
+import formatPrice from "../../../components/priceFormatter"
 
 export default function OrderItem({
     id,
-    product,
+    total_cost,
     paymentMethod,
     address,
-    recipient,
-    deliveryCost,
     status,
-    dateOfIssue,
+    createdAt,
 }) {
     /*
     Коды статусов заказа:
@@ -43,12 +41,15 @@ export default function OrderItem({
                         </span>
                     )}
                 </div>
-                <div className="xl:text-xl">Дата оформления: {dateOfIssue}</div>
+                <div className="xl:text-xl">
+                    Дата оформления:{" "}
+                    {new Date(createdAt).toLocaleDateString("ru-RU")}
+                </div>
             </div>
             <span className="mt-5">
                 Стоимость:{" "}
                 <span className="font-semibold">
-                    {formatPrice(product.totalPrice)} руб.
+                    {formatPrice(total_cost)} руб.
                 </span>
             </span>
             <span>
@@ -59,18 +60,18 @@ export default function OrderItem({
                 Адрес доставки: <span className="font-semibold">{address}</span>
             </span>
             <span>
-                Получатель: <span className="font-semibold">{recipient}</span>
+                Получатель: <span className="font-semibold">Получатель</span>
             </span>
             <span>
                 Стоимость доставки:{" "}
-                {deliveryCost === 0 ? (
+                {/* {deliveryCost === 0 ? (
                     <span className="font-semibold capitalize text-success">
                         Бесплатно
                     </span>
                 ) : (
                     <span className="font-semibold">{deliveryCost} руб.</span>
-                )}
+                )} */}
             </span>
         </div>
-    );
+    )
 }

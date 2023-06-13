@@ -1,5 +1,3 @@
-import { api } from "./api.RTK"
-
 // export const productApi = createApi({
 //     reducerPath: "productApi",
 //     baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/" }),
@@ -13,7 +11,9 @@ import { api } from "./api.RTK"
 //     }),
 // });
 
-export const productApi = api.injectEndpoints({
+import { publicApi } from "./publicApi.RTK"
+
+export const productApi = publicApi.injectEndpoints({
     endpoints: (build) => ({
         getProducts: build.query({
             query: (params) => ({
@@ -21,7 +21,11 @@ export const productApi = api.injectEndpoints({
                 params: { ...params },
             }),
         }),
+        getOneProduct: build.query({
+            query: ({ id }) => ({
+                url: `api/product/${id}`,
+            }),
+        }),
     }),
 })
-export const { useGetProductsQuery } = api
-// export const { useGetProductsQuery } = productApi
+export const { useGetProductsQuery, useGetOneProductQuery } = productApi

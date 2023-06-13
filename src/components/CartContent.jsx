@@ -1,68 +1,51 @@
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { FaTimes, FaTruck } from "react-icons/fa";
-import { v4 as uuidv4 } from "uuid";
-import formatPrice from "../components/priceFormatter";
-import useCart from "../hooks/useCart";
-import ItemProductCart from "./itemProduct/ItemProductCart";
+import { useEffect, useState } from "react"
+import { useForm } from "react-hook-form"
+import { FaTimes, FaTruck } from "react-icons/fa"
+import { useDispatch, useSelector } from "react-redux"
+import formatPrice from "../components/priceFormatter"
+import {
+    DEC_COUNT,
+    INC_COUNT,
+    REMOVE_FROM_CART,
+} from "../store/actions/cartActionsTypes"
+import InputForm from "./inputForm/InputForm"
+import ItemProductCart from "./itemProduct/ItemProductCart"
 
 export default function CartContent() {
+    const dispatch = useDispatch()
     const {
         register,
         handleSubmit,
         formState: { errors },
+        control,
     } = useForm({
         mode: "onChange",
-    });
-    let { cart, setCart, setCountProducts } = useCart();
+    })
+    // let { cart, setCart, setCountProducts } = useCart();
+    const cart = useSelector((state) => state.cart)
     //суммарная скидка
-    const [totalDiscount, setTotalDiscount] = useState(0);
+    // const [totalDiscount, setTotalDiscount] = useState(0)
     //итоговая стоимость
-    const [total, setTotal] = useState(0);
+    const [total, setTotal] = useState(0)
     useEffect(() => {
         if (cart) {
-            setTotalDiscount(
-                cart.reduce(
-                    (summ, item) =>
-                        summ +
-                        (item.isDiscount ? item.discount_cost * item.count : 0),
-                    0
-                )
-            );
             setTotal(
                 cart.reduce((summ, item) => summ + item.price * item.count, 0)
-            );
+            )
         } else {
-            setTotalDiscount(0);
-            setTotal(0);
+            setTotalDiscount(0)
+            setTotal(0)
         }
-    }, [cart]);
+    }, [cart])
 
-    function deleteProduct(id, count) {
-        setCart(cart.filter((item) => item.id !== id));
-        setCountProducts((prev) => prev - count);
+    function deleteProduct(id, size) {
+        dispatch({ type: REMOVE_FROM_CART, payload: { id, size } })
     }
     function increase(id, size) {
-        setCart(
-            cart.map((item) => {
-                if (item.id === id && item.size === size) {
-                    ++item.count;
-                }
-                return item;
-            })
-        );
-        setCountProducts((prev) => prev + 1);
+        dispatch({ type: INC_COUNT, payload: { id, size } })
     }
     function decrease(id, size) {
-        setCart(
-            cart.map((item) => {
-                if (item.id === id && item.size === size && item.count > 1)
-                    --item.count;
-                return item;
-            })
-        );
-
-        setCountProducts((prev) => (prev > 1 ? prev - 1 : prev));
+        dispatch({ type: DEC_COUNT, payload: { id, size } })
     }
 
     //поля адреса доставки
@@ -92,11 +75,11 @@ export default function CartContent() {
             label: "Квартира",
             isRequired: true,
         },
-    ]);
+    ])
 
     const onSubmit = (data) => {
-        console.log(data);
-    };
+        console.log(data)
+    }
 
     return (
         <div className="container mx-auto my-6 text-4xl">
@@ -125,12 +108,16 @@ export default function CartContent() {
                     </div>
                     <div className="mt-5 flex flex-col space-y-5">
                         {cart &&
-                            cart.map((item) => (
+                            cart.map((item, index) => (
                                 <ItemProductCart
-                                    key={item.title}
+                                    key={index}
                                     id={item.id}
-                                    url_img={item.url_img}
-                                    name={item.title}
+                                    url={item.url}
+                                    url_img={
+                                        process.env.REACT_APP_API_URL +
+                                        item.imgUrl
+                                    }
+                                    name={item.name}
                                     size={item.size}
                                     cost={item.price}
                                     isDiscount={item.isDiscount}
@@ -148,39 +135,14 @@ export default function CartContent() {
                         </div>
                         <div className="mt-5 px-3 flex flex-col space-y-2">
                             {fields &&
-                                fields.map((field) => (
-                                    <div
-                                        key={uuidv4()}
-                                        className="flex flex-col"
-                                    >
-                                        <label
-                                            htmlFor={field.name}
-                                            className="text-lg mb-2 w-fit"
-                                            required={field.isRequired}
-                                        >
-                                            {field.label}
-                                            {field.isRequired && (
-                                                <span className="text-red-500 ml-2">
-                                                    *
-                                                </span>
-                                            )}
-                                        </label>
-                                        <input
-                                            {...register(field.name, {
-                                                required: `Заполните поле ${field.label}`,
-                                            })}
-                                            type={field.type}
-                                            id={field.name}
-                                            required={field.isRequired}
-                                            className="text-lg bg-transparent py-1 px-3 rounded-lg border-2 border-zinc-700 focus:border-orange-500 hover:border-zinc-500 duration-200"
-                                            aria-placeholder={`Введите ${field.label}`}
-                                        />
-                                        {errors?.name && (
-                                            <div className="text-red-500">
-                                                {errors.name.message}
-                                            </div>
-                                        )}
-                                    </div>
+                                fields.map((field, index) => (
+                                    <InputForm
+                                        key={index}
+                                        control={control}
+                                        name={field.name}
+                                        label={field.label}
+                                        rules={{ required: true }}
+                                    />
                                 ))}
                         </div>
                     </div>
@@ -196,7 +158,7 @@ export default function CartContent() {
                                     Скидка
                                 </span>
                                 <span className="whitespace-nowrap">
-                                    {formatPrice(totalDiscount)} руб.
+                                    {/* {formatPrice(totalDiscount)} руб. */}
                                 </span>
                             </div>
                             <div className="flex justify-between items-center text-sm text-dark-muted">
@@ -204,7 +166,7 @@ export default function CartContent() {
                                     Стоимость без скидки
                                 </span>
                                 <span className="whitespace-nowrap">
-                                    {formatPrice(totalDiscount + total)} руб.
+                                    {/* {formatPrice(totalDiscount + total)} руб. */}
                                 </span>
                             </div>
                             <div className="flex justify-between items-center text-xl">
@@ -226,5 +188,5 @@ export default function CartContent() {
                 </div>
             </form>
         </div>
-    );
+    )
 }

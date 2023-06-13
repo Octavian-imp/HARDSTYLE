@@ -1,9 +1,9 @@
-import { IoCart } from "react-icons/io5";
-import { Link } from "react-router-dom";
-import useCart from "../../hooks/useCart";
+import { IoCart } from "react-icons/io5"
+import { useSelector } from "react-redux"
+import { Link } from "react-router-dom"
 
 const CartBtn = () => {
-    const { countProducts } = useCart();
+    const countProducts = useSelector((state) => state.cart)
     return (
         <Link
             to="/cart"
@@ -11,10 +11,10 @@ const CartBtn = () => {
         >
             <IoCart className="dark:text-white text-black" />
             <span className="ml-2 text-sm dark:text-white text-black">
-                Корзина ({countProducts})
+                Корзина ({countProducts.length})
             </span>
         </Link>
-    );
-};
+    )
+}
 
-export default CartBtn;
+export default CartBtn

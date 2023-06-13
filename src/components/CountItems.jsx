@@ -2,7 +2,7 @@ export default function CountItems({ value, id, size, increase, decrease }) {
     return (
         <>
             <button
-                className="block m-auto w-fit bg-inherit dark:text-white text-black hover:bg-orange-500"
+                className="block px-2 py-1 m-auto w-fit bg-inherit dark:text-white text-black hover:bg-orange-500"
                 title="Уменьшить"
                 onClick={() => decrease(id, size)}
             >
@@ -16,12 +16,12 @@ export default function CountItems({ value, id, size, increase, decrease }) {
                 disabled
             />
             <button
-                className="block m-auto w-fit bg-inherit dark:text-white text-black hover:bg-orange-500"
+                className="block px-2 py-1 m-auto w-fit bg-inherit dark:text-white text-black hover:bg-orange-500"
                 title="Увеличить"
                 onClick={() => increase(id, size)}
             >
                 &#43;
             </button>
         </>
-    );
+    )
 }

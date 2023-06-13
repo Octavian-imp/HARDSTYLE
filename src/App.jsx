@@ -1,12 +1,11 @@
-import { useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useState } from "react"
+import { useSelector } from "react-redux"
 import { Route, Routes } from "react-router-dom"
 import "./App.scss"
 import Content from "./Content"
 import Layout from "./components/Layout"
 import MainContainer from "./components/MainContainer"
 import useToggleTheme from "./hooks/useToggleTheme"
-import { check } from "./http/userApi"
 import Accessories from "./pages/accessories/Accessories"
 import All from "./pages/all/All"
 import LayoutUser from "./pages/cabinet/LayoutUser"
@@ -26,21 +25,12 @@ import ItemPage from "./pages/pageItem/ItemPage"
 import Preloader from "./pages/preloader/Preloader"
 import { CartProvider } from "./providers/CartContext"
 import { ThemeProvider } from "./providers/ThemeProvider.jsx"
-import { SET_USER } from "./store/actions/userActionsTypes"
 
 const App = () => {
-    // const { user } = useContext(Context);
-    const dispatch = useDispatch()
     const user = useSelector((state) => state.user)
-    useEffect(() => {
-        check()
-            .then((data) => {
-                dispatch({ type: SET_USER, payload: data })
-            })
-            .finally(setLoading(false))
-    }, [])
+
     useToggleTheme()
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
     if (loading) {
         return (
             <ThemeProvider>
@@ -73,7 +63,7 @@ const App = () => {
                                         path="support"
                                         element={<Support />}
                                     />
-                                    <Route path="products">
+                                    {/* <Route path="products">
                                         <Route
                                             path="add"
                                             element={<AddProduct />}
@@ -82,7 +72,7 @@ const App = () => {
                                             path="all"
                                             element={<AllProducts />}
                                         />
-                                    </Route>
+                                    </Route> */}
                                 </Route>
                             )}
                             {/* Публичные маршруты */}

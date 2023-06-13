@@ -1,47 +1,60 @@
 import {
-    ADD_QUANTITY,
     ADD_TO_CART,
+    DEC_COUNT,
     EMPTY_CART,
+    INC_COUNT,
     REMOVE_FROM_CART,
-    SUB_QUANTITY,
-} from "../actions/cartActionsTypes.js";
+} from "../actions/cartActionsTypes.js"
 
-const defaultState = [];
+const defaultState = [
+    // {
+    //     id: null,
+    //     name: null,
+    //     price: null,
+    //     imgUrl: null,
+    //     size: null,
+    //     count: null,
+    // },
+]
 
 export const CartReducer = (state = defaultState, action) => {
     switch (action.type) {
         case ADD_TO_CART:
-            return [...state, state.push(action.payload)];
+            return [...state, action.payload]
         case REMOVE_FROM_CART:
-            return [
-                ...state,
-                state.filter((item) => item.id !== action.payload.id),
-            ];
-        case ADD_QUANTITY:
-            return [
-                ...state,
-                state.map((item) =>
-                    item.id === action.payload.id
-                        ? { ...item, quantity: item.quantity + 1 }
-                        : item
-                ),
-            ];
-        case SUB_QUANTITY:
-            return [
-                ...state,
-                state.map((item) =>
-                    item.id === action.payload.id
-                        ? {
-                              ...item,
-                              quantity:
-                                  item.quantity !== 1 ? item.quantity - 1 : 1,
-                          }
-                        : item
-                ),
-            ];
+            return state.filter((item) => {
+                if (
+                    item.id === action.payload.id &&
+                    item.size === action.payload.size
+                ) {
+                    return false
+                }
+                return true
+            })
+        case INC_COUNT:
+            return state.map((item) => {
+                if (
+                    item.id === action.payload.id &&
+                    item.size === action.payload.size
+                ) {
+                    return { ...item, count: item.count + 1 }
+                }
+                return item
+            })
+        case DEC_COUNT:
+            return state.map((item) => {
+                if (
+                    item.id === action.payload.id &&
+                    item.size === action.payload.size &&
+                    item.count > 1
+                ) {
+                    return { ...item, count: item.count - 1 }
+                }
+                return item
+            })
         case EMPTY_CART:
-            return [];
+            return []
         default:
-            return state;
+            return state
     }
-};
+}

@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom";
-import useTheme from "../hooks/useTheme";
+import { Link } from "react-router-dom"
+import useTheme from "../hooks/useTheme"
 
 export default function Logo({ width = "100%", height = "100%", className }) {
-    const { isDark } = useTheme();
-    let mainColor = isDark ? "#fff" : "#000";
-    let secondColor = isDark ? "#000" : "#fff";
+    const { isDark } = useTheme()
+    let mainColor = isDark ? "#fff" : "#000"
+    let secondColor = isDark ? "#000" : "#fff"
 
     return (
         <Link
@@ -172,8 +172,8 @@ export default function Logo({ width = "100%", height = "100%", className }) {
                 className="uppercase whitespace-nowrap"
                 style={{ fontFamily: "Stalinist One", color: mainColor }}
             >
-                hard style
+                hard store
             </div>
         </Link>
-    );
+    )
 }

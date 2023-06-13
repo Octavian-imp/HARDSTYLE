@@ -1,13 +1,15 @@
 import { BsHeart } from "react-icons/bs"
 import { FaTimes } from "react-icons/fa"
+import { NavLink } from "react-router-dom"
 import formatPrice from "../../components/priceFormatter"
 import CountItems from "../CountItems"
 
 export default function ItemProductCart({
     id,
+    url = "#",
     url_img = require("../../assets/not_found_logo.png"),
-    name = "Without name",
-    size = "m",
+    name = "undefined",
+    size = "undefined",
     cost,
     isDiscount = false,
     discount_cost,
@@ -25,15 +27,19 @@ export default function ItemProductCart({
                     className="min-w-40 w-40 h-40 object-contain rounded-lg"
                 />
                 <div className="flex flex-col justify-between m-4 w-96">
-                    <span className="2xl:text-2xl text-ellipsis whitespace-nowrap overflow-hidden">
+                    <NavLink
+                        to={url}
+                        className="2xl:text-2xl text-ellipsis whitespace-nowrap overflow-hidden"
+                        title={name}
+                    >
                         {name}
-                    </span>
+                    </NavLink>
                     <span className="dark:text-dark-muted text-muted capitalize">
                         Размер: {size}
                     </span>
                     <button
                         type="button"
-                        className="text-red-500 rounded-[50%] bg-transparent hover:bg-red-500 hover:text-white px-2 text-xl w-fit"
+                        className="text-red-500 rounded-2 p-1 bg-transparent hover:bg-red-500 hover:text-white px-2 text-xl w-fit"
                         title="В избранное"
                     >
                         <BsHeart></BsHeart>
@@ -53,7 +59,7 @@ export default function ItemProductCart({
                     type="button"
                     className="text-xl w-fit bg-transparent dark:text-white text-black dark:hover:text-red-500 hover:text-red-500"
                     title="Удалить"
-                    onClick={() => deleteProduct(id, size, countItem)}
+                    onClick={() => deleteProduct(id, size)}
                 >
                     <FaTimes></FaTimes>
                 </button>

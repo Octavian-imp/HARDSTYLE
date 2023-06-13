@@ -1,26 +1,19 @@
-import { BsFillChatDotsFill, BsHeartFill } from "react-icons/bs";
-import { FaUserAlt } from "react-icons/fa";
-import {
-    IoBag,
-    IoDuplicate,
-    IoFileTrayFull,
-    IoLogOut,
-    IoTicket,
-} from "react-icons/io5";
-import { useDispatch } from "react-redux";
-import { NavLink, useNavigate } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
-import { LOGOUT_USER } from "../store/actions/userActionsTypes";
+import { BsFillChatDotsFill, BsHeartFill } from "react-icons/bs"
+import { FaUserAlt } from "react-icons/fa"
+import { IoBag, IoLogOut, IoTicket } from "react-icons/io5"
+import { useDispatch } from "react-redux"
+import { NavLink, useNavigate } from "react-router-dom"
+import { v4 as uuidv4 } from "uuid"
+import { useLogoutUserMutation } from "../http/userAuthApi.RTK"
 
 function UserContainer({ children }) {
-    const dispatch = useDispatch();
-
-    const navigate = useNavigate();
+    const dispatch = useDispatch()
+    const [logoutUser] = useLogoutUserMutation()
+    const navigate = useNavigate()
     const logOut = () => {
-        dispatch({ type: LOGOUT_USER });
-        localStorage.removeItem("token");
-        return navigate("/");
-    };
+        logoutUser()
+        return navigate("/")
+    }
     const menuUser = [
         {
             url: "/user/profile",
@@ -44,20 +37,20 @@ function UserContainer({ children }) {
         },
         {
             url: "/user/coupons",
-            title: "Специальные предолжения",
+            title: "Специальные предложения",
             icon: <IoTicket />,
         },
-        {
-            url: "/user/products/add",
-            title: "Добавить товар",
-            icon: <IoDuplicate />,
-        },
-        {
-            url: "/user/products/all",
-            title: "Все товары",
-            icon: <IoFileTrayFull />,
-        },
-    ];
+        // {
+        //     url: "/user/products/add",
+        //     title: "Добавить товар",
+        //     icon: <IoDuplicate />,
+        // },
+        // {
+        //     url: "/user/products/all",
+        //     title: "Все товары",
+        //     icon: <IoFileTrayFull />,
+        // },
+    ]
     return (
         <div className="flex lg:flex-row flex-col w-full">
             <ul className="dark:bg-dark-light lg:w-[84px] lg:sticky lg:top-6 h-fit py-3 rounded-2xl flex flex-row lg:flex-col items-center lg:space-y-4 space-x-4 lg:space-x-0 pl-4 lg:pl-0 overflow-x-auto">
@@ -65,9 +58,6 @@ function UserContainer({ children }) {
                     menuUser.map((item, index) => {
                         return (
                             <li key={uuidv4()} className="flex flex-col">
-                                {index === 5 && (
-                                    <div className="bg-muted w-[2px] lg:w-[40px] h-[40px] lg:h-[2px] rounded-sm mb-4" />
-                                )}
                                 <NavLink
                                     to={item.url}
                                     className={({ isActive }) =>
@@ -80,8 +70,9 @@ function UserContainer({ children }) {
                                     {item.icon}
                                 </NavLink>
                             </li>
-                        );
+                        )
                     })}
+                <div className="bg-muted w-[2px] lg:w-[40px] h-[40px] lg:h-[2px] rounded-sm mb-4" />
                 <NavLink
                     to="/"
                     onClick={logOut}
@@ -93,7 +84,7 @@ function UserContainer({ children }) {
             </ul>
             <div className="lg:ml-5 my-5 lg:mt-0 w-full">{children}</div>
         </div>
-    );
+    )
 }
 
-export default UserContainer;
+export default UserContainer

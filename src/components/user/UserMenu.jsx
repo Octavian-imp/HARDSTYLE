@@ -1,10 +1,10 @@
-import { AiOutlineLogin } from "react-icons/ai";
-import { HiUserCircle } from "react-icons/hi";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { AiOutlineLogin } from "react-icons/ai"
+import { HiUserCircle } from "react-icons/hi"
+import { useSelector } from "react-redux"
+import { Link } from "react-router-dom"
 
 function UserMenu() {
-    const user = useSelector((state) => state.user);
+    const user = useSelector((state) => state.user)
     return (
         <>
             {user !== null ? (
@@ -29,7 +29,7 @@ function UserMenu() {
                 </Link>
             )}
         </>
-    );
+    )
 }
 
-export default UserMenu;
+export default UserMenu

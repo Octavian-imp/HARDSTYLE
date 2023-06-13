@@ -1,9 +1,9 @@
-import { memo } from "react";
-import useTheme from "../hooks/useTheme";
-import Header from "./header/Header";
+import { memo } from "react"
+import useTheme from "../hooks/useTheme"
+import Header from "./header/Header"
 
-const MainContainer = memo(({ isCabinet = false, children }) => {
-    const { isHeader } = useTheme();
+const MainContainer = memo(({ children }) => {
+    const { isHeader } = useTheme()
     return (
         <>
             {isHeader && <Header />}
@@ -11,7 +11,7 @@ const MainContainer = memo(({ isCabinet = false, children }) => {
                 {children}
             </div>
         </>
-    );
-});
+    )
+})
 
-export default MainContainer;
+export default MainContainer
