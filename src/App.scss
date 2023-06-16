@@ -95,3 +95,6 @@ input:focus,textarea:focus, select:focus{
 select > option{
   @apply dark:bg-dark dark:text-white bg-light text-black;
   }
+  dialog::backdrop{
+  @apply backdrop-blur-sm dark:bg-dark-form bg-light-form;
+  }

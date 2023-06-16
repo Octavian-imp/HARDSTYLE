@@ -2,17 +2,27 @@ import { authApi } from "./authApi.RTK"
 
 export const orderAuthApi = authApi.injectEndpoints({
     endpoints: (build) => ({
-        getAll: build.query({
-            query: (params) => ({
+        createOrder: build.mutation({
+            query: (body) => ({
                 url: "/api/order",
-                params,
+                method: "post",
+                body,
             }),
-            onQueryStarted: () => {
-                // TODO: продолжить тут
-            },
-            providesTags: () => [{ type: "ordersAuth" }],
+            // onQueryStarted: async (arg, { dispatch, queryFulfilled }) => {
+            //     try {
+            //         const { data } = await queryFulfilled
+            //         dispatch({ type: SET_USER, payload: data })
+            //     } catch (error) {}
+            // },
+            providesTags: () => [{ type: "orderAuth" }],
+        }),
+        getHistory: build.query({
+            query: () => ({
+                url: "/api/order/history",
+            }),
+            providesTags: () => [{ type: "orderAuth" }],
         }),
     }),
 })
 
-export const { useGetAllQuery } = orderAuthApi
+export const { useCreateOrderMutation, useGetHistoryQuery } = orderAuthApi

@@ -20,7 +20,10 @@ const defaultState = [
 export const CartReducer = (state = defaultState, action) => {
     switch (action.type) {
         case ADD_TO_CART:
-            return [...state, action.payload]
+            if (state.indexOf(action.payload) === -1) {
+                return [...state, action.payload]
+            }
+            return state
         case REMOVE_FROM_CART:
             return state.filter((item) => {
                 if (

@@ -24,7 +24,7 @@ export const fetchProducts = async (params, page, limit = 12) => {
 }
 
 export const fetchPopularProducts = async () => {
-    const { data } = await $host.get("api/product", { params: { limit: 6 } })
+    const { data } = await $host.get("api/product", { params: { limit: 8 } })
     return data
 }
 

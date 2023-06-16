@@ -1,9 +1,9 @@
 import { IoCart } from "react-icons/io5"
-import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
+import useCart from "../../hooks/useCart"
 
 const CartBtn = () => {
-    const countProducts = useSelector((state) => state.cart)
+    const countProducts = useCart()
     return (
         <Link
             to="/cart"

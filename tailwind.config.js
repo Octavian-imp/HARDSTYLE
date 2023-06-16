@@ -16,7 +16,11 @@ module.exports = {
                 success: "#5cf625",
                 warning: "#f4be56",
             },
+            backgroundColor: {
+                "dark-form": "#22222645",
+                "light-form": "#fafafa1c",
+            },
         },
     },
     plugins: [],
-};
+}

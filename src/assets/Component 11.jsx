@@ -8,7 +8,7 @@ export default function Logo({ width = "100%", height = "100%", className }) {
 
     return (
         <Link
-            to="/home"
+            to="/"
             className={`flex items-center justify-center ${className}`}
         >
             <svg

@@ -36,7 +36,7 @@ function UserContainer({ children }) {
             icon: <BsFillChatDotsFill />,
         },
         {
-            url: "/user/coupons",
+            url: "/user/coupon",
             title: "Специальные предложения",
             icon: <IoTicket />,
         },
@@ -82,7 +82,9 @@ function UserContainer({ children }) {
                     <IoLogOut />
                 </NavLink>
             </ul>
-            <div className="lg:ml-5 my-5 lg:mt-0 w-full">{children}</div>
+            <div className="lg:ml-5 my-5 xl:my-0 lg:mt-0 w-full">
+                {children}
+            </div>
         </div>
     )
 }

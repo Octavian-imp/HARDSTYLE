@@ -5,7 +5,6 @@ import { authApi } from "./authApi.RTK"
 
 export const userAuthApi = authApi.injectEndpoints({
     endpoints: (build) => ({
-        // переписать под mutation
         setUser: build.mutation({
             query: (params) => ({
                 url: "api/user/login",
@@ -19,14 +18,14 @@ export const userAuthApi = authApi.injectEndpoints({
                 try {
                     const { data } = await queryFulfilled
                     dispatch({ type: SET_USER, payload: data })
+                    localStorage.setItem("token", data.token)
                 } catch (error) {}
             },
             invalidatesTags: () => [{ type: "userAuth" }],
         }),
         getUser: build.query({
-            query: (params) => ({
+            query: () => ({
                 url: `api/user/auth`,
-                params: { ...params },
             }),
             transformResponse: (res) => {
                 return { ...res, ...jwtDecode(res.token) }
@@ -69,6 +68,7 @@ export const userAuthApi = authApi.injectEndpoints({
                 try {
                     const { data } = await queryFulfilled
                     dispatch({ type: SET_USER, payload: data })
+                    localStorage.setItem("token", data.token)
                 } catch (error) {}
             },
             invalidatesTags: () => [{ type: "userAuth" }],

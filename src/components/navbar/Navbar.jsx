@@ -1,20 +1,20 @@
-import { useState } from "react";
-import { FaBars } from "react-icons/fa";
-import { v4 as uuidv4 } from "uuid";
-import { NavLink } from "react-router-dom";
-import Logo from "../../assets/Component 11";
-import CartBtn from "../../pages/cart/CartBtn";
-import Search from "../search/Search";
-import SwitchTheme from "../switchTheme/SwitchTheme";
-import UserMenu from "../user/UserMenu";
+import { useState } from "react"
+import { FaBars } from "react-icons/fa"
+import { v4 as uuidv4 } from "uuid"
+import { NavLink } from "react-router-dom"
+import Logo from "../../assets/Component 11"
+import CartBtn from "../../pages/cart/CartBtn"
+import Search from "../search/Search"
+import SwitchTheme from "../switchTheme/SwitchTheme"
+import UserMenu from "../user/UserMenu"
 
-import "./Navbar.scss";
+import "./Navbar.scss"
 
 function Navbar() {
-    let [clickMenu, setClickMenu] = useState(false);
+    let [clickMenu, setClickMenu] = useState(false)
     let navLinks = [
         {
-            url: "/home",
+            url: "/",
             title: "Главная",
         },
         {
@@ -37,7 +37,7 @@ function Navbar() {
             url: "/all",
             title: "Все товары",
         },
-    ];
+    ]
     return (
         <>
             <button
@@ -90,7 +90,7 @@ function Navbar() {
                 </div>
             </div>
         </>
-    );
+    )
 }
 
-export default Navbar;
+export default Navbar

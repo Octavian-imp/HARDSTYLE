@@ -12,25 +12,25 @@ import { UserReducer } from "./store/reducers/userReducer"
 
 export const Context = createContext(null)
 
-// const saveToLocalStorage = (state) => {
-//     try {
-//         localStorage.setItem("state", JSON.stringify(state))
-//     } catch (e) {
-//         console.error(e)
-//     }
-// }
+const saveToLocalStorage = (state) => {
+    try {
+        localStorage.setItem("state", JSON.stringify(state))
+    } catch (e) {
+        console.error(e)
+    }
+}
 
-// const loadFromLocalStorage = () => {
-//     try {
-//         const stateStr = localStorage.getItem("state")
-//         return stateStr ? JSON.parse(stateStr) : undefined
-//     } catch (e) {
-//         console.error(e)
-//         return undefined
-//     }
-// }
+const loadFromLocalStorage = () => {
+    try {
+        const stateStr = localStorage.getItem("state")
+        return stateStr ? JSON.parse(stateStr) : undefined
+    } catch (e) {
+        console.error(e)
+        return undefined
+    }
+}
 
-// const persistedStore = loadFromLocalStorage()
+const persistedStore = loadFromLocalStorage()
 
 export const store = configureStore({
     reducer: {
@@ -44,11 +44,11 @@ export const store = configureStore({
             publicApi.middleware,
             authApi.middleware,
         ]),
-    // preloadedState: persistedStore,
+    preloadedState: persistedStore,
 })
-// store.subscribe(() => {
-//     saveToLocalStorage(store.getState())
-// })
+store.subscribe(() => {
+    saveToLocalStorage(store.getState())
+})
 const root = createRoot(document.getElementById("root"))
 
 root.render(

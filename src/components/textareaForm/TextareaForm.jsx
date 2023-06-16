@@ -1,6 +1,6 @@
 import { useController } from "react-hook-form"
 
-const InputForm = ({ control, name, label, rules = {}, className }) => {
+const TextareaForm = ({ control, name, label, rules = {}, className }) => {
     const { field, fieldState } = useController({
         name,
         control,
@@ -15,12 +15,12 @@ const InputForm = ({ control, name, label, rules = {}, className }) => {
                 {label}
                 {rules.required && <span className="text-red-500 ml-2">*</span>}
             </label>
-            <input
+            <textarea
                 {...field}
                 id={name}
-                className="text-lg bg-transparent py-1 px-3 rounded-lg border-2 border-zinc-700 focus:border-orange-500 hover:border-zinc-500 duration-200"
+                className="text-lg bg-transparent py-1 px-3 rounded-lg border-2 border-zinc-700 focus:border-orange-500 hover:border-zinc-500 duration-200 min-h-[50px]"
                 aria-placeholder={`Введите ${label}`}
-            />
+            ></textarea>
             {fieldState?.error && (
                 <div className="text-red-500 text-base">
                     Заполните поле {fieldState.error.message}
@@ -30,4 +30,4 @@ const InputForm = ({ control, name, label, rules = {}, className }) => {
     )
 }
 
-export default InputForm
+export default TextareaForm

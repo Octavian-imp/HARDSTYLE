@@ -1,28 +1,21 @@
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
-import { FaTimes, FaTruck } from "react-icons/fa"
-import { useDispatch, useSelector } from "react-redux"
+import { FaTrash, FaTruck } from "react-icons/fa"
+import { useDispatch } from "react-redux"
 import formatPrice from "../components/priceFormatter"
-import {
-    DEC_COUNT,
-    INC_COUNT,
-    REMOVE_FROM_CART,
-} from "../store/actions/cartActionsTypes"
+import useCart from "../hooks/useCart"
+import { useCheckCouponMutation } from "../http/couponApi.RTK"
+import { useCreateOrderMutation } from "../http/orderAuthApi.RTK"
+import { EMPTY_CART } from "../store/actions/cartActionsTypes"
 import InputForm from "./inputForm/InputForm"
 import ItemProductCart from "./itemProduct/ItemProductCart"
 
 export default function CartContent() {
     const dispatch = useDispatch()
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-        control,
-    } = useForm({
+    const { handleSubmit, formState, control, getValues } = useForm({
         mode: "onChange",
     })
-    // let { cart, setCart, setCountProducts } = useCart();
-    const cart = useSelector((state) => state.cart)
+    const cart = useCart()
     //суммарная скидка
     // const [totalDiscount, setTotalDiscount] = useState(0)
     //итоговая стоимость
@@ -37,16 +30,6 @@ export default function CartContent() {
             setTotal(0)
         }
     }, [cart])
-
-    function deleteProduct(id, size) {
-        dispatch({ type: REMOVE_FROM_CART, payload: { id, size } })
-    }
-    function increase(id, size) {
-        dispatch({ type: INC_COUNT, payload: { id, size } })
-    }
-    function decrease(id, size) {
-        dispatch({ type: DEC_COUNT, payload: { id, size } })
-    }
 
     //поля адреса доставки
     const [fields] = useState([
@@ -67,7 +50,7 @@ export default function CartContent() {
         },
         {
             name: "frame",
-            label: "Корпус",
+            label: "Корпус / Строение",
             isRequired: false,
         },
         {
@@ -77,9 +60,34 @@ export default function CartContent() {
         },
     ])
 
-    const onSubmit = (data) => {
-        console.log(data)
+    // оформление заказа
+    const [createOrder, { isSuccess }] = useCreateOrderMutation()
+    const onSubmit = async (data) => {
+        if (!formState.isValid || !cart.length > 0) {
+            return
+        }
+        const address = `${data.city} ${data.street} ${data.houseNumber} ${data.frame} ${data.flat}`
+        const deliveryCost = 150
+        const paymentMethod = "card"
+        const productsId = cart.map((item) => item.id)
+        await createOrder({
+            totalCost: total,
+            deliveryCost,
+            paymentMethod,
+            address,
+            productsId,
+        }).unwrap()
     }
+    useEffect(() => {
+        if (isSuccess) {
+            dispatch({ type: EMPTY_CART })
+        }
+    }, [isSuccess])
+
+    const [
+        checkCoupon,
+        { isSuccess: isSuccessCoupon, isError: isErrorCoupon, errorCoupon },
+    ] = useCheckCouponMutation()
 
     return (
         <div className="container mx-auto my-6 text-4xl">
@@ -94,11 +102,11 @@ export default function CartContent() {
                         {cart?.length > 0 ? (
                             <button
                                 type="button"
-                                className="text-2xl flex items-center justify-center bg-inherit dark:text-white text-black"
-                                onClick={() => setCart([])}
+                                className="text-xl flex items-center justify-center bg-transparent  dark:text-white  text-black dark:hover:text-red-500 hover:text-red-500"
+                                onClick={() => dispatch({ type: EMPTY_CART })}
                             >
-                                Очистить корзину{" "}
-                                <FaTimes className="ml-2"></FaTimes>
+                                <FaTrash className="mr-2"></FaTrash>
+                                Очистить корзину
                             </button>
                         ) : (
                             <span className="text-2xl flex items-center justify-center bg-inherit dark:text-white text-black my-4">
@@ -123,9 +131,6 @@ export default function CartContent() {
                                     isDiscount={item.isDiscount}
                                     discount_cost={item.discount_cost}
                                     countItem={item.count}
-                                    deleteProduct={deleteProduct}
-                                    increase={increase}
-                                    decrease={decrease}
                                 />
                             ))}
                     </div>
@@ -148,17 +153,45 @@ export default function CartContent() {
                     </div>
                 </div>
                 <div className=" flex flex-col text-lg xl:text-xl w-full lg:w-2/5 lg:pl-7">
-                    <div className="lg:sticky lg:top-8">
+                    <div className="lg:sticky lg:top-8 space-y-3">
+                        <div className="dark:bg-dark-light bg-light px-7 md:px-14 py-6 rounded-xl space-y-2">
+                            <InputForm
+                                control={control}
+                                name="couponInput"
+                                label="Введите промокод"
+                            />
+                            {isSuccessCoupon && (
+                                <span className="text-success text-sm">
+                                    Скидка применена
+                                </span>
+                            )}
+                            {isErrorCoupon && (
+                                <span className="text-red-500 text-sm">
+                                    {errorCoupon?.data?.message}
+                                </span>
+                            )}
+                            <button
+                                type="button"
+                                className=" border-solid border-2 border-orange-500 hover:bg-orange-500 py-1 text-center w-full font-semibold text-lg"
+                                onClick={() => {
+                                    checkCoupon({
+                                        text: getValues("couponInput"),
+                                    })
+                                }}
+                            >
+                                Применить
+                            </button>
+                        </div>
                         <div className="dark:bg-dark-light bg-light px-7 md:px-14 py-6 rounded-xl">
                             <div className="text-center text-2xl font-semibold mb-5">
                                 Итого
                             </div>
-                            <div className="flex justify-between items-center text-sm">
+                            {/* <div className="flex justify-between items-center text-sm">
                                 <span className="whitespace-nowrap">
                                     Скидка
                                 </span>
                                 <span className="whitespace-nowrap">
-                                    {/* {formatPrice(totalDiscount)} руб. */}
+                                    {formatPrice(totalDiscount)} руб.
                                 </span>
                             </div>
                             <div className="flex justify-between items-center text-sm text-dark-muted">
@@ -166,10 +199,11 @@ export default function CartContent() {
                                     Стоимость без скидки
                                 </span>
                                 <span className="whitespace-nowrap">
-                                    {/* {formatPrice(totalDiscount + total)} руб. */}
+                                    {formatPrice(totalDiscount + total)} руб.
                                 </span>
-                            </div>
-                            <div className="flex justify-between items-center text-xl">
+                            </div> */}
+
+                            <div className="flex justify-between items-center text-xl my-2">
                                 <span className="whitespace-nowrap">
                                     Итоговая стоимость
                                 </span>
@@ -179,8 +213,9 @@ export default function CartContent() {
                             </div>
                         </div>
                         <button
+                            disabled={!formState.isValid || !cart.length > 0}
                             type="submit"
-                            className="mt-5 bg-orange-500 hover:bg-orange-600 py-3 text-center w-full font-semibold"
+                            className=" disabled:bg-zinc-500 bg-orange-500 hover:bg-orange-600 py-3 text-center w-full font-semibold"
                         >
                             Заказать
                         </button>

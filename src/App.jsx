@@ -1,20 +1,18 @@
-import { useState } from "react"
-import { useSelector } from "react-redux"
 import { Route, Routes } from "react-router-dom"
 import "./App.scss"
-import Content from "./Content"
 import Layout from "./components/Layout"
 import MainContainer from "./components/MainContainer"
 import useToggleTheme from "./hooks/useToggleTheme"
+import { useGetUserQuery } from "./http/userAuthApi.RTK"
 import Accessories from "./pages/accessories/Accessories"
 import All from "./pages/all/All"
 import LayoutUser from "./pages/cabinet/LayoutUser"
+import Coupon from "./pages/cabinet/coupon/Coupon"
 import Favorite from "./pages/cabinet/favorite/Favorite"
 import Orders from "./pages/cabinet/orders/Orders"
-import AddProduct from "./pages/cabinet/products/AddProduct"
-import AllProducts from "./pages/cabinet/products/AllProducts"
 import Profile from "./pages/cabinet/profile/Profile"
 import Support from "./pages/cabinet/reqSupport/Support"
+import SupportChat from "./pages/cabinet/reqSupport/SupportChat"
 import CartPage from "./pages/cart/CartPage"
 import ForHer from "./pages/forHer/ForHer"
 import ForHim from "./pages/forHim/ForHim"
@@ -27,19 +25,19 @@ import { CartProvider } from "./providers/CartContext"
 import { ThemeProvider } from "./providers/ThemeProvider.jsx"
 
 const App = () => {
-    const user = useSelector((state) => state.user)
-
+    const { data: user } = useGetUserQuery()
     useToggleTheme()
-    const [loading, setLoading] = useState(false)
-    if (loading) {
-        return (
-            <ThemeProvider>
-                <Layout>
-                    <Preloader previewText="Loading..." />
-                </Layout>
-            </ThemeProvider>
-        )
-    }
+
+    // const [loading, setLoading] = useState(false)
+    // if (loading) {
+    //     return (
+    //         <ThemeProvider>
+    //             <Layout>
+    //                 <Preloader previewText="Loading..." />
+    //             </Layout>
+    //         </ThemeProvider>
+    //     )
+    // }
     return (
         <ThemeProvider>
             <Layout>
@@ -47,8 +45,7 @@ const App = () => {
                     <MainContainer>
                         <Routes>
                             {/* Авторизованный пользователь */}
-                            {/* Убрать */}
-                            {user !== null && (
+                            {user && (
                                 <Route path="user" element={<LayoutUser />}>
                                     <Route
                                         path="profile"
@@ -63,6 +60,11 @@ const App = () => {
                                         path="support"
                                         element={<Support />}
                                     />
+                                    <Route
+                                        path="support/:id"
+                                        element={<SupportChat />}
+                                    />
+                                    <Route path="coupon" element={<Coupon />} />
                                     {/* <Route path="products">
                                         <Route
                                             path="add"
@@ -76,8 +78,8 @@ const App = () => {
                                 </Route>
                             )}
                             {/* Публичные маршруты */}
-                            <Route path="/" element={<Content />} />
-                            <Route path="home" element={<Home />} />
+                            {/* <Route path="/" element={<Content />} /> */}
+                            <Route path="/" element={<Home />} />
                             <Route path="new" element={<New />} />
                             <Route path="for-him" element={<ForHim />} />
                             <Route path="for-her" element={<ForHer />} />

@@ -1,12 +1,14 @@
 import formatPrice from "../../../components/priceFormatter"
+import { statusOrder } from "../../../global/statusOrder"
 
 export default function OrderItem({
     id,
     total_cost,
-    paymentMethod,
+    payment_method,
     address,
     status,
     createdAt,
+    delivery_cost,
 }) {
     /*
     Коды статусов заказа:
@@ -20,31 +22,37 @@ export default function OrderItem({
             <div className="flex justify-between items-center flex-wrap">
                 <div className="text-2xl xl:text-3xl">
                     Заказ № {id}
-                    {status === 1 && (
+                    {status === statusOrder.created && (
                         <span className="text-zinc-500 text-lg lg:text-xl ml-2">
                             Принят
                         </span>
                     )}
-                    {status === 2 && (
+                    {status === statusOrder.enRoute && (
                         <span className="text-warning text-lg lg:text-xl ml-2">
                             В пути
                         </span>
                     )}
-                    {status === 3 && (
+                    {status === statusOrder.completed && (
                         <span className="text-success text-lg lg:text-xl ml-2">
                             Уже у вас
                         </span>
                     )}
-                    {status === 4 && (
+                    {status === statusOrder.canceled && (
                         <span className="text-red-500 text-lg lg:text-xl ml-2">
                             Отменен
                         </span>
                     )}
                 </div>
-                <div className="xl:text-xl">
+                <span className="xl:text-xl">
                     Дата оформления:{" "}
-                    {new Date(createdAt).toLocaleDateString("ru-RU")}
-                </div>
+                    <time
+                        dateTime={`${new Date(createdAt).toLocaleDateString(
+                            "ru-RU"
+                        )}`}
+                    >
+                        {new Date(createdAt).toLocaleDateString("ru-RU")}
+                    </time>
+                </span>
             </div>
             <span className="mt-5">
                 Стоимость:{" "}
@@ -54,7 +62,7 @@ export default function OrderItem({
             </span>
             <span>
                 Способ оплаты:{" "}
-                <span className="font-semibold">{paymentMethod}</span>
+                <span className="font-semibold">{payment_method}</span>
             </span>
             <span>
                 Адрес доставки: <span className="font-semibold">{address}</span>
@@ -63,14 +71,16 @@ export default function OrderItem({
                 Получатель: <span className="font-semibold">Получатель</span>
             </span>
             <span>
-                Стоимость доставки:{" "}
-                {/* {deliveryCost === 0 ? (
+                Стоимость доставки:
+                {delivery_cost === 0 ? (
                     <span className="font-semibold capitalize text-success">
                         Бесплатно
                     </span>
                 ) : (
-                    <span className="font-semibold">{deliveryCost} руб.</span>
-                )} */}
+                    <span className="font-semibold text-warning ml-1">
+                        {delivery_cost} руб.
+                    </span>
+                )}
             </span>
         </div>
     )

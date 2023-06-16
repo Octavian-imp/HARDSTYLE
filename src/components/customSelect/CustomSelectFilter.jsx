@@ -22,7 +22,7 @@ export default function CustomSelectFilter({ options, onChangeValue }) {
                 {selectedSort}
             </span>
             <ul
-                className={`absolute -left-[10%] z-20  py-3 rounded-xl space-y-3 ${
+                className={`absolute -right-[50%] z-20  py-3 rounded-xl space-y-3 ${
                     isChecked ? "" : "hidden"
                 } ${isChecked ? "dark:bg-dark-light bg-light" : ""}`}
             >

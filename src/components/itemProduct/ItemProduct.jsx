@@ -1,8 +1,8 @@
-import { IoCart, IoHeartOutline, IoStatsChart } from "react-icons/io5";
-import { NavLink } from "react-router-dom";
-import formatPrice from "../../components/priceFormatter";
-import useCart from "../../hooks/useCart";
-import "./ItemProduct.scss";
+import { IoCart, IoHeartOutline, IoStatsChart } from "react-icons/io5"
+import { NavLink } from "react-router-dom"
+import formatPrice from "../../components/priceFormatter"
+import { useAddFavoriteMutation } from "../../http/favoriteApi.RTK"
+import "./ItemProduct.scss"
 
 function ItemProduct({
     id,
@@ -14,9 +14,9 @@ function ItemProduct({
     discount = false,
     cost_without_discount = "null",
     units = "руб.",
-    className,
     isSliderChild = false,
 }) {
+    const [addFavorite] = useAddFavoriteMutation()
     return (
         <article
             className={`rounded-2xl h-96 ${
@@ -54,9 +54,9 @@ function ItemProduct({
                         {formatPrice(cost)} {units}
                     </span>
                     {discount && (
-                        <div className="ml-1 text-red-500 line-through text-sm">
+                        <sud className="ml-1 text-red-500 line-through text-sm">
                             {formatPrice(cost_without_discount)} {units}
-                        </div>
+                        </sud>
                     )}
                 </div>
                 <div className="flex justify-between mt-4 mb-3 text-sm">
@@ -68,12 +68,15 @@ function ItemProduct({
                         <IoCart className="text-white mr-2 text-xl" />
                         Купить
                     </NavLink>
+
                     <button
                         className="bg-red-500 hover:bg-red-700 text-white flex items-center justify-center rounded-full font-semibold p-2"
                         title="В избранное"
+                        onClick={() => addFavorite({ productId: id })}
                     >
                         <IoHeartOutline className="text-white text-xl" />
                     </button>
+
                     <button
                         className="bg-yellow-500 hover:bg-yellow-700 text-white flex items-center justify-center rounded-full font-semibold p-2"
                         title="Сравнить"
@@ -83,7 +86,7 @@ function ItemProduct({
                 </div>
             </div>
         </article>
-    );
+    )
 }
 
-export default ItemProduct;
+export default ItemProduct

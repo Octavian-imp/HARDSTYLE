@@ -5,23 +5,35 @@ import { useGetProductsQuery } from "../http/productAPI.RTK"
 import CustomSelectFilter from "./customSelect/CustomSelectFilter"
 import ItemProduct from "./itemProduct/ItemProduct"
 
-const ContentProductPage = ({ gender }) => {
+const ContentProductPage = ({ gender, isAccessories }) => {
     const [page, setPage] = useState(1)
+    const countPerPage = [
+        { content: 12, name: 12 },
+        { content: 2, name: 2 },
+    ]
     const [sortname, setSortname] = useState(filterOptions[0].name)
-    const { data, isLoading, error, isError } = useGetProductsQuery({
-        limit: 12,
+    let [limitPage, setLimitPage] = useState(12)
+    const {
+        data: products,
+        isLoading,
+        error,
+        isError,
+        isSuccess,
+    } = useGetProductsQuery({
+        limit: limitPage,
         page,
         sort: sortname,
+        gender,
+        isAccessories,
     })
     let [pageCount, setPageCount] = useState(1)
-    let [newProducts, setNewProducts] = useState([])
 
     useEffect(() => {
-        if (data) {
-            setNewProducts(data.rows)
-            setPageCount(Math.ceil(data.count / 12))
+        if (isSuccess) {
+            console.log(products)
+            setPageCount(Math.ceil(products.count / limitPage))
         }
-    }, [data])
+    }, [products])
     if (isLoading) {
         return <h1>Loading</h1>
     }
@@ -34,19 +46,27 @@ const ContentProductPage = ({ gender }) => {
     }
     return (
         <div className="flex flex-col xl:w-4/5 lg:w-4/5">
-            <div className="flex mb-3 font-semibold">
-                Сортировка по:
+            <div className="flex justify-between mb-3 font-semibold">
+                <div className="flex">
+                    Сортировка по:
+                    <CustomSelectFilter
+                        options={filterOptions}
+                        onChangeValue={(value) => {
+                            setSortname(value)
+                            setPage(1)
+                        }}
+                    />
+                </div>
                 <CustomSelectFilter
-                    options={filterOptions}
+                    options={countPerPage}
                     onChangeValue={(value) => {
-                        setSortname(value)
-                        setPage(1)
+                        setLimitPage(value)
                     }}
                 />
             </div>
             <div className="flex md:justify-between justify-evenly flex-wrap">
-                {newProducts &&
-                    newProducts.map((item) => (
+                {products.rows?.length > 0 &&
+                    products.rows.map((item) => (
                         <ItemProduct
                             key={uuidv4()}
                             id={item.id}

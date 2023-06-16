@@ -1,6 +1,6 @@
-import FormFilter from "../../components/formFilter/FormFilter";
-import ContentProductPage from "../../components/ContentProductPage";
-import { FilterProductsProvider } from "../../providers/FilterProductsProvider";
+import ContentProductPage from "../../components/ContentProductPage"
+import FormFilter from "../../components/formFilter/FormFilter"
+import { FilterProductsProvider } from "../../providers/FilterProductsProvider"
 
 const New = () => {
     return (
@@ -13,7 +13,7 @@ const New = () => {
                 <ContentProductPage gender="female" />
             </FilterProductsProvider>
         </div>
-    );
-};
+    )
+}
 
-export default New;
+export default New

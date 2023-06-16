@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import useTheme from "../../hooks/useTheme"
+import useUser from "../../hooks/useUser"
 import {
     useCreateUserMutation,
     useSetUserMutation,
 } from "../../http/userAuthApi.RTK"
 
 const Login = () => {
-    const user = useSelector((state) => state.user)
+    const user = useUser()
     const dispatch = useDispatch()
 
     const { setIsHeader } = useTheme()

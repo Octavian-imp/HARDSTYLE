@@ -1,7 +1,13 @@
 import { BsHeart } from "react-icons/bs"
 import { FaTimes } from "react-icons/fa"
+import { useDispatch } from "react-redux"
 import { NavLink } from "react-router-dom"
 import formatPrice from "../../components/priceFormatter"
+import {
+    DEC_COUNT,
+    INC_COUNT,
+    REMOVE_FROM_CART,
+} from "../../store/actions/cartActionsTypes"
 import CountItems from "../CountItems"
 
 export default function ItemProductCart({
@@ -18,6 +24,16 @@ export default function ItemProductCart({
     increase,
     decrease,
 }) {
+    const dispatch = useDispatch()
+    function deleteProduct(id, size) {
+        dispatch({ type: REMOVE_FROM_CART, payload: { id, size } })
+    }
+    function increase(id, size) {
+        dispatch({ type: INC_COUNT, payload: { id, size } })
+    }
+    function decrease(id, size) {
+        dispatch({ type: DEC_COUNT, payload: { id, size } })
+    }
     return (
         <div className="flex sm:flex-row flex-col mx-3 text-lg justify-between">
             <div className="flex">

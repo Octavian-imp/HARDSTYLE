@@ -38,7 +38,6 @@ function TabItem({ title, content }) {
 
 export default function ItemContent() {
     const dispatch = useDispatch()
-    const { cart, setCart, setCountProducts } = useCart()
     const [tabs, setTabs] = useState([
         {
             title: "Характеристики",
@@ -87,9 +86,6 @@ scelerisque fermentum dui.`,
         require("../../assets/item.jpg"),
     ])
 
-    const [sizes, setSizes] = useState([])
-    // const [product, setProduct] = useState({})
-    const [description, setDescription] = useState([])
     const [productCart, setProductCart] = useState({})
 
     const { id } = useParams()

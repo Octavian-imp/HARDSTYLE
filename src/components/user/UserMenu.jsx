@@ -1,10 +1,10 @@
 import { AiOutlineLogin } from "react-icons/ai"
 import { HiUserCircle } from "react-icons/hi"
-import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
+import useUser from "../../hooks/useUser"
 
 function UserMenu() {
-    const user = useSelector((state) => state.user)
+    const user = useUser()
     return (
         <>
             {user !== null ? (

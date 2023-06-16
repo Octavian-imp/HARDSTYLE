@@ -18,7 +18,7 @@ export const productApi = publicApi.injectEndpoints({
         getProducts: build.query({
             query: (params) => ({
                 url: `api/product`,
-                params: { ...params },
+                params,
             }),
         }),
         getOneProduct: build.query({

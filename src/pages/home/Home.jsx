@@ -1,16 +1,21 @@
-import ItemProduct from "../../components/itemProduct/ItemProduct";
-import "./Home.scss";
+import ItemProduct from "../../components/itemProduct/ItemProduct"
+import "./Home.scss"
 
-import { useEffect, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import { fetchPopularProducts } from "../../http/productAPI";
+import { Autoplay, Navigation, Pagination } from "swiper"
+import "swiper/css"
+import "swiper/css/navigation"
+import "swiper/css/pagination"
+import { Swiper, SwiperSlide } from "swiper/react"
+import { filterOptions } from "../../global/filterOptions"
+import { useGetProductsQuery } from "../../http/productAPI.RTK"
 
 function Home() {
-    const [popularItems, setPopularItems] = useState([]);
+    const { data, isSuccess } = useGetProductsQuery({
+        limit: 8,
+        sort: filterOptions.at(0).name,
+    })
+
+    // const [popularProducts, setPopularProducts] = useState([])
 
     //настройки слайдеров
     const settingsMainBanner = {
@@ -29,9 +34,9 @@ function Home() {
         loop: true,
         slidesPerView: 1,
         slidesPerGroup: 1,
-    };
+    }
 
-    const settingsPopularItems = {
+    const settingsNoveltyProducts = {
         modules: [Navigation, Autoplay],
         spaceBetween: 15,
         navigation: {
@@ -61,13 +66,7 @@ function Home() {
                 slidesPerView: 5,
             },
         },
-    };
-
-    useEffect(() => {
-        fetchPopularProducts().then((res) => {
-            setPopularItems(res.rows);
-        });
-    }, []);
+    }
 
     return (
         <>
@@ -116,24 +115,25 @@ function Home() {
                 </div>
 
                 <Swiper
-                    {...settingsPopularItems}
+                    {...settingsNoveltyProducts}
                     className="homeSlider mt-10 flex items-center justify-center"
                 >
-                    {popularItems &&
-                        popularItems.map((item, index) => (
+                    {data?.rows?.length > 0 &&
+                        data?.rows.map((product, index) => (
                             <SwiperSlide
                                 virtualIndex={index}
                                 key={index}
                                 className="overflow-hidden"
                             >
                                 <ItemProduct
-                                    index={item.id}
+                                    index={product.id}
                                     url_item_img={
-                                        process.env.REACT_APP_API_URL + item.img
+                                        process.env.REACT_APP_API_URL +
+                                        product.img
                                     }
-                                    url_item_page={`/product/${item.id}`}
-                                    name_item={item.name}
-                                    cost={item.price}
+                                    url_item_page={`/product/${product.id}`}
+                                    name_item={product.name}
+                                    cost={product.price}
                                     isSliderChild={true}
                                 />
                             </SwiperSlide>
@@ -143,7 +143,7 @@ function Home() {
                 </Swiper>
             </div>
         </>
-    );
+    )
 }
 
-export default Home;
+export default Home

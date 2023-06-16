@@ -4,12 +4,12 @@ import { RiEditBoxFill } from "react-icons/ri"
 // import imgUser from "../../../assets/item.jpg";
 import { useEffect } from "react"
 import { useForm } from "react-hook-form"
-import { useSelector } from "react-redux"
 import useTheme from "../../../hooks/useTheme"
+import useUser from "../../../hooks/useUser"
 import { useUpdateUserMutation } from "../../../http/userAuthApi.RTK"
 
 export default function Profile() {
-    const user = useSelector((state) => state.user)
+    const user = useUser()
     const [updateInfo] = useUpdateUserMutation()
 
     const { setIsHeader } = useTheme()
