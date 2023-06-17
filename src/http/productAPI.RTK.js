@@ -20,6 +20,14 @@ export const productApi = publicApi.injectEndpoints({
                 url: `api/product`,
                 params,
             }),
+            providesTags: () => [{ type: "productsApi" }],
+        }),
+        filterProducts: build.mutation({
+            query: (params) => ({
+                url: "api/product",
+                params,
+            }),
+            invalidatesTags: () => [{ type: "productsApi" }],
         }),
         getOneProduct: build.query({
             query: ({ id }) => ({
@@ -28,4 +36,8 @@ export const productApi = publicApi.injectEndpoints({
         }),
     }),
 })
-export const { useGetProductsQuery, useGetOneProductQuery } = productApi
+export const {
+    useGetProductsQuery,
+    useGetOneProductQuery,
+    useFilterProductsMutation,
+} = productApi

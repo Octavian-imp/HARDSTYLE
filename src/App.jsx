@@ -1,9 +1,10 @@
+import { useEffect } from "react"
 import { Route, Routes } from "react-router-dom"
 import "./App.scss"
 import Layout from "./components/Layout"
 import MainContainer from "./components/MainContainer"
 import useToggleTheme from "./hooks/useToggleTheme"
-import { useGetUserQuery } from "./http/userAuthApi.RTK"
+import { useGetUserMutation } from "./http/userAuthApi.RTK"
 import Accessories from "./pages/accessories/Accessories"
 import All from "./pages/all/All"
 import LayoutUser from "./pages/cabinet/LayoutUser"
@@ -25,9 +26,11 @@ import { CartProvider } from "./providers/CartContext"
 import { ThemeProvider } from "./providers/ThemeProvider.jsx"
 
 const App = () => {
-    const { data: user } = useGetUserQuery()
+    const [getUser, { data: user }] = useGetUserMutation()
     useToggleTheme()
-
+    useEffect(() => {
+        getUser()
+    }, [])
     // const [loading, setLoading] = useState(false)
     // if (loading) {
     //     return (

@@ -32,7 +32,7 @@ export default function Support() {
     const form = useRef()
 
     const { data: tickets, isLoading: isLoadingTickets } =
-        useGetAllTicketsQuery()
+        useGetAllTicketsQuery(null)
     const [isOpen, setIsOpen] = useState(false)
 
     if (isLoadingTickets) {

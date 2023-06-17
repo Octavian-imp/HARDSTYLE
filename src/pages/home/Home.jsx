@@ -111,7 +111,7 @@ function Home() {
                 </Swiper>
 
                 <div className="mt-10 font-bold text-3xl text-center">
-                    Популярные товары
+                    Новинки
                 </div>
 
                 <Swiper

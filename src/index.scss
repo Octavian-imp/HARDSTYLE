@@ -2,84 +2,86 @@
 @tailwind components;
 @tailwind utilities;
 
-
 $dark: #121212;
 $dark-light: #222226;
 $light: #fafafa;
 $dark-muted: #cecece;
 $muted: #5a5a5a;
 
-html, body {
-  @apply selection:bg-orange-500 selection:text-white;
-
-  min-height:100%;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+html,
+body {
+    @apply selection:bg-orange-500 selection:text-white;
+    min-height: 100%;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+        "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 *:focus,
-*:focus-within, *:active,*:target,*:focus-visible{
-  @apply outline-none;
+*:focus-within,
+*:active,
+*:target,
+*:focus-visible {
+    @apply outline-none;
 }
 /* W3C standard
    сейчас только для Firefox */
 * {
-  scrollbar-width: thin;
-  scrollbar-color: $light $dark-light;
+    scrollbar-width: thin;
+    scrollbar-color: $light $dark-light;
 }
 
 /* для Chrome/Edge/Safari */
 *::-webkit-scrollbar {
-  height: 12px;
-  width: 12px;
+    height: 12px;
+    width: 12px;
 }
 *::-webkit-scrollbar-track {
-  background: $light;
+    background: $light;
 }
 *::-webkit-scrollbar-thumb {
-  background-color: $dark-light;
-  border-radius: 6px;
-  border: 3px solid $light;
+    background-color: $dark-light;
+    border-radius: 6px;
+    border: 3px solid $light;
 }
 
 html.dark {
-  & *{
-    scrollbar-color: $dark-light $light;
-  }
-  & *::-webkit-scrollbar-track {
-    background: $dark-light;
-  }
-  & *::-webkit-scrollbar-thumb {
-    background-color: $light;
-    border-color: $dark-light;
-  }
+    & * {
+        scrollbar-color: $dark-light $light;
+    }
+    & *::-webkit-scrollbar-track {
+        background: $dark-light;
+    }
+    & *::-webkit-scrollbar-thumb {
+        background-color: $light;
+        border-color: $dark-light;
+    }
 }
-
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+        monospace;
 }
-#root{
-min-height: 100%;
-  height: fit-content;
+#root {
+    @apply overflow-y-hidden;
+    min-height: 100%;
+    height: fit-content;
 }
 
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
+    -webkit-appearance: none;
 }
-input[type="number"]{
-  appearance:none;
-  -moz-appearance:textfield;
+input[type="number"] {
+    appearance: none;
+    -moz-appearance: textfield;
 }
 
 input[type="number"]:focus,
 input[type="number"]:active,
-input[type="number"]:focus-within{
-  outline:none;
+input[type="number"]:focus-within {
+    outline: none;
 }

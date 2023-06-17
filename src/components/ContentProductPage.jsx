@@ -30,7 +30,6 @@ const ContentProductPage = ({ gender, isAccessories }) => {
 
     useEffect(() => {
         if (isSuccess) {
-            console.log(products)
             setPageCount(Math.ceil(products.count / limitPage))
         }
     }, [products])
@@ -40,7 +39,7 @@ const ContentProductPage = ({ gender, isAccessories }) => {
     if (isError) {
         return (
             <h1>
-                {error.status} {JSON.stringify(error.data)}
+                {error.status} {JSON.stringify(error?.data?.message)}
             </h1>
         )
     }

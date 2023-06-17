@@ -23,20 +23,25 @@ export const userAuthApi = authApi.injectEndpoints({
             },
             invalidatesTags: () => [{ type: "userAuth" }],
         }),
-        getUser: build.query({
+        getUser: build.mutation({
             query: () => ({
                 url: `api/user/auth`,
             }),
             transformResponse: (res) => {
                 return { ...res, ...jwtDecode(res.token) }
             },
+            transformErrorResponse: (rej) => {
+                dispatch({ type: LOGOUT_USER })
+                localStorage.removeItem("token")
+            },
             onQueryStarted: async (arg, { dispatch, queryFulfilled }) => {
                 try {
                     const { data } = await queryFulfilled
                     dispatch({ type: SET_USER, payload: data })
+                    localStorage.setItem("token", data.token)
                 } catch (error) {}
             },
-            providesTags: () => [{ type: "userAuth" }],
+            invalidatesTags: () => [{ type: "userAuth" }],
         }),
         updateUser: build.mutation({
             query: (body) => ({
@@ -90,7 +95,7 @@ export const userAuthApi = authApi.injectEndpoints({
 
 export const {
     useSetUserMutation,
-    useGetUserQuery,
+    useGetUserMutation,
     useUpdateUserMutation,
     useCreateUserMutation,
     useLogoutUserMutation,
