@@ -76,34 +76,82 @@ function Home() {
                     className="homeSlider rounded-[3rem] "
                 >
                     <SwiperSlide>
-                        <div className="w-full !flex h-96">
-                            <div className="w-1/2 bg-[#bfbfbf] font-stalinist flex items-center justify-center">
-                                Фото лицевой стороны 1
+                        <a
+                            href={`${process.env.REACT_APP_HOME_URL}product/${
+                                data.rows.at(0).id
+                            }`}
+                            className="w-full !flex h-96 select-none"
+                        >
+                            <div className="w-1/2 bg-white font-stalinist flex items-center justify-center">
+                                <img
+                                    src={
+                                        process.env.REACT_APP_API_URL +
+                                        data.rows.at(0).img
+                                    }
+                                    alt=""
+                                    className="h-full"
+                                />
                             </div>
-                            <div className="w-1/2 bg-[#9c9999] font-stalinist flex items-center justify-center">
-                                Фото задней стороны 1
+                            <div className="w-1/2 bg-white font-stalinist flex items-center justify-center">
+                                <img
+                                    src={require("../../assets/not_found_logo.png")}
+                                    alt=""
+                                    className="h-full"
+                                />
                             </div>
-                        </div>
+                        </a>
                     </SwiperSlide>
                     <SwiperSlide>
-                        <div className="w-full !flex h-96">
-                            <div className="w-1/2 bg-[#bfbfbf] font-stalinist flex items-center justify-center">
-                                Фото лицевой стороны 2
+                        <a
+                            href={`${process.env.REACT_APP_HOME_URL}product/${
+                                data.rows.at(1).id
+                            }`}
+                            className="w-full !flex h-96 select-none"
+                        >
+                            <div className="w-1/2 bg-white font-stalinist flex items-center justify-center">
+                                <img
+                                    src={
+                                        process.env.REACT_APP_API_URL +
+                                        data.rows.at(1).img
+                                    }
+                                    alt=""
+                                    className="h-full"
+                                />
                             </div>
-                            <div className="w-1/2 bg-[#9c9999] font-stalinist flex items-center justify-center">
-                                Фото задней стороны 2
+                            <div className="w-1/2 bg-white font-stalinist flex items-center justify-center">
+                                <img
+                                    src={require("../../assets/not_found_logo.png")}
+                                    alt=""
+                                    className="h-full"
+                                />
                             </div>
-                        </div>
+                        </a>
                     </SwiperSlide>
                     <SwiperSlide>
-                        <div className="w-full !flex h-96">
-                            <div className="w-1/2 bg-[#bfbfbf] font-stalinist flex items-center justify-center">
-                                Фото лицевой стороны 3
+                        <a
+                            href={`${process.env.REACT_APP_HOME_URL}product/${
+                                data.rows.at(2).id
+                            }`}
+                            className="w-full !flex h-96 select-none"
+                        >
+                            <div className="w-1/2 bg-white font-stalinist flex items-center justify-center">
+                                <img
+                                    src={
+                                        process.env.REACT_APP_API_URL +
+                                        data.rows.at(2).img
+                                    }
+                                    alt=""
+                                    className="h-full"
+                                />
                             </div>
-                            <div className="w-1/2 bg-[#9c9999] font-stalinist flex items-center justify-center">
-                                Фото задней стороны 3
+                            <div className="w-1/2 bg-white font-stalinist flex items-center justify-center">
+                                <img
+                                    src={require("../../assets/not_found_logo.png")}
+                                    alt=""
+                                    className="h-full"
+                                />
                             </div>
-                        </div>
+                        </a>
                     </SwiperSlide>
                     <div className="swiper-button-prev customArrows"></div>
                     <div className="swiper-button-next customArrows"></div>
