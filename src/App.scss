@@ -48,6 +48,18 @@ $light-theme-text-color: #121212;
   -webkit-animation: transformation 5s ease infinite;
 }
 
+@-webkit-keyframes transformation {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 @keyframes transformation {
   0% {
     opacity: 0;
@@ -64,7 +76,8 @@ input{
 @apply caret-orange-500 outline-none
 }
 html.dark input[type='date']::-webkit-calendar-picker-indicator {
-  filter:invert(1);
+  -webkit-filter:invert(1);
+          filter:invert(1);
 }
 
 button {
@@ -83,6 +96,9 @@ button {
   -ms-transition: 0.3s ease;
   -o-transition: 0.3s ease;
 }
+a{
+  transition: 0.3s ease;
+}
 input,textarea,select{
   @apply duration-200 outline-none;
 }
@@ -94,6 +110,9 @@ input:focus,textarea:focus, select:focus{
 }
 select > option{
   @apply dark:bg-dark dark:text-white bg-light text-black;
+  }
+  dialog::-webkit-backdrop{
+  @apply backdrop-blur-sm dark:bg-dark-form bg-light-form;
   }
   dialog::backdrop{
   @apply backdrop-blur-sm dark:bg-dark-form bg-light-form;

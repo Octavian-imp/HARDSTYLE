@@ -78,7 +78,7 @@ function Home() {
                     <SwiperSlide>
                         <a
                             href={`${process.env.REACT_APP_HOME_URL}product/${
-                                data.rows.at(0).id
+                                data?.rows?.at(0).id
                             }`}
                             className="w-full !flex h-96 select-none"
                         >
@@ -86,7 +86,7 @@ function Home() {
                                 <img
                                     src={
                                         process.env.REACT_APP_API_URL +
-                                        data.rows.at(0).img
+                                        data?.rows?.at(0).img
                                     }
                                     alt=""
                                     className="h-full"
@@ -104,7 +104,7 @@ function Home() {
                     <SwiperSlide>
                         <a
                             href={`${process.env.REACT_APP_HOME_URL}product/${
-                                data.rows.at(1).id
+                                data?.rows?.at(1).id
                             }`}
                             className="w-full !flex h-96 select-none"
                         >
@@ -112,7 +112,7 @@ function Home() {
                                 <img
                                     src={
                                         process.env.REACT_APP_API_URL +
-                                        data.rows.at(1).img
+                                        data?.rows?.at(1).img
                                     }
                                     alt=""
                                     className="h-full"
@@ -130,7 +130,7 @@ function Home() {
                     <SwiperSlide>
                         <a
                             href={`${process.env.REACT_APP_HOME_URL}product/${
-                                data.rows.at(2).id
+                                data?.rows?.at(2).id
                             }`}
                             className="w-full !flex h-96 select-none"
                         >
@@ -138,7 +138,7 @@ function Home() {
                                 <img
                                     src={
                                         process.env.REACT_APP_API_URL +
-                                        data.rows.at(2).img
+                                        data?.rows?.at(2).img
                                     }
                                     alt=""
                                     className="h-full"
