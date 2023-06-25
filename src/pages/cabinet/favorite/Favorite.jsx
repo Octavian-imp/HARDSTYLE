@@ -1,8 +1,8 @@
 import { useEffect } from "react"
 import { IoHeart } from "react-icons/io5"
 import { v4 as uuidv4 } from "uuid"
-import FavoriteItem from "../../../components/favoriteItem/FavoriteItem"
-import FavoriteItemLoading from "../../../components/favoriteItem/FavoriteItemLoading"
+import FavoriteItem from "../../../components/favoriteItem/FavoriteItem.jsx"
+import FavoriteItemLoading from "../../../components/favoriteItem/FavoriteItemLoading.jsx"
 import { useGetAllQuery } from "../../../http/favoriteApi.RTK"
 
 export default function Favorite() {
@@ -11,7 +11,8 @@ export default function Favorite() {
         if (isError) {
             console.error(error.message)
         }
-    }, [favorites])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [favorites, isError])
     if (isLoading) {
         return (
             <>

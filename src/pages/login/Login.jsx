@@ -1,21 +1,20 @@
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
-import { useDispatch } from "react-redux"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import useTheme from "../../hooks/useTheme"
-import useUser from "../../hooks/useUser"
 import {
     useCreateUserMutation,
     useSetUserMutation,
 } from "../../http/userAuthApi.RTK"
 
 const Login = () => {
-    const user = useUser()
-    const dispatch = useDispatch()
+    // const user = useUser()
+    // const dispatch = useDispatch()
 
     const { setIsHeader } = useTheme()
     useEffect(() => {
         setIsHeader(false)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const location = useLocation()
@@ -63,7 +62,7 @@ const Login = () => {
 
     const {
         register,
-        handleSubmit,
+        // handleSubmit,
         formState: { errors },
         reset,
     } = useForm({

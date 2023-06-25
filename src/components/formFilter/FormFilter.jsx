@@ -1,12 +1,12 @@
-import React, { useEffect } from "react"
+
 import { FormProvider, useForm } from "react-hook-form"
 import { v4 as uuidv4 } from "uuid"
 import { useFilterProductsMutation } from "../../http/productAPI.RTK"
-import InputCheckbox from "../inputCheckbox/InputCheckbox"
-import InputRangeCost from "../inputRangeCost/InputRangeCost"
+import InputCheckbox from "../inputCheckbox/InputCheckbox.jsx"
+import InputRangeCost from "../inputRangeCost/InputRangeCost.jsx"
 
 export default function FormFilter() {
-    const [filterProducts, { data, isSuccess }] = useFilterProductsMutation()
+    const [filterProducts] = useFilterProductsMutation()
 
     const sizesCheckbox = [
         {

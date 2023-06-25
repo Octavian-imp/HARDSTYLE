@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import jwtDecode from "jwt-decode"
 import { toDataForm } from "../hooks/toDataForm"
 import { LOGOUT_USER, SET_USER } from "../store/actions/userActionsTypes"
@@ -29,10 +30,6 @@ export const userAuthApi = authApi.injectEndpoints({
             }),
             transformResponse: (res) => {
                 return { ...res, ...jwtDecode(res.token) }
-            },
-            transformErrorResponse: (rej) => {
-                dispatch({ type: LOGOUT_USER })
-                localStorage.removeItem("token")
             },
             onQueryStarted: async (arg, { dispatch, queryFulfilled }) => {
                 try {

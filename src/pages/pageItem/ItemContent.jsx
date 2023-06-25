@@ -5,7 +5,6 @@ import { Navigation, Thumbs, Virtual } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { v4 as uuidv4 } from "uuid"
 import SelectSizeRadioBtn from "../../components/selectSizeRadioBtn/SelectSizeRadioBtn.jsx"
-import useCart from "../../hooks/useCart"
 import { useGetOneProductQuery } from "../../http/productAPI.RTK.js"
 import { ADD_TO_CART } from "../../store/actions/cartActionsTypes.js"
 import "./ItemContent.scss"
@@ -38,7 +37,7 @@ function TabItem({ title, content }) {
 
 export default function ItemContent() {
     const dispatch = useDispatch()
-    const [tabs, setTabs] = useState([
+    const tabs = [
         {
             title: "Характеристики",
             description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -75,26 +74,21 @@ scelerisque. Laoreet id donec ultrices tincidunt. Nunc pulvinar
 sapien et ligula. Etiam dignissim diam quis enim lobortis
 scelerisque fermentum dui.`,
         },
-    ])
+    ]
 
     // TODO:Сделать вывод картинок из бека
-    const [itemImages, setItemImages] = useState([
+    const itemImages = [
         require("../../assets/item.jpg"),
         require("../../assets/item_2.jpg"),
         require("../../assets/item.jpg"),
         require("../../assets/item_2.jpg"),
         require("../../assets/item.jpg"),
-    ])
+    ]
 
     const [productCart, setProductCart] = useState({})
 
     const { id } = useParams()
-    const {
-        data: product,
-        isSuccess,
-        isError,
-        error,
-    } = useGetOneProductQuery({ id })
+    const { data: product, isSuccess } = useGetOneProductQuery({ id })
     useEffect(() => {
         if (isSuccess) {
             setProductCart({
@@ -105,6 +99,7 @@ scelerisque fermentum dui.`,
                 url: `${process.env.REACT_APP_HOME_URL}product/${id}`,
             })
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [product])
     // useEffect(() => {
     //     console.log(productCart)

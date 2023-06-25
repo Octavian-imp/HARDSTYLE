@@ -1,8 +1,7 @@
-import { useState } from "react"
 import { IoMdSave } from "react-icons/io"
 import { RiEditBoxFill } from "react-icons/ri"
 // import imgUser from "../../../assets/item.jpg";
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import useTheme from "../../../hooks/useTheme"
 import useUser from "../../../hooks/useUser"
@@ -15,6 +14,7 @@ export default function Profile() {
     const { setIsHeader } = useTheme()
     useEffect(() => {
         setIsHeader(true)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     const [urlAvatar, setUrlAvatar] = useState(
         process.env.REACT_APP_API_URL + user.avatarURL
@@ -46,7 +46,7 @@ export default function Profile() {
                 birthDay: data.birthDay,
             })
                 .unwrap()
-                .then((res) => {
+                .then(() => {
                     alert("Информация обновлена")
                 })
                 .catch((err) => {

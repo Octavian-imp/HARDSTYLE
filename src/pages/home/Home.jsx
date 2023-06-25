@@ -1,16 +1,19 @@
-import ItemProduct from "../../components/itemProduct/ItemProduct"
+import ItemProduct from "../../components/itemProduct/ItemProduct.jsx"
 import "./Home.scss"
 
 import { Autoplay, Navigation, Pagination } from "swiper"
+// eslint-disable-next-line import/no-unresolved
 import "swiper/css"
+// eslint-disable-next-line import/no-unresolved
 import "swiper/css/navigation"
+// eslint-disable-next-line import/no-unresolved
 import "swiper/css/pagination"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { filterOptions } from "../../global/filterOptions"
 import { useGetProductsQuery } from "../../http/productAPI.RTK"
 
 function Home() {
-    const { data, isSuccess } = useGetProductsQuery({
+    const { data } = useGetProductsQuery({
         limit: 8,
         sort: filterOptions.at(0).name,
     })

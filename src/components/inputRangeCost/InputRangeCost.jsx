@@ -36,6 +36,7 @@ const InputRangeCost = ({ min, max, step }) => {
                 }
             }
         },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [minVal, maxVal, progressGap]
     )
 

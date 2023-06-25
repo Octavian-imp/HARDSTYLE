@@ -1,6 +1,6 @@
 import { memo } from "react"
 import useTheme from "../hooks/useTheme"
-import Header from "./header/Header"
+import Header from "./header/Header.jsx"
 
 const MainContainer = memo(({ children }) => {
     const { isHeader } = useTheme()

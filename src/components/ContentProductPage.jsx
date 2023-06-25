@@ -2,17 +2,17 @@ import { useEffect, useState } from "react"
 import { v4 as uuidv4 } from "uuid"
 import { filterOptions } from "../global/filterOptions"
 import { useGetProductsQuery } from "../http/productAPI.RTK"
-import CustomSelectFilter from "./customSelect/CustomSelectFilter"
-import ItemProduct from "./itemProduct/ItemProduct"
+import CustomSelectFilter from "./customSelect/CustomSelectFilter.jsx"
+import ItemProduct from "./itemProduct/ItemProduct.jsx"
 
-const ContentProductPage = ({ gender, isAccessories }) => {
+function ContentProductPage({ gender, isAccessories }) {
     const [page, setPage] = useState(1)
     const countPerPage = [
         { content: 12, name: 12 },
         { content: 2, name: 2 },
     ]
     const [sortname, setSortname] = useState(filterOptions[0].name)
-    let [limitPage, setLimitPage] = useState(12)
+    const [limitPage, setLimitPage] = useState(12)
     const {
         data: products,
         isLoading,
@@ -26,12 +26,13 @@ const ContentProductPage = ({ gender, isAccessories }) => {
         gender,
         isAccessories,
     })
-    let [pageCount, setPageCount] = useState(1)
+    const [pageCount, setPageCount] = useState(1)
 
     useEffect(() => {
         if (isSuccess) {
             setPageCount(Math.ceil(products.count / limitPage))
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [products])
     if (isLoading) {
         return <h1>Loading</h1>

@@ -1,5 +1,5 @@
-import Logo from "../../assets/Component 11";
-import Navbar from "../navbar/Navbar";
+import Logo from "../../assets/Component 11.jsx"
+import Navbar from "../navbar/Navbar.jsx"
 
 function Header() {
     return (
@@ -13,7 +13,7 @@ function Header() {
                 </div>
             </div>
         </header>
-    );
+    )
 }
 
-export default Header;
+export default Header

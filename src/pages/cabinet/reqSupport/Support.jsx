@@ -2,9 +2,9 @@ import { useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import { BsFillChatDotsFill } from "react-icons/bs"
 import { v4 as uuidv4 } from "uuid"
-import InputForm from "../../../components/inputForm/InputForm"
-import SupportTicket from "../../../components/supportTicket/SupportTicket"
-import SupportTicketLoading from "../../../components/supportTicket/SupportTicketLoading"
+import InputForm from "../../../components/inputForm/InputForm.jsx"
+import SupportTicket from "../../../components/supportTicket/SupportTicket.jsx"
+import SupportTicketLoading from "../../../components/supportTicket/SupportTicketLoading.jsx"
 import {
     useCreateTicketMutation,
     useGetAllTicketsQuery,
@@ -22,7 +22,7 @@ export default function Support() {
     const onSubmit = (data) => {
         createTicket(data)
             .unwrap()
-            .then((res) => {
+            .then(() => {
                 form.current.close()
                 setIsOpen(false)
                 reset({ theme: "", message: "" })

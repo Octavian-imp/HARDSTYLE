@@ -1,16 +1,16 @@
-import { useState } from "react";
-import MainContainer from "../../components/MainContainer";
-import { registration } from "../../http/userApi";
+import { useState } from "react"
+import MainContainer from "../../components/MainContainer.jsx"
+import { registration } from "../../http/userApi"
 
 export default function Registration() {
-    let [username, setUsername] = useState("");
-    let [email, setEmail] = useState("");
-    let [password, setPassword] = useState("");
+    let [username, setUsername] = useState("")
+    let [email, setEmail] = useState("")
+    let [password, setPassword] = useState("")
 
     const register = async () => {
-        const data = await registration(email, password, username);
-        console.log(data);
-    };
+        const data = await registration(email, password, username)
+        console.log(data)
+    }
     return (
         <MainContainer isHeader={false}>
             <form className="flex flex-col absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 2xl:w-fit dark:bg-dark-light bg-light rounded-[34px] self-center justify-center p-10 sm:w-96">
@@ -56,5 +56,5 @@ export default function Registration() {
                 </button>
             </form>
         </MainContainer>
-    );
+    )
 }

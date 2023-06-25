@@ -7,8 +7,8 @@ import useCart from "../hooks/useCart"
 import { useCheckCouponMutation } from "../http/couponApi.RTK"
 import { useCreateOrderMutation } from "../http/orderAuthApi.RTK"
 import { EMPTY_CART } from "../store/actions/cartActionsTypes"
-import InputForm from "./inputForm/InputForm"
-import ItemProductCart from "./itemProduct/ItemProductCart"
+import InputForm from "./inputForm/InputForm.jsx"
+import ItemProductCart from "./itemProduct/ItemProductCart.jsx"
 
 export default function CartContent() {
     const dispatch = useDispatch()
@@ -26,7 +26,7 @@ export default function CartContent() {
                 cart.reduce((summ, item) => summ + item.price * item.count, 0)
             )
         } else {
-            setTotalDiscount(0)
+            // setTotalDiscount(0)
             setTotal(0)
         }
     }, [cart])
@@ -82,6 +82,7 @@ export default function CartContent() {
         if (isSuccess) {
             dispatch({ type: EMPTY_CART })
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isSuccess])
 
     const [

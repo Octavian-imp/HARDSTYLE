@@ -8,7 +8,7 @@ import {
     INC_COUNT,
     REMOVE_FROM_CART,
 } from "../../store/actions/cartActionsTypes"
-import CountItems from "../CountItems"
+import CountItems from "../CountItems.jsx"
 
 export default function ItemProductCart({
     id,
@@ -20,9 +20,6 @@ export default function ItemProductCart({
     isDiscount = false,
     discount_cost,
     countItem = 1,
-    deleteProduct,
-    increase,
-    decrease,
 }) {
     const dispatch = useDispatch()
     function deleteProduct(id, size) {

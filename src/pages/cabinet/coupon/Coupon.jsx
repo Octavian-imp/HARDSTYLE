@@ -1,7 +1,6 @@
-import { useEffect } from "react"
 import { IoTicket } from "react-icons/io5"
 import { v4 as uuidv4 } from "uuid"
-import CouponItem from "../../../components/couponItem/CouponItem"
+import CouponItem from "../../../components/couponItem/CouponItem.jsx"
 import { useGetAllCouponsQuery } from "../../../http/couponApi.RTK"
 
 function Coupon() {

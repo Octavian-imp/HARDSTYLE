@@ -1,35 +1,43 @@
 import { useEffect } from "react"
+import { useDispatch } from "react-redux"
 import { Route, Routes } from "react-router-dom"
 import "./App.scss"
-import Layout from "./components/Layout"
-import MainContainer from "./components/MainContainer"
-import useToggleTheme from "./hooks/useToggleTheme"
-import { useGetUserMutation } from "./http/userAuthApi.RTK"
-import Accessories from "./pages/accessories/Accessories"
-import All from "./pages/all/All"
-import LayoutUser from "./pages/cabinet/LayoutUser"
-import Coupon from "./pages/cabinet/coupon/Coupon"
-import Favorite from "./pages/cabinet/favorite/Favorite"
-import Orders from "./pages/cabinet/orders/Orders"
-import Profile from "./pages/cabinet/profile/Profile"
-import Support from "./pages/cabinet/reqSupport/Support"
-import SupportChat from "./pages/cabinet/reqSupport/SupportChat"
-import CartPage from "./pages/cart/CartPage"
-import ForHer from "./pages/forHer/ForHer"
-import ForHim from "./pages/forHim/ForHim"
-import Home from "./pages/home/Home"
-import Login from "./pages/login/Login"
-import New from "./pages/new/New"
-import ItemPage from "./pages/pageItem/ItemPage"
-import Preloader from "./pages/preloader/Preloader"
-import { CartProvider } from "./providers/CartContext"
+import Layout from "./components/Layout.jsx"
+import MainContainer from "./components/MainContainer.jsx"
+import useToggleTheme from "./hooks/useToggleTheme.js"
+import { useGetUserMutation } from "./http/userAuthApi.RTK.js"
+import Accessories from "./pages/accessories/Accessories.jsx"
+import All from "./pages/all/All.jsx"
+import LayoutUser from "./pages/cabinet/LayoutUser.jsx"
+import Coupon from "./pages/cabinet/coupon/Coupon.jsx"
+import Favorite from "./pages/cabinet/favorite/Favorite.jsx"
+import Orders from "./pages/cabinet/orders/Orders.jsx"
+import Profile from "./pages/cabinet/profile/Profile.jsx"
+import Support from "./pages/cabinet/reqSupport/Support.jsx"
+import SupportChat from "./pages/cabinet/reqSupport/SupportChat.jsx"
+import CartPage from "./pages/cart/CartPage.jsx"
+import ForHer from "./pages/forHer/ForHer.jsx"
+import ForHim from "./pages/forHim/ForHim.jsx"
+import Home from "./pages/home/Home.jsx"
+import Login from "./pages/login/Login.jsx"
+import New from "./pages/new/New.jsx"
+import ItemPage from "./pages/pageItem/ItemPage.jsx"
+import Preloader from "./pages/preloader/Preloader.jsx"
+import { CartProvider } from "./providers/CartContext.jsx"
 import { ThemeProvider } from "./providers/ThemeProvider.jsx"
+import { LOGOUT_USER } from "./store/actions/userActionsTypes"
 
 const App = () => {
-    const [getUser, { data: user }] = useGetUserMutation()
+    const dispatch = useDispatch()
+    const [getUser, { data: user, isError }] = useGetUserMutation()
     useToggleTheme()
     useEffect(() => {
         getUser()
+        if (isError) {
+            dispatch({ type: LOGOUT_USER })
+            localStorage.removeItem("token")
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     // const [loading, setLoading] = useState(false)
     // if (loading) {

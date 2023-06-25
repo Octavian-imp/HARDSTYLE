@@ -1,7 +1,9 @@
-import { useState } from "react";
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
+import { useState } from "react"
 
 export default function CustomSelect({ defaultValue, options }) {
-    const [isChecked, setIsChecked] = useState(false);
+    const [isChecked, setIsChecked] = useState(false)
     return (
         <div className="relative ml-3">
             <span
@@ -29,5 +31,5 @@ export default function CustomSelect({ defaultValue, options }) {
                     ))}
             </ul>
         </div>
-    );
+    )
 }

@@ -11,7 +11,7 @@ const AddProduct = () => {
     const [gender, setGender] = useState("male")
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
-    const [info, setInfo] = useState([])
+    const info = []
     const [price, setPrice] = useState(0)
 
     //работа с картинками и превью к ним

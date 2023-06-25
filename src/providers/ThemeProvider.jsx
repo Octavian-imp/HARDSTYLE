@@ -1,4 +1,4 @@
-import { createContext, useEffect, useMemo, useState } from "react"
+import { createContext, useMemo, useState } from "react"
 
 export const ThemeContext = createContext({
     isDark: localStorage.getItem("isDark"),

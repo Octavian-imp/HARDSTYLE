@@ -1,6 +1,6 @@
-import ContentProductPage from "../../components/ContentProductPage"
-import FormFilter from "../../components/formFilter/FormFilter"
-import { FilterProductsProvider } from "../../providers/FilterProductsProvider"
+import ContentProductPage from "../../components/ContentProductPage.jsx"
+import FormFilter from "../../components/formFilter/FormFilter.jsx"
+import { FilterProductsProvider } from "../../providers/FilterProductsProvider.jsx"
 
 const New = () => {
     return (

@@ -1,8 +1,8 @@
-import Logo from "../../assets/Component 11";
-import useTheme from "../../hooks/useTheme";
+import Logo from "../../assets/Component 11.jsx"
+import useTheme from "../../hooks/useTheme"
 
 function Preloader({ previewText }) {
-    const { isDark } = useTheme();
+    const { isDark } = useTheme()
     return (
         <div
             className={`${
@@ -18,7 +18,7 @@ function Preloader({ previewText }) {
                 {previewText}
             </div>
         </div>
-    );
+    )
 }
 
-export default Preloader;
+export default Preloader

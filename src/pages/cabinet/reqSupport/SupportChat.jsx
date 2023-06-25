@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form"
 import { useParams } from "react-router-dom"
 import { v4 as uuidv4 } from "uuid"
-import MessageItem from "../../../components/messageItem/MessageItem"
-import TextareaForm from "../../../components/textareaForm/TextareaForm"
+import MessageItem from "../../../components/messageItem/MessageItem.jsx"
+import TextareaForm from "../../../components/textareaForm/TextareaForm.jsx"
 import {
     useAddNewMessageMutation,
     useGetOneTicketQuery,

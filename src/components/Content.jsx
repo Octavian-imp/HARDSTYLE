@@ -1,28 +1,28 @@
-import React, { useEffect, useMemo, useState } from "react";
-import useFilter from "../hooks/useFilter";
-import ItemProduct from "./itemProduct/ItemProduct";
-import { v4 as uuidv4 } from "uuid";
+import { useEffect, useMemo, useState } from "react"
+import { v4 as uuidv4 } from "uuid"
+import useFilter from "../hooks/useFilter"
+import ItemProduct from "./itemProduct/ItemProduct.jsx"
 
 export default function Content() {
-    let [newProducts, setNewProducts] = useState([]);
-    let { filter } = useFilter();
+    let [newProducts, setNewProducts] = useState([])
+    let { filter } = useFilter()
 
     async function fetchProducts() {
-        const res = await fetch("https://fakestoreapi.com/products/");
-        const json = await res.json();
-        setNewProducts(json);
-        console.log(json);
+        const res = await fetch("https://fakestoreapi.com/products/")
+        const json = await res.json()
+        setNewProducts(json)
+        console.log(json)
     }
     useEffect(() => {
-        fetchProducts();
-    }, []);
+        fetchProducts()
+    }, [])
 
     useMemo(() => {
         if (filter == "Цена (по возрастанию)") {
-            setNewProducts(newProducts.sort((a, b) => a.price - b.price));
-            console.log(filter);
+            setNewProducts(newProducts.sort((a, b) => a.price - b.price))
+            console.log(filter)
         }
-    }, [filter, newProducts]);
+    }, [filter, newProducts])
 
     return (
         <div className="flex md:justify-between justify-evenly flex-wrap">
@@ -42,5 +42,5 @@ export default function Content() {
                     />
                 ))}
         </div>
-    );
+    )
 }

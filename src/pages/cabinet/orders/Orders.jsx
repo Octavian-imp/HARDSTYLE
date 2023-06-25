@@ -1,7 +1,7 @@
 import { IoBag } from "react-icons/io5"
 import { v4 as uuidv4 } from "uuid"
 import { useGetHistoryQuery } from "../../../http/orderAuthApi.RTK"
-import OrderItem from "./OrderItem"
+import OrderItem from "./OrderItem.jsx"
 
 /*
     Коды статусов заказа:

@@ -27,7 +27,7 @@ export default function CustomSelectFilter({ options, onChangeValue }) {
                 } ${isChecked ? "dark:bg-dark-light bg-light" : ""}`}
             >
                 {options &&
-                    options.map((option, index) => (
+                    options.map((option) => (
                         <li
                             key={uuidv4()}
                             onClick={() => actionClick(option)}

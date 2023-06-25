@@ -1,13 +1,13 @@
 import { BsFillChatDotsFill, BsHeartFill } from "react-icons/bs"
 import { FaUserAlt } from "react-icons/fa"
 import { IoBag, IoLogOut, IoTicket } from "react-icons/io5"
-import { useDispatch } from "react-redux"
+// import { useDispatch } from "react-redux"
 import { NavLink, useNavigate } from "react-router-dom"
 import { v4 as uuidv4 } from "uuid"
 import { useLogoutUserMutation } from "../http/userAuthApi.RTK"
 
 function UserContainer({ children }) {
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
     const [logoutUser] = useLogoutUserMutation()
     const navigate = useNavigate()
     const logOut = () => {
@@ -55,7 +55,7 @@ function UserContainer({ children }) {
         <div className="flex lg:flex-row flex-col w-full">
             <ul className="dark:bg-dark-light lg:w-[84px] lg:sticky lg:top-6 h-fit py-3 rounded-2xl flex flex-row lg:flex-col items-center lg:space-y-4 space-x-4 lg:space-x-0 pl-4 lg:pl-0 overflow-x-auto">
                 {menuUser &&
-                    menuUser.map((item, index) => {
+                    menuUser.map((item) => {
                         return (
                             <li key={uuidv4()} className="flex flex-col">
                                 <NavLink
