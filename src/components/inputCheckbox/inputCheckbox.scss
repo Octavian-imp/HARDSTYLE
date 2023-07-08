@@ -2,7 +2,7 @@ $size-checkbox: 1rem;
 $border-radius: .25rem;
 
 
-.inputCheckbox:before{
+.inputCheckbox::before{
     content: '';
     display:block;
     position: absolute;
@@ -12,9 +12,10 @@ $border-radius: .25rem;
     width: $size-checkbox;
     height: $size-checkbox;
     border-radius: $border-radius;
+
     @apply dark:bg-light bg-gray-300;
 }
 
-.inputCheckbox:checked:before{
+.inputCheckbox:checked::before{
     @apply bg-orange-500;
 }

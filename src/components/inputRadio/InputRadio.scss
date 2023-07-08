@@ -2,7 +2,7 @@ $size-radio: 1rem;
 $border-radius: .25rem;
 
 
-.inputRadio:before{
+.inputRadio::before{
     content: '';
     display:block;
     position: absolute;
@@ -12,9 +12,10 @@ $border-radius: .25rem;
     width: $size-radio;
     height: $size-radio;
     border-radius: $border-radius;
+
     @apply dark:bg-light bg-gray-300;
 }
 
-.inputRadio:checked:before{
+.inputRadio:checked::before{
     @apply bg-orange-500;
 }

@@ -1,22 +1,25 @@
 $size-slider-thumb: 1.15rem;
+
 .costMin,
 .inputRangeCost {
     position: absolute;
 }
+
 .inputRangeCost {
     width: 100%;
     cursor: pointer;
     background-color: transparent;
     appearance: none;
     pointer-events: none;
-    -webkit-appearance: none;
+    appearance: none;
 }
+
 .inputRangeCost::-webkit-slider-thumb {
     @apply dark:bg-white bg-black;
     
     height: $size-slider-thumb;
     width: $size-slider-thumb;
-    -webkit-appearance: none;
+    appearance: none;
     pointer-events: auto;
     border-radius: 50%;
 }
@@ -26,11 +29,12 @@ $size-slider-thumb: 1.15rem;
     
     height: $size-slider-thumb;
     pointer-events: auto;
-    -moz-appearance: none;
+    appearance: none;
     width: $size-slider-thumb;
     border-radius: 50%;
 }
+
 .inputRangeCost::-webkit-outer-spin-button,
 .inputRangeCost::-webkit-inner-spin-button {
-    -webkit-appearance: none;
+    appearance: none;
 }

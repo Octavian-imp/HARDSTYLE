@@ -11,10 +11,11 @@ $muted: #5a5a5a;
 html,
 body {
     @apply selection:bg-orange-500 selection:text-white;
+
     min-height: 100%;
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans",
         "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -27,6 +28,7 @@ body {
 *:focus-visible {
     @apply outline-none;
 }
+
 /* W3C standard
    сейчас только для Firefox */
 * {
@@ -39,9 +41,11 @@ body {
     height: 12px;
     width: 12px;
 }
+
 *::-webkit-scrollbar-track {
     background: $light;
 }
+
 *::-webkit-scrollbar-thumb {
     background-color: $dark-light;
     border-radius: 6px;
@@ -52,9 +56,11 @@ html.dark {
     & * {
         scrollbar-color: $dark-light $light;
     }
+
     & *::-webkit-scrollbar-track {
         background: $dark-light;
     }
+
     & *::-webkit-scrollbar-thumb {
         background-color: $light;
         border-color: $dark-light;
@@ -65,22 +71,23 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
         monospace;
 }
+
 #root {
     @apply overflow-y-hidden;
+
     min-height: 100%;
-    height: -webkit-fit-content;
-    height: -moz-fit-content;
     height: fit-content;
 }
 
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
+    appearance: none;
 }
+
 input[type="number"] {
-    -webkit-appearance: none;
+    appearance: none;
             appearance: none;
-    -moz-appearance: textfield;
+    appearance: textfield;
 }
 
 input[type="number"]:focus,

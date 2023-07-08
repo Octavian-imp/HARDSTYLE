@@ -3,26 +3,32 @@
     opacity: 1;
     animation: mount .2s ease-in-out forwards;
 }
+
 @keyframes mount{
     0%{
         opacity: 0;
     }
+
     100%{
         opacity: 1;
     }
 }
+
 .unmount.animate-decrease_1s_ease-in-out{
     overflow: hidden;
     opacity: 0;
     animation: unmout .2s ease-in-out forwards;
+
     @media (min-width: 991px){
         opacity: 1;
     }
 }
+
 @keyframes unmount{
     0%{
         opacity: 1;
     }
+
     100%{
         opacity: 0;
     }

@@ -1,12 +1,12 @@
 $dark-color: #121212;
 
-
-.swiper.homeSlider .swiper-button-prev.customArrows:after,
-.swiper.homeSlider .swiper-button-next.customArrows:after{
-color: $dark-color;
-opacity:1;
-transition: .3s ease;
+.swiper.homeSlider .swiper-button-prev.customArrows::after,
+.swiper.homeSlider .swiper-button-next.customArrows::after {
+    color: $dark-color;
+    opacity: 1;
+    transition: 0.3s ease;
 }
+
 /*
 html.dark .swiper.homeSlider .swiper-button-prev.customArrows:after,
 html.dark .swiper.homeSlider .swiper-button-next.customArrows:after{
@@ -22,20 +22,22 @@ color: white;
 html .swiper.homeSlider:hover .swiper-button-prev.customArrows:after,
 html .swiper.homeSlider:hover .swiper-button-next.customArrows:after{
 color: black;
-}*/
+} */
 
-.homeSlider .slick-list{
-    border-radius:inherit;
-}
-.homeSlider .slick-list .slick-track{
-border-radius:inherit;
+.homeSlider .slick-list {
+    border-radius: inherit;
 }
 
+.homeSlider .slick-list .slick-track {
+    border-radius: inherit;
+}
 
-.swiper-pagination-bullet{
+.swiper-pagination-bullet {
     --tw-bg-opacity: 1;
-    background-color: rgba(0,0,0,var(--tw-bg-opacity)) !important;
+
+    background-color: rgba(0, 0, 0, var(--tw-bg-opacity)) !important;
 }
+
 /*
 html.dark .swiper-pagination-bullet{
     --tw-bg-opacity: 1;
@@ -44,8 +46,9 @@ html.dark .swiper-pagination-bullet{
 html.dark .swiper-pagination-bullet-active{
     --tw-bg-opacity: 1;
     background-color: rgba(0,0,0,var(--tw-bg-opacity)) !important;
-}*/
-.swiper-pagination-bullet-active{
+} */
+.swiper-pagination-bullet-active {
     --tw-bg-opacity: 1;
-    background-color: rgba(0,0,0,var(--tw-bg-opacity)) !important;
+
+    background-color: rgba(0, 0, 0, var(--tw-bg-opacity)) !important;
 }
